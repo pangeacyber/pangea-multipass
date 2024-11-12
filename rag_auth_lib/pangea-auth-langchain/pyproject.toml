@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "pangea.auth.langchain"
+name = "pangea-auth-langchain"
 version = "0.1.0"
-description = "Pangea Generalized Auth library for Langchain"
+description = "Pangea Generalized Auth library for LangChain"
 authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
 license = "MIT"
 readme = "README.md"

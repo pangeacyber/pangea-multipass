@@ -33,10 +33,10 @@ def get_doc_metadata(doc: Document) -> dict[str, Any]:
     return doc.metadata
 
 
-class LangchainJiraFilter(JiraProcessor[Document]):
-    """Filter for Jira integration with Langchain documents.
+class LangChainJiraFilter(JiraProcessor[Document]):
+    """Filter for Jira integration with LangChain documents.
 
-    Uses Jira authentication to access documents in the Langchain.
+    Uses Jira authentication to access documents in the LangChain.
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
@@ -46,10 +46,10 @@ class LangchainJiraFilter(JiraProcessor[Document]):
         super().__init__(auth, get_node_metadata=get_doc_metadata)
 
 
-class LangchainConfluenceFilter(ConfluenceProcessor[Document]):
-    """Filter for Confluence integration with Langchain documents.
+class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
+    """Filter for Confluence integration with LangChain documents.
 
-    Uses Confluence authentication to access documents in the Langchain.
+    Uses Confluence authentication to access documents in the LangChain.
 
     Args:
         auth (ConfluenceAuth): Confluence authentication credentials.
@@ -59,10 +59,10 @@ class LangchainConfluenceFilter(ConfluenceProcessor[Document]):
         super().__init__(auth, get_node_metadata=get_doc_metadata)
 
 
-class LangchainGDriveFilter(GDriveProcessor[Document]):
-    """Filter for Google Drive integration with Langchain documents.
+class LangChainGDriveFilter(GDriveProcessor[Document]):
+    """Filter for Google Drive integration with LangChain documents.
 
-    Uses Google Drive credentials to access documents in the Langchain.
+    Uses Google Drive credentials to access documents in the LangChain.
 
     Args:
         creds (Credentials): Google OAuth2 credentials.
