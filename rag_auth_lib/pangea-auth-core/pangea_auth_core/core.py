@@ -6,9 +6,14 @@ from typing import Any, Sequence, List, Callable, Generic, TypeVar
 import hashlib
 import enum
 import dataclasses
+from secrets import token_hex
 
 T = TypeVar("T")
 _PANGEA_METADATA_KEY_PREFIX = "_pangea_"
+
+
+def generate_id() -> str:
+    return token_hex(20)
 
 
 class FilterOperator(str, enum.Enum):
@@ -35,6 +40,7 @@ class PangeaMetadataKeys(str, enum.Enum):
     CONFLUENCE_PAGE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}confluence_page_id"
     JIRA_ISSUE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}jira_issue_id"
     GDRIVE_FILE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}gdrive_file_id"
+    NODE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}node_id"
 
 
 class PangeaMetadataValues(str, enum.Enum):
@@ -149,6 +155,10 @@ def enrich_metadata(
 
     for doc in documents:
         file_content = reader.read(doc)
+
+        # Add Pangea Node Random ID
+        updater.update_metadata(doc, {PangeaMetadataKeys.NODE_ID: generate_id()})
+
         for enricher in metadata_enrichers:
             updater.update_metadata(doc, enricher.extract_metadata(doc, file_content))
 
@@ -163,25 +173,21 @@ class PangeaNodeProcessorMixer(Generic[T]):
     Attributes:
         _node_processors (List[PangeaGenericNodeProcessor]): List of node processors.
         _get_node_metadata (Callable): Function to get node metadata.
-        _get_node_id (Callable): Function to retrieve node ID.
         _unauthorized_nodes (List[T]): Cached list of unauthorized nodes.
         _authorized_nodes (List[T]): Cached list of authorized nodes.
     """
 
     _node_processors: List[PangeaGenericNodeProcessor] = []
     _get_node_metadata: Callable[[T], dict[str, Any]]
-    _get_node_id: Callable[[T], str]
     _unauthorized_nodes: List[T] = []
     _authorized_nodes: List[T] = []
 
     def __init__(
         self,
         get_node_metadata: Callable[[T], dict[str, Any]],
-        get_node_id: Callable[[T], str],
         node_processors: List[PangeaGenericNodeProcessor],
     ):
         self._node_processors = node_processors
-        self._get_node_id = get_node_id
         self._get_node_metadata = get_node_metadata
 
     def filter(
@@ -200,12 +206,16 @@ class PangeaNodeProcessorMixer(Generic[T]):
         authorized: dict[str, T] = {}
         unauthorized: dict[str, T] = {}
         for node in nodes:
-            unauthorized[self._get_node_id(node)] = node
+            id = self._get_node_metadata(node).get(PangeaMetadataKeys.NODE_ID, None)
+            if not id:
+                raise Exception(f"{PangeaMetadataKeys.NODE_ID} key should be set in node metadata")
+
+            unauthorized[id] = node
 
         # This works as an OR operator among all node post processors
         for npp in self._node_processors:
             for node in npp.filter(list(unauthorized.values())):
-                id = self._get_node_id(node)
+                id = self._get_node_metadata(node).get(PangeaMetadataKeys.NODE_ID)
                 authorized[id] = unauthorized.pop(id)
 
         self._unauthorized_nodes = list(unauthorized.values())

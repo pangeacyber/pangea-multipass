@@ -27,7 +27,6 @@ class GDriveME(MetadataEnricher):
         _creds (Credentials): Credentials for authenticating with Google Drive.
         _files (dict): Cached file metadata from Google Drive.
         _fields (dict): Mappings of FileField attributes to metadata keys.
-        _get_doc_id (Callable): Callable function to extract a unique document ID.
         _fields_param (str): Parameter for specifying fields to retrieve in Google Drive API requests.
     """
 
@@ -52,15 +51,13 @@ class GDriveME(MetadataEnricher):
     _creds: Credentials
     _files: dict[str, dict]
     _fields: dict[FileField, str]
-    _get_doc_id: Callable[[Any], str]
     _fields_param: str
 
-    def __init__(self, creds: Credentials, fields: dict[FileField, str], get_doc_id: Callable[[Any], str]):
+    def __init__(self, creds: Credentials, fields: dict[FileField, str]):
         # TODO: Add authz instance to upload permission tuples
         self._creds = creds
         self._fields = fields
         # Overwrite this value if exists
-        self._get_doc_id = get_doc_id
         self._set_fields_param()
         self._files = {}
 
@@ -80,7 +77,11 @@ class GDriveME(MetadataEnricher):
         # This step is to normalize some attributes across platforms
         metadata[PangeaMetadataKeys.FILE_NAME] = doc.metadata.get("file name", "")
         metadata[PangeaMetadataKeys.DATA_SOURCE] = PangeaMetadataValues.DATA_SOURCE_GDRIVE
-        metadata[PangeaMetadataKeys.GDRIVE_FILE_ID] = doc.metadata.get("file id", "")
+
+        id = self._get_id_from_metadata(doc.metadata)
+        if not id:
+            raise Exception("empty doc_id")
+        metadata[PangeaMetadataKeys.GDRIVE_FILE_ID] = id
 
         # No fields to ask, so return empty
         if not self._fields:
@@ -95,7 +96,7 @@ class GDriveME(MetadataEnricher):
             return metadata
 
         # Process files
-        file = self._files.get(self._get_doc_id(doc), None)
+        file = self._files.get(id, None)
         if not file:
             return metadata
 
@@ -113,6 +114,29 @@ class GDriveME(MetadataEnricher):
             metadata[metadata_key] = value
 
         return metadata
+    
+    def _get_id_from_metadata(self, metadata: dict[str, Any]) -> str:
+        # Llama index "file_id" key
+        value = metadata.get("file id", None)
+        if value:
+            return value
+
+        # Langchain does not have id in metadata, it need to be extracted from "source"
+        # "source": f"https://docs.google.com/document/d/{id}/edit",
+        source = metadata.get("source", None)
+        if source and type(source) is str:
+            value = self._get_id_from_source(source) 
+            if value:
+                return value
+
+        return ""
+
+    def _get_id_from_source(self, source: str) -> str:
+            parts = source.split("/")
+            if len(parts) < 2:
+                return ""
+
+            return parts[-2]
 
     def _get_permissions(self, file: dict[str, Any]) -> List[str]:
         file_permissions = file.get(GDriveME.FileField.PERMISSIONS, [])
@@ -254,7 +278,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
         if not self.files_ids:
             self.files_ids = GDriveAPI.list_all_file_ids(self.creds)
 
-        return MetadataFilter(key="file id", value=self.files_ids, operator=FilterOperator.IN)
+        return MetadataFilter(key=PangeaMetadataKeys.GDRIVE_FILE_ID, value=self.files_ids, operator=FilterOperator.IN)
 
     def _is_authorized(self, node: T) -> bool:
         metadata = self.get_node_metadata(node)
@@ -264,7 +288,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
     def _has_access(self, metadata: dict[str, Any]) -> bool:
         id = metadata.get(PangeaMetadataKeys.GDRIVE_FILE_ID, None)
-        if id is None:
+        if not id:
             raise KeyError("Invalid metadata key")
 
         access = self.files_access_cache.get(id, None)

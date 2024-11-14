@@ -75,12 +75,11 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
 class DocumentFilterMixer:
     node_processor: PangeaNodeProcessorMixer[Document]
 
-    def __init__(self, node_processors: List[PangeaGenericNodeProcessor]):
+    def __init__(self, document_filters: List[PangeaGenericNodeProcessor]):
         super().__init__()
         self.node_processor = PangeaNodeProcessorMixer[Document](
             get_node_metadata=get_doc_metadata,
-            get_node_id=get_doc_id,
-            node_processors=node_processors,
+            node_processors=document_filters,
         )
 
     def filter(

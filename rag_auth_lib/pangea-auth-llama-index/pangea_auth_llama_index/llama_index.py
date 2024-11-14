@@ -146,7 +146,6 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
         super().__init__()
         self.node_processor = PangeaNodeProcessorMixer[NodeWithScore](
             get_node_metadata=get_node_metadata,
-            get_node_id=get_node_id,
             node_processors=node_processors,
         )
 

@@ -12,7 +12,7 @@ from typing import List
 import warnings
 
 from pangea_auth_core import GDriveME, enrich_metadata
-from pangea_auth_llama_index import LIDocumentReader, get_doc_id
+from pangea_auth_llama_index import LIDocumentReader
 
 # Suppress specific warning
 warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
@@ -76,7 +76,7 @@ def google_drive_read_docs() -> List:
 
     # Metadata enricher library
     creds = Credentials.from_authorized_user_file(admin_token_filepath, SCOPES)
-    gdrive_me = GDriveME(creds, {}, get_doc_id)
+    gdrive_me = GDriveME(creds, {})
     enrich_metadata(documents, [gdrive_me], reader=LIDocumentReader())
     # Finish metadata enrichement
 

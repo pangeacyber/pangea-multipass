@@ -65,7 +65,6 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
     auth: ConfluenceAuth
     space_id: Optional[int] = None
     get_node_metadata: Callable[[T], dict[str, Any]]
-    get_node_id: Callable[[T], str]
 
     def __init__(
         self, auth: ConfluenceAuth, get_node_metadata: Callable[[T], dict[str, Any]], space_id: Optional[int] = None
