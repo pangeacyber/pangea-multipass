@@ -55,18 +55,6 @@ def get_doc_id(doc: LIDocument) -> str:
     return doc.doc_id
 
 
-def get_node_id(node: NodeWithScore) -> str:
-    """Retrieves the ID of a node with a score.
-
-    Args:
-        node (NodeWithScore): The node with a score.
-
-    Returns:
-        str: The node ID.
-    """
-    return node.node_id
-
-
 def get_node_metadata(node: NodeWithScore) -> dict[str, Any]:
     """Fetches metadata from a node with a score.
 
