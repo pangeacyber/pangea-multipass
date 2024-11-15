@@ -30,10 +30,8 @@ class ConfluenceAuth:
 class ConfluenceME(MetadataEnricher):
     """Enriches Confluence-specific metadata for documents."""
 
-    _get_doc_id: Callable[[Any], str]
-
-    def __init__(self, get_doc_id: Callable[[Any], str]):
-        self._get_doc_id = get_doc_id
+    def __init__(self):
+        super().__init__("unused_key")
 
     def extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
         """
@@ -53,8 +51,24 @@ class ConfluenceME(MetadataEnricher):
         metadata[PangeaMetadataKeys.DATA_SOURCE] = PangeaMetadataValues.DATA_SOURCE_CONFLUENCE
 
         # Particular Confluence metadata enricher
-        metadata[PangeaMetadataKeys.CONFLUENCE_PAGE_ID] = self._get_doc_id(doc)
+        id = self._get_id_from_metadata(doc.metadata)
+        if not id:
+            raise Exception("No confluence id")
+        metadata[PangeaMetadataKeys.CONFLUENCE_PAGE_ID] = id
         return metadata
+
+    def _get_id_from_metadata(self, metadata: dict[str, Any]) -> str:
+        # Langchain metadata id value
+        value = metadata.get("id", None)
+        if value:
+            return value
+
+        # Llama Index metadata id value
+        value = metadata.get("page_id", None)
+        if value:
+            return value
+
+        return ""
 
 
 class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
@@ -109,7 +123,7 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
         """Checks access permissions for a specific Confluence page."""
 
         id = metadata.get(PangeaMetadataKeys.CONFLUENCE_PAGE_ID, None)
-        if id is None:
+        if not id:
             raise KeyError("Invalid metadata key")
 
         access = self.page_ids_cache.get(id, None)

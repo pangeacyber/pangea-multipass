@@ -111,7 +111,7 @@ def confluence_read_docs():
 
     # Enrich metadata process
     print(f"Processing {len(documents)} Confluence docs...")
-    confluence_me = ConfluenceME(get_doc_id)
+    confluence_me = ConfluenceME()
     enrich_metadata(documents, [confluence_me], reader=LIDocumentReader())
 
     return documents
