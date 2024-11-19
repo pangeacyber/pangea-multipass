@@ -32,7 +32,6 @@ class GDriveME(MetadataEnricher):
 
     class FileField(str, enum.Enum):
         PARENT = "parents"
-        PERMISSIONS = "permissions"
         FILE_EXTENSION = "fileExtension"
         MIME_TYPE = "mimeType"
         SIZE = "size"
@@ -103,8 +102,6 @@ class GDriveME(MetadataEnricher):
         for k, metadata_key in self._fields.items():
             if k == GDriveME.FileField.PARENT:
                 value: Any = self._get_parent(file)
-            elif k == GDriveME.FileField.PERMISSIONS:
-                value = self._get_permissions(file)
             else:
                 value = file.get(k, None)
 
@@ -137,14 +134,6 @@ class GDriveME(MetadataEnricher):
                 return ""
 
             return parts[-2]
-
-    def _get_permissions(self, file: dict[str, Any]) -> List[str]:
-        file_permissions = file.get(GDriveME.FileField.PERMISSIONS, [])
-        permission_ids = []
-        for permission_item in file_permissions:
-            permission_ids.append(permission_item["emailAddress"])
-
-        return permission_ids
 
     def _get_parent(self, file: dict[str, Any]) -> str:
         parents = file.get(GDriveME.FileField.PARENT, [])
