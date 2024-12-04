@@ -4,11 +4,11 @@ Pangea Auth Core is a Python library for enriching metadata of documents from Go
 
 ## Features
 
-- **Metadata Enrichment**: Includes enrichers for hashing, constant value setting, and custom metadata.
 - **Document Reading**: Supports document content extraction for use in processing and enrichment.
+- **Metadata Enrichment**: Includes enrichers for hashing, constant value setting, and custom metadata.
+- **Metadata Filtering**: Provides flexible operators to filter document metadata for customized queries.
 - **Authorization Processing**: Manages authorized and unauthorized nodes with customizable node processors.
 - **Extensible**: Built on abstract base classes, allowing easy extension and customization of functionality.
-- **Metadata Filtering**: Provides flexible operators to filter document metadata for customized queries.
 
 ## Installation
 
@@ -160,5 +160,23 @@ class GDriveAPI:
 ```
 
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Roadmap
+
+At release, this library supports Google Workspace, Confluence, and Jira. For adding systems, our top priorities are:
+
+- Slack
+- Github
+- Salesforce
+- Box
+
+Other we plan to support or are looking for contributions are:
+
+- Office 365
+- Zoom
+- Dropbox
+- Gitlab
+- Zendesk
+- Notion
+- Sharepoint
+- Asana
+- Hubspot
