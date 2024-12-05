@@ -169,7 +169,7 @@ At release, this library supports Google Workspace, Confluence, and Jira. For ad
 - Salesforce
 - Box
 
-Other we plan to support or are looking for contributions are:
+Others we plan to support or are looking for contributions are:
 
 - Office 365
 - Zoom
