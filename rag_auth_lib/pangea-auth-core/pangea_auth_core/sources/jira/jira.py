@@ -37,20 +37,17 @@ class JiraME(MetadataEnricher):
         _email (str): Email for authenticating with Jira.
         _api_token (str): API token for Jira access.
         _auth (JiraAuth): Authentication details for Jira.
-        _get_doc_id (Callable): Function to retrieve document ID for Jira queries.
     """
 
     _url: str
     _email: str
     _api_token: str
     _auth: JiraAuth
-    _get_doc_id: Callable[[Any], str]
 
-    def __init__(self, url: str, email: str, api_token: str, get_doc_id: Callable[[Any], str]):
+    def __init__(self, url: str, email: str, api_token: str):
         self._url = url
         self._email = email
         self._api_token = api_token
-        self._get_doc_id = get_doc_id
         self._auth = JiraAuth(email, api_token, url)
 
     def extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
@@ -69,10 +66,15 @@ class JiraME(MetadataEnricher):
         # This step is to normalize some attributes across platforms
         metadata[PangeaMetadataKeys.DATA_SOURCE] = PangeaMetadataValues.DATA_SOURCE_JIRA
         metadata[PangeaMetadataKeys.FILE_NAME] = doc.metadata.get("title", "")
-        metadata[PangeaMetadataKeys.JIRA_ISSUE_ID] = doc.metadata.get("id", "")
+
+        id = doc.metadata.get("id", "")
+        if not id:
+            raise Exception("invalid metadata key")
+
+        metadata[PangeaMetadataKeys.JIRA_ISSUE_ID] = id
 
         # New metadata
-        issue = JiraAPI.get_issue(self._auth, self._get_doc_id(doc))
+        issue = JiraAPI.get_issue(self._auth, id)
         metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_assignee_account_id"] = (
             issue.get("fields", {}).get("assignee", {}).get("accountId", "")
         )

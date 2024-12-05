@@ -78,7 +78,7 @@ def google_drive_read_docs() -> List:
 
     # Metadata enricher library
     creds = Credentials.from_authorized_user_file(admin_token_filepath, SCOPES)
-    gdrive_me = GDriveME(creds, {}, get_doc_id)
+    gdrive_me = GDriveME(creds, {})
     enrich_metadata(documents, [gdrive_me], reader=LIDocumentReader())
     # Finish metadata enrichement
 
@@ -111,7 +111,7 @@ def confluence_read_docs():
 
     # Enrich metadata process
     print(f"Processing {len(documents)} Confluence docs...")
-    confluence_me = ConfluenceME(get_doc_id)
+    confluence_me = ConfluenceME()
     enrich_metadata(documents, [confluence_me], reader=LIDocumentReader())
 
     return documents
@@ -150,7 +150,7 @@ def jira_read_docs():
 
     # Metadata enricher library
     print(f"Processing {len(documents)} Jira docs...")
-    jira_me = JiraME(JIRA_BASE_URL, jira_admin_email, jira_api_token, get_doc_id)
+    jira_me = JiraME(JIRA_BASE_URL, jira_admin_email, jira_api_token)
     enrich_metadata(documents, [jira_me], reader=LIDocumentReader())
 
     return documents
