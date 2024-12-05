@@ -126,7 +126,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
 ### API 
 
-This third class is used just to group all the API request related to this particular data source. It's not required but it's a nice way to group all these required methods used internally for the above descrived classes. 
+This third class is used just to group all the API request related to this particular data source. It's not required but it's a nice way to group all these required methods used internally for the above classes. 
 
 ```python
 class GDriveAPI:
