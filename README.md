@@ -45,7 +45,7 @@ New sources implementation should have, at least, 2 parts:
 
 ### Metadata Enricher
 
-CustomSource metadata enricher implementation should inherite from `MetadataEnricher` class.
+CustomSource metadata enricher implementation should inherit from `MetadataEnricher` class.
 
 ```python
 class GDriveME(MetadataEnricher):
