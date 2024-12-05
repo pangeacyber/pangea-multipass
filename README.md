@@ -111,7 +111,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
         return filtered
 ```
 
-`get_filter()` method will return a `MetadataFilter` to be used in LlamaIndex or Langchain retriever filters. In this case it request all the permission of all the files, so it's not performing for really long dataset. It's recommended to use `filter` so only are requested those files of interest to the current prompt.
+`get_filter()` method will return a `MetadataFilter` to be used in LlamaIndex or LangChain retriever filters. In this case it requests all permissions of all files, so it's not performant for really large datasets. It's recommended to use `filter` so that only files that are of interest to the current prompt are requested.
 
 ```python
     def get_filter(
