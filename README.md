@@ -73,7 +73,7 @@ This method will receive the document itself, so it's possible to access to the 
 
         # Required: at least for this use case, it's required that this metadata enricher set the file id, so it will be used
         # at inference time to request the permissions of this file.
-        # In this case there is a function to get the id from the metadata due to each source Langchain/LlamaIndex use different
+        # In this case there is a function to get the id from the metadata due to each source LangChain/LlamaIndex use different
         # key names to save it into the metadata.
         id = self._get_id_from_metadata(doc.metadata)
         if not id:
