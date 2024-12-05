@@ -187,6 +187,6 @@ while True:
     print(f"\n{response}")
     print("\n=================")
     print(
-        f"Warning: This answer could be inaccurate as its missing context from {count} out of {len(similar_docs)} data sources. Include {len(filtered_docs)} sources."
+        f"Warning: This answer could be inaccurate as it's missing context from {count} out of {len(similar_docs)} data sources. Included {len(filtered_docs)} sources."
     )
     print("=================\n")
