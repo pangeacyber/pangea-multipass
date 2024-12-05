@@ -51,7 +51,7 @@ CustomSource metadata enricher implementation should inherit from `MetadataEnric
 class GDriveME(MetadataEnricher):
 ```
 
-This inheration will require that `extract_metadata` method is implemented with this next signature:
+This inheritance will require that the `extract_metadata` method is implemented with this signature:
 
 ```
 extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
