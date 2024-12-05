@@ -104,11 +104,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
         nodes: List[T],
     ) -> List[T]:
 
-        filtered: List[T] = []
-        for node in nodes:
-            if self._is_authorized(node):
-                filtered.append(node)
-        return filtered
+        return [node for node in nodes if self._is_authorized(node)]
 ```
 
 `get_filter()` method will return a `MetadataFilter` to be used in LlamaIndex or LangChain retriever filters. In this case it requests all permissions of all files, so it's not performant for really large datasets. It's recommended to use `filter` so that only files that are of interest to the current prompt are requested.
