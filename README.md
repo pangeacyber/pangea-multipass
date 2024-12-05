@@ -57,7 +57,7 @@ This inheritance will require that the `extract_metadata` method is implemented 
 extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
 ```
 
-This method will receive the document itself, so it's possible to access to the document metadata and another attributes if needed, and it will also receive document content, so it's possible so process it for whatever it's needed (hash it, process by another llm in order to get further information about it, etc.)
+This method will receive the document itself, so it's possible to access to the document metadata and other attributes if needed, and it will also receive document content, so it's possible so process it for whatever is needed (hash it, process by another LLM in order to get further information about it, etc.)
 
 ```python
     def extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
