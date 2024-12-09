@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "langchain_examples"
 version = "0.1.0"
-description = "Pangea Generalized Auth library for LangChain"
+description = "Pangea Multipass authorization library for LangChain"
 authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
 license = "MIT"
 readme = "README.md"
@@ -14,7 +14,7 @@ google-auth-oauthlib = "^1.2.1"
 langchain = "0.3.0"
 langchain-community = "0.3.0"
 langchain-aws = "0.2.1"
-pangea-auth-langchain = { path = "../../pangea-auth-langchain", develop = true }
+pangea-multipass-langchain = { path = "../../pangea-multipass-langchain", develop = true }
 google-api-python-client = "^2.151.0"
 google-auth-httplib2 = "^0.2.0"
 langchain-google-community = "^2.0.2"
