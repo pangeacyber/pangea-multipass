@@ -1,6 +1,6 @@
 # Pangea Multipass for Llama Index
 
-This library extends the Pangea Mutlipass package to integrate metadata enrichment and document processing with Llama Index. It enables seamless use of authorization checks, metadata filtering, and custom processors on documents from Google Drive, JIRA, and Confluence, utilizing Llama Index structures for Retrieval-Augmented Generation (RAG) applications.
+This library extends the Pangea Multipass package to integrate metadata enrichment and document processing with Llama Index. It enables seamless use of authorization checks, metadata filtering, and custom processors on documents from Google Drive, JIRA, and Confluence, utilizing Llama Index structures for Retrieval-Augmented Generation (RAG) applications.
 
 ## Features
 
