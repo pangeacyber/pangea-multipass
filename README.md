@@ -1,6 +1,6 @@
-# Pangea Auth Core
+# Pangea Mutipass
 
-Pangea Auth Core is a Python library for enriching metadata of documents from Google Drive, JIRA, and Confluence. This library is designed with a flexible architecture, particularly useful for Retrieval-Augmented Generation (RAG) applications and can function in a framework-less environment.
+Pangea Multipass is a Python library for enriching metadata of documents from Google Drive, JIRA, and Confluence. This library is designed with a flexible architecture, particularly useful for Retrieval-Augmented Generation (RAG) applications and can function in a framework-less environment.
 
 ## Features
 
@@ -12,17 +12,17 @@ Pangea Auth Core is a Python library for enriching metadata of documents from Go
 
 ## Installation
 
-To install `pangea-auth-core`, you can use [Poetry](https://python-poetry.org/) for dependency management:
+To install `pangea-multipass`, you can use [Poetry](https://python-poetry.org/) for dependency management:
 
 ```bash
-poetry add pangea-auth-core
+poetry add pangea-multipass
 ```
 
 Alternatively, if installing directly from the source:
 - Clone the repository and run the following commands:
 
 ```bash
-cd pangea-auth-core
+cd pangea-multipass
 poetry install
 ```
 

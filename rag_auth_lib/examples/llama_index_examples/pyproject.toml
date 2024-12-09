@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "llama_index_examples"
 version = "0.1.0"
-description = "Pangea Generalized Auth library for Llama Index"
+description = "Pangea Multipass authorization library for Llama Index"
 authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
 license = "MIT"
 readme = "README.md"
@@ -17,7 +17,7 @@ llama-index-embeddings-bedrock = "0.3.1"
 llama-index-readers-google = "^0.4.1"
 llama-index-readers-confluence = "^0.2.1"
 llama-index-readers-jira = "^0.3.1"
-pangea-auth-llama-index = { path = "../../pangea-auth-llama-index", develop = true }
+pangea-multipass-llama-index = { path = "../../pangea-multipass-llama-index", develop = true }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
