@@ -1,6 +1,6 @@
-# pangea-auth-langchain
+# Pangea Multipass for LangChain
 
-The `pangea-auth-langchain` package extends Pangea's core authorization framework to integrate with LangChain's document processing, providing enhanced security, metadata filtering, and access control for LangChain documents. This package supports integrations with Google Drive, JIRA, and Confluence, leveraging metadata-based filtering and authorization to control document access.
+The `pangea-multipass-langchain` package extends Pangea Multipass to integrate with LangChain's document processing, providing enhanced security, metadata filtering, and access control for LangChain documents. This package supports integrations with Google Drive, JIRA, and Confluence, leveraging metadata-based filtering and authorization to control document access.
 
 ## Features
 
@@ -16,7 +16,7 @@ The `pangea-auth-langchain` package extends Pangea's core authorization framewor
 Use [Poetry](https://python-poetry.org/) to install dependencies:
 
 ```bash
-poetry add pangea-auth-langchain
+poetry add pangea-multipass-langchain
 ```
 
 ## Usage 

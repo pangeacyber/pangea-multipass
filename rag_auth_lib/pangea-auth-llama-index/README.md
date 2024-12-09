@@ -1,6 +1,6 @@
-# Pangea Metadata Llama Index Integration
+# Pangea Multipass for Llama Index
 
-This library extends the Pangea Auth Core package to integrate metadata enrichment and document processing with Llama Index. It enables seamless use of authorization checks, metadata filtering, and custom processors on documents from Google Drive, JIRA, and Confluence, utilizing Llama Index structures for Retrieval-Augmented Generation (RAG) applications.
+This library extends the Pangea Mutlipass package to integrate metadata enrichment and document processing with Llama Index. It enables seamless use of authorization checks, metadata filtering, and custom processors on documents from Google Drive, JIRA, and Confluence, utilizing Llama Index structures for Retrieval-Augmented Generation (RAG) applications.
 
 ## Features
 
@@ -13,13 +13,13 @@ This library extends the Pangea Auth Core package to integrate metadata enrichme
 Use [Poetry](https://python-poetry.org/) to install dependencies:
 
 ```bash
-poetry add pangea-auth-llama-index
+poetry add pangea-multipass-llama-index
 ```
 
 If installing directly from the source, clone the repository and run:
 
 ```bash
-cd pangea-auth-llama-index
+cd pangea-multipass-llama-index
 poetry install
 ```
 
