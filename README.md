@@ -1,4 +1,4 @@
-# Pangea Mutipass
+# Pangea Multipass
 
 Pangea Multipass is a Python library for enriching metadata of documents from Google Drive, JIRA, and Confluence. This library is designed with a flexible architecture, particularly useful for Retrieval-Augmented Generation (RAG) applications and can function in a framework-less environment.
 
