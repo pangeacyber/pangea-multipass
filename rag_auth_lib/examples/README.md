@@ -7,8 +7,6 @@ Using these examples
 In each of the directories, you can run the installer. We recommend using a virtual environment:
 
 ```
-python -m venv .venv
-source .venv/bin/activate
 poetry install
 ```
 
