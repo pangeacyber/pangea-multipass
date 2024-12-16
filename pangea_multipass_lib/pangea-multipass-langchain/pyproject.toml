@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "pangea-multipass-langchain"
+version = "0.1.0"
+description = "Pangea Multipass authorization library for LangChain"
+authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "pangea_multipass_langchain" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+pangea-sdk = "^5.1.0"
+google-auth-oauthlib = "^1.2.1"
+langchain = "0.3.0"
+langchain-community = "0.3.0"
+langchain-aws = "0.2.1"
+pangea-multipass = { path = "../pangea-multipass", develop = true }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
