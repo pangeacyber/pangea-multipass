@@ -74,9 +74,7 @@ class GDriveME(MetadataEnricher):
         metadata: dict[str, Any] = {}
 
         # This step is to normalize some attributes across platforms
-        name = doc.metadata.get("file name", "")
-        if not name:
-            name = doc.metadata.get("file path", "")
+        name = doc.metadata.get("file name", doc.metadata.get("file path", ""))
         metadata[PangeaMetadataKeys.FILE_NAME] = name
         metadata[PangeaMetadataKeys.DATA_SOURCE] = PangeaMetadataValues.DATA_SOURCE_GDRIVE
 
