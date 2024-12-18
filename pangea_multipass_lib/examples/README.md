@@ -1,36 +1,6 @@
 # Trying Pangea Multipass
 
-Using these examples
-
-## Set up the code
-
-In each of the directories, you can run the installer. We recommend using a virtual environment:
-
-```
-poetry install
-```
-
-## Set up the environment
-
-Each of the examples uses a Google folder to extract files and permissions and later check them at runtime. In the LLM examples, these map to ingestion time import and inference time checks.
-
-- todo: get google credentials
-- todo: get google folder id
-- todo: what should be in the google folder
-
-## Using the Code
+Pangea Multipass is a general purpose library for checking a user's access to resources in an upstream system. While we (Pangea) originally built this for our AI/LLM apps, you can use this library independently. To see that in action, check out the `simple` folder, otherwise explore your framework of choice.
 
 
-### Simple example
-
-- todo: run the code
-
-## LangChain Example
-
-- todo: connect to bedrock
-- todo: run the code
-
-## Llama Index Example
-
-- todo: connect to bedrock
-- todo: run the code
+Each directory has its own README to get setup though many of the steps overlap.
