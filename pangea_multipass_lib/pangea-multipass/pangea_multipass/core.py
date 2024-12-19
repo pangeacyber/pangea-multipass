@@ -1,12 +1,12 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from abc import ABC, abstractmethod
-from typing import Any, Sequence, List, Callable, Generic, TypeVar
-import hashlib
-import enum
 import dataclasses
+import enum
+import hashlib
+from abc import ABC, abstractmethod
 from secrets import token_hex
+from typing import Any, Callable, Generic, List, Sequence, TypeVar
 
 T = TypeVar("T")
 _PANGEA_METADATA_KEY_PREFIX = "_pangea_"

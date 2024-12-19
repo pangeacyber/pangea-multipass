@@ -1,20 +1,15 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from typing import Any, List, Callable, Generic
-from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
 import enum
-from pangea_multipass.core import (
-    MetadataEnricher,
-    PangeaMetadataKeys,
-    PangeaMetadataValues,
-    PangeaGenericNodeProcessor,
-    MetadataFilter,
-    FilterOperator,
-    T,
-)
+from typing import Any, Callable, Generic, List
+
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from pangea_multipass.core import (FilterOperator, MetadataEnricher,
+                                   MetadataFilter, PangeaGenericNodeProcessor,
+                                   PangeaMetadataKeys, PangeaMetadataValues, T)
 
 
 class GDriveME(MetadataEnricher):
@@ -112,7 +107,7 @@ class GDriveME(MetadataEnricher):
             metadata[metadata_key] = value
 
         return metadata
-    
+
     def _get_id_from_metadata(self, metadata: dict[str, Any]) -> str:
         # Llama index "file_id" key
         value = metadata.get("file id", None)
@@ -123,18 +118,18 @@ class GDriveME(MetadataEnricher):
         # "source": f"https://docs.google.com/document/d/{id}/edit",
         source = metadata.get("source", None)
         if source and type(source) is str:
-            value = self._get_id_from_source(source) 
+            value = self._get_id_from_source(source)
             if value:
                 return value
 
         return ""
 
     def _get_id_from_source(self, source: str) -> str:
-            parts = source.split("/")
-            if len(parts) < 2:
-                return ""
+        parts = source.split("/")
+        if len(parts) < 2:
+            return ""
 
-            return parts[-2]
+        return parts[-2]
 
     def _get_parent(self, file: dict[str, Any]) -> str:
         parents = file.get(GDriveME.FileField.PARENT, [])
@@ -312,7 +307,9 @@ class GDriveAPI:
         """
 
         flow = InstalledAppFlow.from_client_secrets_file(credentials_filepath, scopes)
-        creds = flow.run_local_server(port=8080, authorization_prompt_message="", access_type="offline", prompt="consent")
+        creds = flow.run_local_server(
+            port=8080, authorization_prompt_message="", access_type="offline", prompt="consent"
+        )
         # Save the credentials for the next run
         with open(token_filepath, "w") as token:
             token.write(creds.to_json())

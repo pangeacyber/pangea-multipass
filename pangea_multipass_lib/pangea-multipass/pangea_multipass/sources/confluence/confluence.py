@@ -1,21 +1,16 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from typing import Any, List, Callable, Optional, Generic
-import requests
-import json
-from requests.exceptions import HTTPError
-from requests.auth import HTTPBasicAuth
 import dataclasses
-from pangea_multipass.core import (
-    MetadataEnricher,
-    PangeaMetadataKeys,
-    PangeaMetadataValues,
-    PangeaGenericNodeProcessor,
-    MetadataFilter,
-    FilterOperator,
-    T,
-)
+import json
+from typing import Any, Callable, Generic, List, Optional
+
+import requests
+from pangea_multipass.core import (FilterOperator, MetadataEnricher,
+                                   MetadataFilter, PangeaGenericNodeProcessor,
+                                   PangeaMetadataKeys, PangeaMetadataValues, T)
+from requests.auth import HTTPBasicAuth
+from requests.exceptions import HTTPError
 
 
 @dataclasses.dataclass
@@ -134,7 +129,7 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
             ConfluenceAPI.get_page(HTTPBasicAuth(self.auth.email, self.auth.token), self.auth.url, id)
             access = True
         except HTTPError as e:
-            if e.response.status_code == 404:
+            if e.response is None or e.response.status_code == 404:
                 access = False
 
         if access is None:

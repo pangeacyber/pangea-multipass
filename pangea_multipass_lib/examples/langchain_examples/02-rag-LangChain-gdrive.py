@@ -1,20 +1,20 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
+import os
+from io import BytesIO
+from pathlib import Path
+from typing import List
+
 import boto3
-from langchain_aws import ChatBedrock
-from langchain_aws import BedrockEmbeddings
+from google.oauth2.credentials import Credentials
+from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_google_community import GoogleDriveLoader
-from pathlib import Path
-import os
-from io import BytesIO
-from typing import List
-from pangea_multipass import GDriveME, enrich_metadata, GDriveAPI
-from google.oauth2.credentials import Credentials
-from pangea_multipass_langchain import LangChainDocumentReader, DocumentFilterMixer
-
+from pangea_multipass import GDriveAPI, GDriveME, enrich_metadata
+from pangea_multipass_langchain import (DocumentFilterMixer,
+                                        LangChainDocumentReader)
 
 # Initialization
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-west-2")
@@ -35,14 +35,15 @@ llm = ChatBedrock(
 embedding_model = BedrockEmbeddings(model_id="amazon.titan-embed-g1-text-02", client=bedrock_client)
 
 
-class TextLoader():
+class TextLoader:
     file: BytesIO
-    
+
     def __init__(self, file):
         self.file = file
 
     def load(self) -> List[Document]:
         return [Document(page_content=self.file.read().decode("utf-8"))]
+
 
 ## Data ingestion pipeline
 
@@ -61,7 +62,7 @@ if not os.path.exists(PERSIST_DIR):
         file_loader_cls=TextLoader,
     )
 
-    docs = loader.load()    
+    docs = loader.load()
     print(f"GDrive docs loaded: {len(docs)}.")
 
     # Metadata enricher library
@@ -82,7 +83,9 @@ if not os.path.exists(PERSIST_DIR):
     # Store to file system
     vectorstore.save_local(PERSIST_DIR)
 else:
-    vectorstore = FAISS.load_local(folder_path=PERSIST_DIR, embeddings=embedding_model, allow_dangerous_deserialization=True)
+    vectorstore = FAISS.load_local(
+        folder_path=PERSIST_DIR, embeddings=embedding_model, allow_dangerous_deserialization=True
+    )
 
 
 ## Inference pipeline

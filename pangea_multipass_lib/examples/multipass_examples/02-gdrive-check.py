@@ -1,14 +1,15 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from llama_index.readers.google import GoogleDriveReader
 import os
-from google.oauth2.credentials import Credentials
-from typing import List
-import warnings
 import sys
+import warnings
+from typing import List
 
-from pangea_multipass import GDriveME, enrich_metadata, PangeaMetadataKeys, GDriveAPI
+from google.oauth2.credentials import Credentials
+from llama_index.readers.google import GoogleDriveReader
+from pangea_multipass import (GDriveAPI, GDriveME, PangeaMetadataKeys,
+                              enrich_metadata)
 from pangea_multipass_llama_index import LIDocumentReader
 
 # Suppress specific warning
@@ -24,13 +25,14 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/drive.metadata.readonly",
-    "https://www.googleapis.com/auth/drive.readonly"
+    "https://www.googleapis.com/auth/drive.readonly",
 ]
 
 # Sample folder data folder owned by apurv@gondwana.cloud https://drive.google.com/drive/u/1/folders/1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR
 
 # gdrive_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
 gdrive_fid = sys.argv[1]
+
 
 def google_drive_read_docs() -> List:
     print(f"Loading Google Drive docs. Folder ID: {gdrive_fid}.")
@@ -66,8 +68,9 @@ documents = google_drive_read_docs()
 
 # Inference
 
-from pangea_multipass_llama_index import LlamaIndexGDriveProcessor, NodePostprocessorMixer
 from pangea_multipass import GDriveAPI
+from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
+                                          NodePostprocessorMixer)
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../../credentials.json")

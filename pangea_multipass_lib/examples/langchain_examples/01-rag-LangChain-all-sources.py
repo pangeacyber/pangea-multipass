@@ -1,21 +1,22 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
+import os
+from io import BytesIO
+from pathlib import Path
+from typing import List
+
 import boto3
-from langchain_aws import ChatBedrock
-from langchain_aws import BedrockEmbeddings
+from google.oauth2.credentials import Credentials
+from langchain.document_loaders import ConfluenceLoader
+from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_google_community import GoogleDriveLoader
-from langchain.document_loaders import ConfluenceLoader
-from pathlib import Path
-import os
-from io import BytesIO
-from typing import List
-from pangea_multipass import GDriveME, enrich_metadata, GDriveAPI, ConfluenceME
-from google.oauth2.credentials import Credentials
-from pangea_multipass_langchain import LangChainDocumentReader, DocumentFilterMixer, get_doc_id, LangChainConfluenceFilter, ConfluenceAuth
-
+from pangea_multipass import ConfluenceME, GDriveAPI, GDriveME, enrich_metadata
+from pangea_multipass_langchain import (ConfluenceAuth, DocumentFilterMixer,
+                                        LangChainConfluenceFilter,
+                                        LangChainDocumentReader, get_doc_id)
 
 # Initialization
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-west-2")
@@ -36,16 +37,18 @@ llm = ChatBedrock(
 embedding_model = BedrockEmbeddings(model_id="amazon.titan-embed-g1-text-02", client=bedrock_client)
 
 
-class TextLoader():
+class TextLoader:
     file: BytesIO
-    
+
     def __init__(self, file):
         self.file = file
 
     def load(self) -> List[Document]:
         return [Document(page_content=self.file.read().decode("utf-8"))]
 
+
 ## Data ingestion pipeline
+
 
 def load_gdrive_documents() -> List[Document]:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ""
@@ -61,7 +64,7 @@ def load_gdrive_documents() -> List[Document]:
         file_loader_cls=TextLoader,
     )
 
-    docs = loader.load()    
+    docs = loader.load()
     print(f"GDrive docs loaded: {len(docs)}.")
 
     # Metadata enricher library
@@ -75,7 +78,7 @@ def load_gdrive_documents() -> List[Document]:
     gdrive_me = GDriveME(creds, {})
     enrich_metadata(docs, [gdrive_me], reader=LangChainDocumentReader())
     # Finish metadata enrichement
-    return docs 
+    return docs
 
 
 def confluence_read_docs() -> List[Document]:
@@ -122,7 +125,9 @@ if not os.path.exists(PERSIST_DIR):
     # Store to file system
     vectorstore.save_local(PERSIST_DIR)
 else:
-    vectorstore = FAISS.load_local(folder_path=PERSIST_DIR, embeddings=embedding_model, allow_dangerous_deserialization=True)
+    vectorstore = FAISS.load_local(
+        folder_path=PERSIST_DIR, embeddings=embedding_model, allow_dangerous_deserialization=True
+    )
 
 
 ## Inference pipeline

@@ -1,21 +1,16 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from langchain_core.documents import Document
 from typing import Any, List
+
 from google.oauth2.credentials import Credentials
-from pangea_multipass import (
-    JiraAuth,
-    JiraProcessor,
-    ConfluenceAuth,
-    ConfluenceProcessor,
-    GDriveProcessor,
-    PangeaNodeProcessorMixer,
-    FilterOperator,
-    DocumentReader,
-    PangeaGenericNodeProcessor,
-)
+from langchain_core.documents import Document
+from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
+                              DocumentReader, FilterOperator, GDriveProcessor,
+                              JiraAuth, JiraProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
+from pangea_multipass import (PangeaGenericNodeProcessor,
+                              PangeaNodeProcessorMixer)
 
 
 class LangChainDocumentReader(DocumentReader):

@@ -1,21 +1,16 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from typing import Any, List, Callable, Generic
-import requests
 import dataclasses
-from requests.exceptions import HTTPError
+from typing import Any, Callable, Generic, List
+
+import requests
+from pangea_multipass.core import (_PANGEA_METADATA_KEY_PREFIX, FilterOperator,
+                                   MetadataEnricher, MetadataFilter,
+                                   PangeaGenericNodeProcessor,
+                                   PangeaMetadataKeys, PangeaMetadataValues, T)
 from requests.auth import HTTPBasicAuth
-from pangea_multipass.core import (
-    MetadataEnricher,
-    PangeaMetadataKeys,
-    PangeaMetadataValues,
-    PangeaGenericNodeProcessor,
-    MetadataFilter,
-    FilterOperator,
-    T,
-    _PANGEA_METADATA_KEY_PREFIX,
-)
+from requests.exceptions import HTTPError
 
 
 @dataclasses.dataclass
@@ -167,7 +162,7 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
             JiraAPI.get_issue(self.auth, id)
             access = True
         except HTTPError as e:
-            if e.response.status_code == 404:
+            if e.response is None or e.response.status_code == 404:
                 access = False
 
         if access is None:

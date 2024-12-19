@@ -1,0 +1,22 @@
+default:
+  image: python:3.9.20@sha256:ef79f8314118b7cde6910d35f4166c902e7f87f47086686256556b97d991a0fb
+  tags:
+    - pangea-internal
+
+stages:
+  - build
+  - publish
+
+.setup:
+  update-pip:
+    - pip install --upgrade pip
+    - pip --version
+
+  update-poetry:
+    - pip install --upgrade poetry
+    - poetry --version
+
+include:
+  - /pangea_multipass_lib/pangea-multipass/.ci.yml
+  - /pangea_multipass_lib/pangea-multipass-langchain/.ci.yml
+  - /pangea_multipass_lib/pangea-multipass-llama-index/.ci.yml

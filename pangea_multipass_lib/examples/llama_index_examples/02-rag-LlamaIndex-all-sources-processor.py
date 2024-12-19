@@ -1,19 +1,20 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from llama_index.readers.google import GoogleDriveReader
-from llama_index.readers.confluence import ConfluenceReader
-from llama_index.readers.jira import JiraReader
-from llama_index.llms.bedrock import Bedrock
-from llama_index.embeddings.bedrock import BedrockEmbedding
-from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage
-from llama_index.core import Settings, Document
 import os
-from google.oauth2.credentials import Credentials
-from typing import List
 import warnings
+from typing import List
 
-from pangea_multipass import GDriveME, GDriveAPI, JiraME, ConfluenceME, JiraAuth, ConfluenceAuth, enrich_metadata
+from google.oauth2.credentials import Credentials
+from llama_index.core import (Document, Settings, StorageContext,
+                              VectorStoreIndex, load_index_from_storage)
+from llama_index.embeddings.bedrock import BedrockEmbedding
+from llama_index.llms.bedrock import Bedrock
+from llama_index.readers.confluence import ConfluenceReader
+from llama_index.readers.google import GoogleDriveReader
+from llama_index.readers.jira import JiraReader
+from pangea_multipass import (ConfluenceAuth, ConfluenceME, GDriveAPI,
+                              GDriveME, JiraAuth, JiraME, enrich_metadata)
 from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
 
 # Suppress specific warning
@@ -179,12 +180,10 @@ else:
 
 # Inference
 
-from pangea_multipass_llama_index import (
-    LlamaIndexGDriveProcessor,
-    LlamaIndexConfluenceProcessor,
-    LlamaIndexJiraProcessor,
-    NodePostprocessorMixer,
-)
+from pangea_multipass_llama_index import (LlamaIndexConfluenceProcessor,
+                                          LlamaIndexGDriveProcessor,
+                                          LlamaIndexJiraProcessor,
+                                          NodePostprocessorMixer)
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../../credentials.json")

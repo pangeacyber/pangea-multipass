@@ -2,23 +2,20 @@
 # Author: Pangea Cyber Corporation
 
 from typing import Any, List, Optional
-from llama_index.core import Document as LIDocument
-from llama_index.core.schema import NodeWithScore, QueryBundle
-from llama_index.core.vector_stores import MetadataFilter, MetadataFilters, FilterOperator, FilterCondition
-from llama_index.core.postprocessor.types import BaseNodePostprocessor
-from llama_index.core.bridge.pydantic import Field
-from pangea_multipass import (
-    JiraAuth,
-    JiraProcessor,
-    ConfluenceAuth,
-    ConfluenceProcessor,
-    GDriveProcessor,
-    PangeaNodeProcessorMixer,
-    DocumentReader,
-    PangeaGenericNodeProcessor,
-)
-from pangea_multipass import MetadataFilter as PangeaMetadataFilter
+
 from google.oauth2.credentials import Credentials
+from llama_index.core import Document as LIDocument
+from llama_index.core.bridge.pydantic import Field
+from llama_index.core.postprocessor.types import BaseNodePostprocessor
+from llama_index.core.schema import NodeWithScore, QueryBundle
+from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
+                                            MetadataFilter, MetadataFilters)
+from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
+                              DocumentReader, GDriveProcessor, JiraAuth,
+                              JiraProcessor)
+from pangea_multipass import MetadataFilter as PangeaMetadataFilter
+from pangea_multipass import (PangeaGenericNodeProcessor,
+                              PangeaNodeProcessorMixer)
 
 
 class LIDocumentReader(DocumentReader):

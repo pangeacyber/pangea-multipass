@@ -1,16 +1,16 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from llama_index.readers.google import GoogleDriveReader
-from llama_index.llms.bedrock import Bedrock
-from llama_index.embeddings.bedrock import BedrockEmbedding
-from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage
-from llama_index.core import Settings
 import os
-from google.oauth2.credentials import Credentials
-from typing import List
 import warnings
+from typing import List
 
+from google.oauth2.credentials import Credentials
+from llama_index.core import (Settings, StorageContext, VectorStoreIndex,
+                              load_index_from_storage)
+from llama_index.embeddings.bedrock import BedrockEmbedding
+from llama_index.llms.bedrock import Bedrock
+from llama_index.readers.google import GoogleDriveReader
 from pangea_multipass import GDriveME, enrich_metadata
 from pangea_multipass_llama_index import LIDocumentReader
 
@@ -101,8 +101,9 @@ else:
 
 # Inference
 
-from pangea_multipass_llama_index import LlamaIndexGDriveProcessor, NodePostprocessorMixer
 from pangea_multipass import GDriveAPI
+from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
+                                          NodePostprocessorMixer)
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../../credentials.json")

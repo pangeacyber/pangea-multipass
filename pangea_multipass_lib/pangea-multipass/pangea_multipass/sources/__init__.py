@@ -2,5 +2,5 @@
 # Author: Pangea Cyber Corporation
 
 from .confluence import *
-from .jira import *
 from .gdrive import *
+from .jira import *
