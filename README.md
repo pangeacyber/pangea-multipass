@@ -34,6 +34,29 @@ cd pangea-multipass
 poetry install
 ```
 
+There are full runnable demos in the `pangea_multipass_lib\examples` directory but here are the key aspects.
+
+Using a set of Google Drive credentials - follow the steps in the examples - you initialize the data source:
+
+```python
+    gdrive_reader = GoogleDriveReader(
+        folder_id=rbac_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
+    )
+    documents = gdrive_reader.load_data(folder_id=rbac_fid)
+```
+
+This gives you a list of files which you can then use the processors to filter into the authorized and unauthorized resource lists:
+
+```python
+gdrive_processor = LlamaIndexGDriveProcessor(creds)
+node_processor = NodePostprocessorMixer([gdrive_processor])
+
+authorized_docs = node_processor.postprocess_nodes(documents)
+unauthorized_docs = node_processor.get_unauthorized_nodes()
+```
+
+In general, the authorized list will be more important but you may log or notify an admin if a user is attempting to access a folder where they have limited access. It could be an attempt at data theft or their permissions are incomplete.
+
 ## Roadmap
 
 At release, this library supports Google Workspace, Confluence, and Jira. For adding systems, our top priorities are:
