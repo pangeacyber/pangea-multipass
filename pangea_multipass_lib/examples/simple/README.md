@@ -10,7 +10,7 @@ To get started, you’ll need two Google accounts. We’ll call one the Admin ac
 
 Within the Admin account, you'll need to create a Google Cloud project with both the Google Drive and Google Sheets APIs enabled.
 
-If your organizational Google account does not allow setting up a Google Cloud project this way, you can use a personal Google account instead. Within your project, enable both the Google Drive API  and the Google Sheets API and create a service account. Save the resulting json credentials file for later.
+If your organizational Google account does not allow setting up a Google Cloud project this way, you can use a personal Google account instead. Within your project, enable both the Google Drive API  and the Google Sheets API and create a service account. Save the resulting json credentials file in the `pangea_multipass_lib` directory as `credentials.json`.
 
 Using the Admin account, create a folder in Google Drive, add some files, and grant access to some of them to the User account. Note the folder id from the url for later.
 
