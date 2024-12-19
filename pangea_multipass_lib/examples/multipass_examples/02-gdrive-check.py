@@ -3,10 +3,10 @@
 
 from llama_index.readers.google import GoogleDriveReader
 import os
-import sys
 from google.oauth2.credentials import Credentials
 from typing import List
 import warnings
+import sys
 
 from pangea_multipass import GDriveME, enrich_metadata, PangeaMetadataKeys, GDriveAPI
 from pangea_multipass_llama_index import LIDocumentReader
@@ -18,19 +18,22 @@ if len(sys.argv) != 2:
     print(f"usage: {sys.argv[0]} <gdrive_folder_id>")
     exit(1)
 
+
 SCOPES = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
-    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/drive.metadata.readonly",
+    "https://www.googleapis.com/auth/drive.readonly"
 ]
 
 # Sample folder data folder owned by apurv@gondwana.cloud https://drive.google.com/drive/u/1/folders/1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR
+
 # gdrive_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
 gdrive_fid = sys.argv[1]
 
 def google_drive_read_docs() -> List:
-    print("Loading Google Drive docs...")
+    print(f"Loading Google Drive docs. Folder ID: {gdrive_fid}.")
     # Google Drive Data Ingestion
     credentials_filepath = os.path.abspath("../../credentials.json")
 
@@ -68,7 +71,6 @@ from pangea_multipass import GDriveAPI
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../../credentials.json")
-
 print("Sign in with the end user account:")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 user_info = GDriveAPI.get_user_info(creds)
