@@ -21,7 +21,7 @@ SCOPES = [
 ]
 
 # Sample folder data folder owned by apurv@gondwana.cloud https://drive.google.com/drive/u/1/folders/1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR
-rbac_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
+gdrive_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
 
 def google_drive_read_docs() -> List:
     print("Loading Google Drive docs...")
@@ -36,9 +36,9 @@ def google_drive_read_docs() -> List:
 
     # load the documents and create the index
     gdrive_reader = GoogleDriveReader(
-        folder_id=rbac_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
+        folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
-    documents = gdrive_reader.load_data(folder_id=rbac_fid)
+    documents = gdrive_reader.load_data(folder_id=gdrive_fid)
 
     print(f"Processing {len(documents)} docs...")
 
@@ -72,19 +72,19 @@ authorized_docs = node_processor.postprocess_nodes(documents)
 unauthorized_docs = node_processor.get_unauthorized_nodes()
 
 if len(authorized_docs):
-    print(f"User: '{user}' has access to the next files in folder '{rbac_fid}'")
+    print(f"User: '{user}' has access to the next files in folder '{gdrive_fid}'")
     for docs in authorized_docs:
         file_id = docs.metadata.get(PangeaMetadataKeys.GDRIVE_FILE_ID, "")
         name = docs.metadata.get(PangeaMetadataKeys.FILE_NAME, "")
         print(f"id: {file_id:44} filename: {name}.")
 else:
-    print(f"User '{user}' has NO access to any file in folder '{rbac_fid}'")
+    print(f"User '{user}' has NO access to any file in folder '{gdrive_fid}'")
 
 if len(unauthorized_docs):
-    print(f"\nUser '{user}' has NO access to the next files in folder '{rbac_fid}'")
+    print(f"\nUser '{user}' has NO access to the next files in folder '{gdrive_fid}'")
     for docs in unauthorized_docs:
         file_id = docs.metadata.get(PangeaMetadataKeys.GDRIVE_FILE_ID, "")
         name = docs.metadata.get(PangeaMetadataKeys.FILE_NAME, "")
         print(f"id: {file_id:44} filename: {name}.")
 else:
-    print(f"\nUser '{user}' has access to all the files in folder '{rbac_fid}'")
+    print(f"\nUser '{user}' has access to all the files in folder '{gdrive_fid}'")
