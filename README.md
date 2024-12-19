@@ -34,7 +34,7 @@ cd pangea-multipass
 poetry install
 ```
 
-There are full runnable demos in the `packages\examples` directory but here are the key aspects.
+There are full runnable demos in the `pangea_multipass_lib\examples` directory but here are the key aspects.
 
 Using a set of Google Drive credentials - follow the steps in the examples - you initialize the data source:
 

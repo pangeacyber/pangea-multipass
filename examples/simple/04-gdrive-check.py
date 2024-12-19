@@ -34,7 +34,7 @@ gdrive_fid = sys.argv[1]
 def google_drive_read_docs() -> List:
     print("Loading Google Drive docs...")
     # Google Drive Data Ingestion
-    credentials_filepath = os.path.abspath("../../credentials.json")
+    credentials_filepath = os.path.abspath("../credentials.json")
 
     # File name for the admin user
     admin_token_filepath = "admin_access_token.json"

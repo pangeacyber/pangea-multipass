@@ -37,7 +37,7 @@ gdrive_fid = sys.argv[1]
 def google_drive_read_docs() -> List:
     print(f"Loading Google Drive docs. Folder ID: {gdrive_fid}.")
     # Google Drive Data Ingestion
-    credentials_filepath = os.path.abspath("../../credentials.json")
+    credentials_filepath = os.path.abspath("../credentials.json")
 
     # File name for the admin user
     admin_token_filepath = "admin_access_token.json"
@@ -73,7 +73,7 @@ from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
                                           NodePostprocessorMixer)
 
 # Create GDrive filter
-credentials_filepath = os.path.abspath("../../credentials.json")
+credentials_filepath = os.path.abspath("../credentials.json")
 print("Sign in with the end user account:")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 user_info = GDriveAPI.get_user_info(creds)

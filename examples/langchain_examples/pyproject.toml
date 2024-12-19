@@ -14,7 +14,7 @@ google-auth-oauthlib = "^1.2.1"
 langchain = "0.3.0"
 langchain-community = "0.3.0"
 langchain-aws = "0.2.1"
-pangea-multipass-langchain = { path = "../../pangea-multipass-langchain", develop = true }
+pangea-multipass-langchain = { path = "../../packages/pangea-multipass-langchain", develop = true }
 google-api-python-client = "^2.151.0"
 google-auth-httplib2 = "^0.2.0"
 langchain-google-community = "^2.0.2"

@@ -55,7 +55,7 @@ Settings.chunk_overlap = 100
 def google_drive_read_docs() -> List:
     print("Loading Google Drive docs...")
     # Google Drive Data Ingestion
-    credentials_filepath = os.path.abspath("../../credentials.json")
+    credentials_filepath = os.path.abspath("../credentials.json")
 
     # Sample folder data folder owned by apurv@gondwana.cloud https://drive.google.com/drive/u/1/folders/1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR
     gdrive_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
@@ -106,7 +106,7 @@ from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
                                           NodePostprocessorMixer)
 
 # Create GDrive filter
-credentials_filepath = os.path.abspath("../../credentials.json")
+credentials_filepath = os.path.abspath("../credentials.json")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 
 gdrive_processor = LlamaIndexGDriveProcessor(creds)

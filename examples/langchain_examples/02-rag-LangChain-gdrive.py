@@ -8,15 +8,13 @@ from typing import List
 
 import boto3
 from google.oauth2.credentials import Credentials
-from langchain.document_loaders import ConfluenceLoader
 from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_google_community import GoogleDriveLoader
-from pangea_multipass import ConfluenceME, GDriveAPI, GDriveME, enrich_metadata
-from pangea_multipass_langchain import (ConfluenceAuth, DocumentFilterMixer,
-                                        LangChainConfluenceFilter,
-                                        LangChainDocumentReader, get_doc_id)
+from pangea_multipass import GDriveAPI, GDriveME, enrich_metadata
+from pangea_multipass_langchain import (DocumentFilterMixer,
+                                        LangChainDocumentReader)
 
 # Initialization
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-west-2")
@@ -49,8 +47,8 @@ class TextLoader:
 
 ## Data ingestion pipeline
 
-
-def load_gdrive_documents() -> List[Document]:
+PERSIST_DIR = "./storage/data/langchain/faiss_index"
+if not os.path.exists(PERSIST_DIR):
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ""
     # Google Drive Data Ingestion
     admin_token_filepath = "admin_access_token.json"
@@ -58,7 +56,7 @@ def load_gdrive_documents() -> List[Document]:
     loader = GoogleDriveLoader(
         folder_id="1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR",
         token_path=Path(admin_token_filepath),
-        credentials_path=Path("../../credentials.json"),
+        credentials_path=Path("../credentials.json"),
         recursive=True,
         load_extended_metadata=True,
         file_loader_cls=TextLoader,
@@ -78,46 +76,6 @@ def load_gdrive_documents() -> List[Document]:
     gdrive_me = GDriveME(creds, {})
     enrich_metadata(docs, [gdrive_me], reader=LangChainDocumentReader())
     # Finish metadata enrichement
-    return docs
-
-
-def confluence_read_docs() -> List[Document]:
-    """Fetch all documents from Confluence using ConfluenceLoader."""
-
-    token = os.getenv("CONFLUENCE_ADMIN_TOKEN")
-    assert token
-    email = os.getenv("CONFLUENCE_ADMIN_EMAIL")
-    assert email
-    url = os.getenv("CONFLUENCE_BASE_URL")
-    assert url
-
-    confluence_space_key = "~71202041f9bfec117041348629ccf3e3c751b3"
-    # confluence_space_id = 393230
-
-    # Create a ConfluenceReader instance
-    print("Loading Confluence docs...")
-    loader = ConfluenceLoader(
-        url=url,
-        username=email,
-        api_key=token,
-        space_key=confluence_space_key,
-    )
-    documents = loader.load()
-
-    # Enrich metadata process
-    print(f"Processing {len(documents)} Confluence docs...")
-    confluence_me = ConfluenceME()
-    enrich_metadata(documents, [confluence_me], reader=LangChainDocumentReader())
-
-    return documents
-
-
-PERSIST_DIR = "./storage/data/langchain/faiss_index"
-if not os.path.exists(PERSIST_DIR):
-    # gdrive_docs = load_gdrive_documents()
-    confluence_docs = confluence_read_docs()
-    docs = confluence_docs
-    # docs = gdrive_docs + jira_docs
 
     # Initialize the vector store https://faiss.ai
     vectorstore = FAISS.from_documents(documents=docs, embedding=embedding_model)
@@ -137,7 +95,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from pangea_multipass_langchain import LangChainGDriveFilter
 
 # Create GDrive filter
-credentials_filepath = os.path.abspath("../../credentials.json")
+credentials_filepath = os.path.abspath("../credentials.json")
 SCOPES = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.email",
@@ -146,20 +104,7 @@ SCOPES = [
 ]
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 gdrive_filter = LangChainGDriveFilter(creds)
-
-# Create Confluence filter
-confluence_user_token = os.getenv("CONFLUENCE_USER_TOKEN")
-assert confluence_user_token
-confluence_user_email = os.getenv("CONFLUENCE_USER_EMAIL")
-assert confluence_user_email
-confluence_url = os.getenv("CONFLUENCE_BASE_URL")
-assert confluence_url
-confluence_filter = LangChainConfluenceFilter(
-    ConfluenceAuth(confluence_user_email, confluence_user_token, confluence_url),
-)
-
-# Create mixed filter
-filter_mixer = DocumentFilterMixer(document_filters=[gdrive_filter, confluence_filter])
+filter_mixer = DocumentFilterMixer(document_filters=[gdrive_filter])
 
 # Use indexed store as a reteriver to create qa chain
 retriever = vectorstore.as_retriever()
@@ -192,6 +137,6 @@ while True:
     print(f"\n{response}")
     print("\n=================")
     print(
-        f"Warning: This answer could be inaccurate as it's missing context from {count} out of {len(similar_docs)} data sources. Included {len(filtered_docs)} sources."
+        f"Warning: This answer could be inaccurate as its missing context from {count} out of {len(similar_docs)} data sources. Include {len(filtered_docs)} sources."
     )
     print("=================\n")

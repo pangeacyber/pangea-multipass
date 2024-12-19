@@ -10,7 +10,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
 pangea-sdk = "^5.1.0"
-pangea-multipass = { path = "../../pangea-multipass", develop = true }
+pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

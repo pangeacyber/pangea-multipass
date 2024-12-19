@@ -13,7 +13,7 @@ pangea-sdk = "^5.1.0"
 google-auth-oauthlib = "^1.2.1"
 llama-index = "0.11.11"
 llama-index-readers-google = "^0.4.1"
-pangea-multipass-llama-index = { path = "../../pangea-multipass-llama-index", develop = true }
+pangea-multipass-llama-index = { path = "../../packages/pangea-multipass-llama-index", develop = true }
 openpyxl = "^3.1.5"
 
 [build-system]

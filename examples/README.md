@@ -21,7 +21,7 @@ poetry install
 
 In order to use Google Drive as a source in the examples you need to:
 
-- Download the `credentials.json` file from Google console and save it in `<repo-root-directory>/packages/` folder.
+- Download the `credentials.json` file from Google console and save it in `<repo-root-directory>/examples/` folder.
 - On the example script update `gdrive_fid` variable value with the Google Drive folder ID to process.
 
 

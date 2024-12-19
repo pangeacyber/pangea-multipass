@@ -17,7 +17,7 @@ llama-index-embeddings-bedrock = "0.3.1"
 llama-index-readers-google = "^0.4.1"
 llama-index-readers-confluence = "^0.2.1"
 llama-index-readers-jira = "^0.3.1"
-pangea-multipass-llama-index = { path = "../../pangea-multipass-llama-index", develop = true }
+pangea-multipass-llama-index = { path = "../../packages/pangea-multipass-llama-index", develop = true }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
