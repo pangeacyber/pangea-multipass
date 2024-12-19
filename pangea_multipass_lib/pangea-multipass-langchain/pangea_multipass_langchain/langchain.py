@@ -14,6 +14,8 @@ from pangea_multipass import (
     FilterOperator,
     DocumentReader,
     PangeaGenericNodeProcessor,
+    MultipassDocument,
+    GithubProcessor
 )
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
 
@@ -32,6 +34,15 @@ def get_doc_id(doc: Document) -> str:
 def get_doc_metadata(doc: Document) -> dict[str, Any]:
     return doc.metadata
 
+
+def from_multipass(documents: List[MultipassDocument]) -> List[Document]:
+    lc_documents: List[Document] = []
+    for doc in documents:
+        lc_doc = Document(id=doc.id, page_content=doc.content)
+        lc_doc.metadata=doc.metadata
+        lc_documents.append(lc_doc)
+
+    return lc_documents
 
 class LangChainJiraFilter(JiraProcessor[Document]):
     """Filter for Jira integration with LangChain documents.
@@ -70,6 +81,19 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
 
     def __init__(self, creds: Credentials):
         super().__init__(creds, get_node_metadata=get_doc_metadata)
+
+
+class LangChainGithubFilter(GithubProcessor[Document]):
+    """Filter for Github integration with LangChain documents.
+
+    Uses Github classic token to access documents in the LangChain.
+
+    Args:
+        token (str): Github classic token.
+    """
+
+    def __init__(self, token: str):
+        super().__init__(token, get_node_metadata=get_doc_metadata)
 
 
 class DocumentFilterMixer:

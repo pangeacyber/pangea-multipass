@@ -37,16 +37,40 @@ class FilterOperator(str, enum.Enum):
 class PangeaMetadataKeys(str, enum.Enum):
     DATA_SOURCE = f"{_PANGEA_METADATA_KEY_PREFIX}data_source"
     FILE_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}file_name"
+    FILE_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}file_path"
     CONFLUENCE_PAGE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}confluence_page_id"
     JIRA_ISSUE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}jira_issue_id"
     GDRIVE_FILE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}gdrive_file_id"
     NODE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}node_id"
+    GITHUB_REPOSITORY_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}repository_name"
+    GITHUB_REPOSITORY_OWNER = f"{_PANGEA_METADATA_KEY_PREFIX}repository_owner"
+    GITHUB_REPOSITORY_OWNER_AND_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}repository_owner_and_name"
 
 
 class PangeaMetadataValues(str, enum.Enum):
     DATA_SOURCE_CONFLUENCE = "confluence"
     DATA_SOURCE_GDRIVE = "gdrive"
     DATA_SOURCE_JIRA = "jira"
+    DATA_SOURCE_GITHUB = "github"
+
+
+@dataclasses.dataclass
+class MultipassDocument:
+    id: str
+    content: str
+    metadata: dict[str, Any]
+
+
+def get_document_metadata(doc: MultipassDocument) -> dict[str, Any]:
+    """Fetches metadata from a multipass document.
+
+    Args:
+        doc (MultipassDocument): The doc from which metadata is retrieved.
+
+    Returns:
+        dict[str, Any]: A dictionary containing node metadata.
+    """
+    return doc.metadata
 
 
 @dataclasses.dataclass
