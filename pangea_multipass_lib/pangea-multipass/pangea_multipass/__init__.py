@@ -13,4 +13,9 @@ from .core import (
     PangeaGenericNodeProcessor,
     MetadataFilter,
     PangeaMetadataKeys,
+    MultipassDocument,
+    generate_id,
+    PangeaMetadataValues,
+    get_document_metadata,
 )
+from .github_reader import GithubReader
