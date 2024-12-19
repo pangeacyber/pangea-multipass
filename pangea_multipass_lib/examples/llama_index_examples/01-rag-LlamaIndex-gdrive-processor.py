@@ -58,7 +58,7 @@ def google_drive_read_docs() -> List:
     credentials_filepath = os.path.abspath("../../credentials.json")
 
     # Sample folder data folder owned by apurv@gondwana.cloud https://drive.google.com/drive/u/1/folders/1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR
-    rbac_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
+    gdrive_fid = "1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR"
 
     # File name for the admin user
     admin_token_filepath = "admin_access_token.json"
@@ -68,9 +68,9 @@ def google_drive_read_docs() -> List:
 
     # load the documents and create the index
     gdrive_reader = GoogleDriveReader(
-        folder_id=rbac_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
+        folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
-    documents = gdrive_reader.load_data(folder_id=rbac_fid)
+    documents = gdrive_reader.load_data(folder_id=gdrive_fid)
 
     print(f"Processing {len(documents)} docs...")
 
