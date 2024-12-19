@@ -8,7 +8,7 @@ We originally built this to support our customers' Retrieval-Augmented Generatio
 
 While this is useful in AI/LLM apps, we've abstracted this to work independently so you can use it in any app.
 
-Check out the `pangea_multipass_lib/examples` folder for AI-specific and generic examples.  
+Check out the `/examples` folder for AI-specific and generic examples.  
 
 ## Features
 
@@ -34,7 +34,7 @@ cd pangea-multipass
 poetry install
 ```
 
-There are full runnable demos in the `pangea_multipass_lib\examples` directory but here are the key aspects.
+There are full runnable demos in the `packages\examples` directory but here are the key aspects.
 
 Using a set of Google Drive credentials - follow the steps in the examples - you initialize the data source:
 

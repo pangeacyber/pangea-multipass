@@ -21,7 +21,7 @@ poetry install
 
 In order to use Google Drive as a source in the examples you need to:
 
-- Download the `credentials.json` file from Google console and save it in `<repo-root-directory>/pangea_multipass_lib/` folder.
+- Download the `credentials.json` file from Google console and save it in `<repo-root-directory>/packages/` folder.
 - On the example script update `gdrive_fid` variable value with the Google Drive folder ID to process.
 
 
@@ -49,7 +49,7 @@ In order to use Confluence as a source it's needed to set some environment varia
 
 ### Simple example
 
-It's possible to run some examples without connecting any LLM. On the `pangea_multipass_lib/examples` folder you can find:
+It's possible to run some examples without connecting any LLM. On the `packages/examples` folder you can find:
 - `llama_index_examples/04-gdrive-check.py`
 
 To run one of this examples make sure to [set up the environment](#set-up-the-environment), then move to the example folder and run:

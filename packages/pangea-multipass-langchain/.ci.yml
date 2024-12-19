@@ -4,7 +4,7 @@
     - !reference [.setup, update-pip]
     - !reference [.setup, update-poetry]
 
-    - cd pangea_multipass_lib/pangea-multipass-langchain
+    - cd packages/pangea-multipass-langchain
     - poetry check --lock
     - poetry install
   rules:
@@ -16,7 +16,7 @@ build:
   script:
     - poetry build
   artifacts:
-    paths: ["pangea_multipass_lib/pangea-multipass-langchain/dist"]
+    paths: ["packages/pangea-multipass-langchain/dist"]
     when: on_success
 
 publish:

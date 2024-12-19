@@ -17,6 +17,6 @@ stages:
     - poetry --version
 
 include:
-  - /pangea_multipass_lib/pangea-multipass/.ci.yml
-  - /pangea_multipass_lib/pangea-multipass-langchain/.ci.yml
-  - /pangea_multipass_lib/pangea-multipass-llama-index/.ci.yml
+  - /packages/pangea-multipass/.ci.yml
+  - /packages/pangea-multipass-langchain/.ci.yml
+  - /packages/pangea-multipass-llama-index/.ci.yml
