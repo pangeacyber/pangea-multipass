@@ -40,9 +40,9 @@ Using a set of Google Drive credentials - follow the steps in the examples - you
 
 ```python
     gdrive_reader = GoogleDriveReader(
-        folder_id=rbac_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
+        folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
-    documents = gdrive_reader.load_data(folder_id=rbac_fid)
+    documents = gdrive_reader.load_data(folder_id=gdrive_fid)
 ```
 
 This gives you a list of files which you can then use the processors to filter into the authorized and unauthorized resource lists:
