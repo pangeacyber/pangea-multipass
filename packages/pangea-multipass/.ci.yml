@@ -22,7 +22,7 @@ build-multipass:
 publish-multipass:
   extends: .base
   stage: publish
-  needs: [build]
+  needs: [build-multipass]
   script:
     - bash ../../dev/validate_tag.sh $CI_COMMIT_TAG
     - poetry publish --username __token__ --password $PYPI_SDK_TOKEN
