@@ -1,4 +1,4 @@
-.base:
+.base-langchain:
   image: python:3.10
   before_script:
     - !reference [.setup, update-pip]
@@ -11,7 +11,7 @@
     - if: $CI_PIPELINE_SOURCE == "push"
 
 build-langchain:
-  extends: .base
+  extends: .base-langchain
   stage: build
   script:
     - poetry build
@@ -20,7 +20,7 @@ build-langchain:
     when: on_success
 
 publish-langchain:
-  extends: .base
+  extends: .base-langchain
   stage: publish
   needs: [build-langchain]
   script:
