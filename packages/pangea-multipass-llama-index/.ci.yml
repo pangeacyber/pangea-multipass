@@ -10,7 +10,7 @@
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
-build:
+build-llama-index:
   extends: .base
   stage: build
   script:
@@ -19,7 +19,7 @@ build:
     paths: ["packages/pangea-multipass-llama-index/dist"]
     when: on_success
 
-publish:
+publish-llama-index:
   extends: .base
   stage: publish
   needs: [build]

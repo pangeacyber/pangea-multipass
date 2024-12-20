@@ -10,7 +10,7 @@
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
-build:
+build-multipass:
   extends: .base
   stage: build
   script:
@@ -19,7 +19,7 @@ build:
     paths: ["packages/pangea-multipass/dist"]
     when: on_success
 
-publish:
+publish-multipass:
   extends: .base
   stage: publish
   needs: [build]
