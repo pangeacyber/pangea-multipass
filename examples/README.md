@@ -56,7 +56,7 @@ In order to use Github as a source it's needed to set some environment variables
 
 ### Simple example
 
-It's possible to run some examples without connecting any LLM. On the `pangea_multipass_lib/examples` folder you can find:
+It's possible to run some examples without connecting any LLM. On the `examples` folder you can find:
 - `llama_index_examples/04-gdrive-check.py` 
 - `llama_index_examples/05-github-check.py` 
 - `multipass_examples/01-github-check.py`
