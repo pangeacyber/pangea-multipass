@@ -1,0 +1,5 @@
+.env
+.env_*
+storage/
+.mypy_cache/
+*.json

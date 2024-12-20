@@ -8,7 +8,7 @@ We originally built this to support our customers' Retrieval-Augmented Generatio
 
 While this is useful in AI/LLM apps, we've abstracted this to work independently so you can use it in any app.
 
-Check out the `pangea_multipass_lib/examples` folder for AI-specific and generic examples.  
+Check out the `/examples` folder for AI-specific and generic examples.  
 
 ## Features
 
