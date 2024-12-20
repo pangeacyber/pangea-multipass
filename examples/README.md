@@ -49,7 +49,7 @@ In order to use Confluence as a source it's needed to set some environment varia
 
 ### Simple example
 
-It's possible to run some examples without connecting any LLM. On the `packages/examples` folder you can find:
+It's possible to run some examples without connecting any LLM. On the `/examples` folder you can find:
 - `llama_index_examples/04-gdrive-check.py`
 
 To run one of this examples make sure to [set up the environment](#set-up-the-environment), then move to the example folder and run:
