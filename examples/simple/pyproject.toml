@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "simple_examples"
+version = "0.1.0"
+description = "Pangea Multipass authorization library with simple examples"
+authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+pangea-sdk = "^5.1.0"
+google-auth-oauthlib = "^1.2.1"
+llama-index = "0.11.11"
+llama-index-readers-google = "^0.4.1"
+pangea-multipass-llama-index = { path = "../../packages/pangea-multipass-llama-index", develop = true }
+openpyxl = "^3.1.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
