@@ -188,17 +188,17 @@ tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
 
 [[package]]
 name = "boto3"
-version = "1.35.84"
+version = "1.35.86"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "boto3-1.35.84-py3-none-any.whl", hash = "sha256:c94fc8023caf952f8740a48fc400521bba167f883cfa547d985c05fda7223f7a"},
-    {file = "boto3-1.35.84.tar.gz", hash = "sha256:9f9bf72d92f7fdd546b974ffa45fa6715b9af7f5c00463e9d0f6ef9c95efe0c2"},
+    {file = "boto3-1.35.86-py3-none-any.whl", hash = "sha256:ed59fb4883da167464a5dfbc96e76d571db75e1a7a27d8e7b790c3008b02fcc7"},
+    {file = "boto3-1.35.86.tar.gz", hash = "sha256:d61476fdd5a5388503b72c897083310d2329ce088593c4332b571a860be5d155"},
 ]
 
 [package.dependencies]
-botocore = ">=1.35.84,<1.36.0"
+botocore = ">=1.35.86,<1.36.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.10.0,<0.11.0"
 
@@ -207,13 +207,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.35.84"
+version = "1.35.86"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore-1.35.84-py3-none-any.whl", hash = "sha256:b4dc2ac7f54ba959429e1debbd6c7c2fb2349baa1cd63803f0682f0773dbd077"},
-    {file = "botocore-1.35.84.tar.gz", hash = "sha256:f86754882e04683e2e99a6a23377d0dd7f1fc2b2242844b2381dbe4dcd639301"},
+    {file = "botocore-1.35.86-py3-none-any.whl", hash = "sha256:77cb4b445e4f424f956c68c688bd3ad527f4d214d51d67ffc8e245f4476d7de0"},
+    {file = "botocore-1.35.86.tar.gz", hash = "sha256:951e944eb30284b4593d4da98f70f7b5292ea237e4de0c5a2852946a549b8347"},
 ]
 
 [package.dependencies]
@@ -1083,13 +1083,13 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
 name = "langchain-core"
-version = "0.3.27"
+version = "0.3.28"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "langchain_core-0.3.27-py3-none-any.whl", hash = "sha256:5db42cd73f4f2d5d2550403a4c8b7dec2cd56f1501fe207d009b5b9632a5ca02"},
-    {file = "langchain_core-0.3.27.tar.gz", hash = "sha256:3d71835c4c630db03a19757565046029e89ee96a4b06788892599d49bb3fc58a"},
+    {file = "langchain_core-0.3.28-py3-none-any.whl", hash = "sha256:a02f81ca53a8eed757133797e5a602ca80c1324bbecb0c5d86ef7bd3d6625372"},
+    {file = "langchain_core-0.3.28.tar.gz", hash = "sha256:407f7607e6b3c0ebfd6094da95d39b701e22e59966698ef126799782953e7f2c"},
 ]
 
 [package.dependencies]
@@ -1451,21 +1451,19 @@ name = "pangea-multipass"
 version = "0.1.0"
 description = "Pangea Multipass authorization library"
 optional = false
-python-versions = ">=3.10,<3.13"
-files = []
-develop = true
+python-versions = "<3.13,>=3.10"
+files = [
+    {file = "pangea_multipass-0.1.0-py3-none-any.whl", hash = "sha256:0158a6e9aa1c88e750261294475f94a79e61cb5a263747e4ee92a051c1253723"},
+    {file = "pangea_multipass-0.1.0.tar.gz", hash = "sha256:b1e29907e1a95306b900098d4410bddc46e5ca96218a81c87cef3bebbca3756e"},
+]
 
 [package.dependencies]
-google-api-python-client = "^2.149.0"
-google-auth = "^2.35.0"
-google-auth-httplib2 = "^0.2.0"
-google-auth-oauthlib = "^1.2.1"
-openpyxl = "^3.1.5"
-pangea-sdk = "^5.1.0"
-
-[package.source]
-type = "directory"
-url = "../pangea-multipass"
+google-api-python-client = ">=2.149.0,<3.0.0"
+google-auth = ">=2.35.0,<3.0.0"
+google-auth-httplib2 = ">=0.2.0,<0.3.0"
+google-auth-oauthlib = ">=1.2.1,<2.0.0"
+openpyxl = ">=3.1.5,<4.0.0"
+pangea-sdk = ">=5.1.0,<6.0.0"
 
 [[package]]
 name = "pangea-sdk"
@@ -2352,4 +2350,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "65309a320ad442b4a7de0167748fff321d771023586f23c22364d3a0c4a45c8b"
+content-hash = "831249802d484c4774cea77b05ec04b20246581a0e67550cf15540afca29c463"
