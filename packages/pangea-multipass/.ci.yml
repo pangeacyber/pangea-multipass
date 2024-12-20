@@ -1,4 +1,4 @@
-.base:
+.base-multipass:
   image: python:3.10
   before_script:
     - !reference [.setup, update-pip]
@@ -11,7 +11,7 @@
     - if: $CI_PIPELINE_SOURCE == "push"
 
 build-multipass:
-  extends: .base
+  extends: .base-multipass
   stage: build
   script:
     - poetry build
@@ -20,7 +20,7 @@ build-multipass:
     when: on_success
 
 publish-multipass:
-  extends: .base
+  extends: .base-multipass
   stage: publish
   needs: [build-multipass]
   script:

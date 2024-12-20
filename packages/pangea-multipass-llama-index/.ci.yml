@@ -1,4 +1,4 @@
-.base:
+.base-llama-index:
   image: python:3.10
   before_script:
     - !reference [.setup, update-pip]
@@ -11,7 +11,7 @@
     - if: $CI_PIPELINE_SOURCE == "push"
 
 build-llama-index:
-  extends: .base
+  extends: .base-llama-index
   stage: build
   script:
     - poetry build
@@ -20,7 +20,7 @@ build-llama-index:
     when: on_success
 
 publish-llama-index:
-  extends: .base
+  extends: .base-llama-index
   stage: publish
   needs: [build-llama-index]
   script:
