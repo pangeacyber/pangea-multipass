@@ -1,4 +1,4 @@
-.base:
+.base-langchain:
   image: python:3.10
   before_script:
     - !reference [.setup, update-pip]
@@ -10,8 +10,8 @@
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
-build:
-  extends: .base
+build-langchain:
+  extends: .base-langchain
   stage: build
   script:
     - poetry build
@@ -19,10 +19,10 @@ build:
     paths: ["packages/pangea-multipass-langchain/dist"]
     when: on_success
 
-publish:
-  extends: .base
+publish-langchain:
+  extends: .base-langchain
   stage: publish
-  needs: [build]
+  needs: [build-langchain]
   script:
     - bash ../../dev/validate_tag.sh $CI_COMMIT_TAG
     - poetry publish --username __token__ --password $PYPI_SDK_TOKEN
