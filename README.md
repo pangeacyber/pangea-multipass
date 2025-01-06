@@ -2,7 +2,7 @@
 
 Pangea Multipass is a Python library for checking user access to upstream data sources.
 
-In practice, you can use it to check if a specific user has access to a file in a Google Drive, a ticket in Jira, or a page in Confluence. In concept, we've built this library to be extensible to eventually support Slack channels, Github repositories, Salesforce opportunities, and more. 
+In practice, you can use it to check if a specific user has access to a file in a Google Drive, a ticket in Jira, or a page in Confluence. In concept, we've built this library to be extensible to eventually support Box and Dropbox files, Salesforce opportunities, and more. 
 
 We originally built this to support our customers' Retrieval-Augmented Generation (RAG) applications to mitigate data leaks. In a RAG architecture, the application inserts additional context at inference time. If you don't check the user's authorization to that context, you could inadvertently leak sensitive information. 
 
@@ -61,16 +61,14 @@ In general, the authorized list will be more important but you may log or notify
 
 At release, this library supports Google Workspace, Confluence, and Jira. For adding systems, our top priorities are:
 
-- Slack
-- Github
-- Salesforce
 - Box
+- Dropbox
+- Office 365
 
 Others we plan to support or are looking for contributions are:
 
-- Office 365
 - Zoom
-- Dropbox
+- Salesforce
 - Gitlab
 - Zendesk
 - Notion
