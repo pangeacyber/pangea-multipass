@@ -1,21 +1,13 @@
 # Trying Pangea Multipass
 
-Pangea Multipass is a general purpose library for checking a user's access to resources in an upstream system. While we (Pangea) originally built this for our AI/LLM apps, you can use this library independently. To see that in action, check out the `simple` folder, otherwise explore your framework of choice.
-
+Pangea Multipass is a general purpose library for checking a user's access to resources in an upstream system. While we (Pangea) originally built this for our AI/LLM apps, you can use this library independently. To see that in action, check out the `multipass_examples` folder, otherwise explore your LLM framework of choice.
 
 Each directory has its own README to get setup though many of the steps overlap.
 
-Using these examples
-
-## Set up the code
-
-In each of the directories, you can run the installer. We recommend using a virtual environment:
-
-```
-poetry install
-```
-
 ## Set up the environment
+
+These are the upstream data sources the core library currently supports. Configure the ones you need and store the credentials for the examples. Most of these will require administrator access to get the credentials.
+
 
 ### Google Drive
 
@@ -45,25 +37,8 @@ In order to use Confluence as a source it's needed to set some environment varia
 - `CONFLUENCE_USER_TOKEN`: Access token of the user email set above. [Learn more](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
 
 
-## Using the Code
+### Github
 
-### Simple example
-
-It's possible to run some examples without connecting any LLM. On the `/examples` folder you can find:
-- `llama_index_examples/04-gdrive-check.py`
-
-To run one of this examples make sure to [set up the environment](#set-up-the-environment), then move to the example folder and run:
-```bash
-poetry run python 04-gdrive-check.py 
-```
-
-
-## LangChain Example
-
-- todo: connect to bedrock
-- todo: run the code
-
-## Llama Index Example
-
-- todo: connect to bedrock
-- todo: run the code
+In order to use Github as a source it's needed to set some environment variables:
+- `GITHUB_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the repositories this token has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). This could be a `Fine-grained personal access token` with access to all the respositories owned by the admin account and `repository permission` to `read access to code and metadata`.
+- `GITHUB_USER_TOKEN`: Token user in inference time. It will be used to validate which files returned by the LLM the user has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic). This must be a `classic personal access token` with scoped access to (at least) all the `repo` items.

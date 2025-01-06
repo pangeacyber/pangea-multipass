@@ -7,9 +7,9 @@ from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
 from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
                               DocumentReader, FilterOperator, GDriveProcessor,
-                              JiraAuth, JiraProcessor)
+                              GithubProcessor, JiraAuth, JiraProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (PangeaGenericNodeProcessor,
+from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
                               PangeaNodeProcessorMixer)
 
 
@@ -26,6 +26,16 @@ def get_doc_id(doc: Document) -> str:
 
 def get_doc_metadata(doc: Document) -> dict[str, Any]:
     return doc.metadata
+
+
+def from_multipass(documents: List[MultipassDocument]) -> List[Document]:
+    lc_documents: List[Document] = []
+    for doc in documents:
+        lc_doc = Document(id=doc.id, page_content=doc.content)
+        lc_doc.metadata = doc.metadata
+        lc_documents.append(lc_doc)
+
+    return lc_documents
 
 
 class LangChainJiraFilter(JiraProcessor[Document]):
@@ -65,6 +75,19 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
 
     def __init__(self, creds: Credentials):
         super().__init__(creds, get_node_metadata=get_doc_metadata)
+
+
+class LangChainGithubFilter(GithubProcessor[Document]):
+    """Filter for Github integration with LangChain documents.
+
+    Uses Github classic token to access documents in the LangChain.
+
+    Args:
+        token (str): Github classic token.
+    """
+
+    def __init__(self, token: str):
+        super().__init__(token, get_node_metadata=get_doc_metadata)
 
 
 class DocumentFilterMixer:

@@ -2,7 +2,9 @@
 # Author: Pangea Cyber Corporation
 
 from .core import (Constant, DocumentReader, FilterOperator, HasherSHA256,
-                   MetadataFilter, PangeaGenericNodeProcessor,
-                   PangeaMetadataKeys, PangeaNodeProcessorMixer,
-                   enrich_metadata)
+                   MetadataFilter, MultipassDocument,
+                   PangeaGenericNodeProcessor, PangeaMetadataKeys,
+                   PangeaMetadataValues, PangeaNodeProcessorMixer,
+                   enrich_metadata, generate_id, get_document_metadata)
+from .github_reader import GithubReader
 from .sources import *

@@ -3,4 +3,5 @@
 
 from .confluence import *
 from .gdrive import *
+from .github import *
 from .jira import *

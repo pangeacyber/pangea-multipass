@@ -11,10 +11,10 @@ from llama_index.core.schema import NodeWithScore, QueryBundle
 from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
                                             MetadataFilter, MetadataFilters)
 from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
-                              DocumentReader, GDriveProcessor, JiraAuth,
-                              JiraProcessor)
+                              DocumentReader, GDriveProcessor, GithubProcessor,
+                              JiraAuth, JiraProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (PangeaGenericNodeProcessor,
+from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
                               PangeaNodeProcessorMixer)
 
 
@@ -64,6 +64,16 @@ def get_node_metadata(node: NodeWithScore) -> dict[str, Any]:
     return node.metadata
 
 
+def from_multipass(documents: List[MultipassDocument]) -> List[LIDocument]:
+    li_documents: List[LIDocument] = []
+    for doc in documents:
+        li_doc = LIDocument(doc_id=doc.id, text=doc.content)
+        li_doc.metadata = doc.metadata
+        li_documents.append(li_doc)
+
+    return li_documents
+
+
 class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
     """Processor for Jira integration with Llama Index nodes.
 
@@ -101,6 +111,19 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
 
     def __init__(self, creds: Credentials):
         super().__init__(creds, get_node_metadata=get_node_metadata)
+
+
+class LlamaIndexGithubProcessor(GithubProcessor[NodeWithScore]):
+    """Processor for Github integration with Llama Index nodes.
+
+    Uses Github token to access nodes in the Llama Index.
+
+    Args:
+        token (str): Github classic token.
+    """
+
+    def __init__(self, token: str):
+        super().__init__(token, get_node_metadata=get_node_metadata)
 
 
 class NodePostprocessorMixer(BaseNodePostprocessor):
