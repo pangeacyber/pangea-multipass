@@ -14,7 +14,7 @@ assert admin_token
 
 reader = SlackReader(token=admin_token, max_messages=2)
 documents = reader.load_data()
-print(f"Loaded {len(documents)} docs.")
+print(f"Loaded {len(documents)} messages.")
 
 # for doc in documents:
 #     print(doc)
@@ -33,5 +33,5 @@ for id in filter.value:
     print(f"\t{id}")
 
 filtered_docs = processor.filter(nodes=documents)
-print(f"User has access to {len(filtered_docs)} docs")
+print(f"User has access to {len(filtered_docs)} messages")
 
