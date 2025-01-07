@@ -13,7 +13,7 @@ stages:
     - pip --version
 
   update-poetry:
-    - pip install --upgrade poetry
+    - pip install --upgrade "poetry<2.0"
     - poetry --version
 
 include:
