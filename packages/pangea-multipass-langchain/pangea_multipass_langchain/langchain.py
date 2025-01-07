@@ -1,7 +1,7 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from typing import Any, List
+from typing import Any, List, Optional
 
 from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
@@ -45,10 +45,11 @@ class LangChainJiraFilter(JiraProcessor[Document]):
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
+        account_id (Optional[str]): Jira user's account id to check issues permissions.
     """
 
-    def __init__(self, auth: JiraAuth):
-        super().__init__(auth, get_node_metadata=get_doc_metadata)
+    def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
+        super().__init__(auth, get_node_metadata=get_doc_metadata, account_id=account_id)
 
 
 class LangChainConfluenceFilter(ConfluenceProcessor[Document]):

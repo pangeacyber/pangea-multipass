@@ -22,9 +22,10 @@ In order to use Google Drive as a source in the examples you need to:
 In order to use Jira as a source, it's needed to set some environment variables:
 - `JIRA_BASE_URL`: Jira project base URL. Its format is `<your-project-id>.atlassian.net/`. Take care of remove `https://` part.
 - `JIRA_ADMIN_EMAIL`: Admin email used in the ingestion time. System will process all the tickets this user has access to.
-- `JIRA_ADMIN_TOKEN`: Access token of the admin email set above. [Learn more](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
+- `JIRA_ADMIN_TOKEN`: Access token of the admin email set above. [Learn more](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/).
 - `JIRA_USER_EMAIL`: User email used in inference time. This email will be used to validate which tickets returned by the LLM the user has access to.
-- `JIRA_USER_TOKEN`: Access token of the user email set above. [Learn more](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
+- `JIRA_USER_TOKEN`: Access token of the user email set above. [Learn more](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/).
+- `JIRA_USER_ACCOUNT_ID`: Set it to use `JIRA_ADMIN_TOKEN` and `JIRA_ADMIN_EMAIL` at inference time to check user permissions. This way it's not needed to set `JIRA_USER_EMAIL` and `JIRA_USER_TOKEN`.
 
 
 ### Confluence

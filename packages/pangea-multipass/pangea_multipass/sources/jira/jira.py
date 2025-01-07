@@ -2,7 +2,7 @@
 # Author: Pangea Cyber Corporation
 
 import dataclasses
-from typing import Any, Callable, Generic, List
+from typing import Any, Callable, Generic, List, Optional
 
 import requests
 from pangea_multipass.core import (_PANGEA_METADATA_KEY_PREFIX, FilterOperator,
@@ -11,6 +11,7 @@ from pangea_multipass.core import (_PANGEA_METADATA_KEY_PREFIX, FilterOperator,
                                    PangeaMetadataKeys, PangeaMetadataValues, T)
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
+import json
 
 
 @dataclasses.dataclass
@@ -102,12 +103,14 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
     issue_ids_cache: dict[str, bool]
     issue_ids_list: List[str]
     get_node_metadata: Callable[[T], dict[str, Any]]
+    _account_id: Optional[str]
 
-    def __init__(self, auth: JiraAuth, get_node_metadata: Callable[[T], dict[str, Any]]):
+    def __init__(self, auth: JiraAuth, get_node_metadata: Callable[[T], dict[str, Any]], account_id: Optional[str] = None):
         super().__init__()
         self.auth = auth
         self.issue_ids_cache = {}
         self.get_node_metadata = get_node_metadata
+        self._account_id = account_id
 
     def filter(
         self,
@@ -123,10 +126,21 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
         """
 
         filtered: List[T] = []
+        if not self._account_id:
+            for node in nodes:
+                if self._is_authorized(node):
+                    filtered.append(node)
+            return filtered
+
+        issues = []
         for node in nodes:
-            if self._is_authorized(node):
+            metadata = self.get_node_metadata(node)
+            if metadata[PangeaMetadataKeys.DATA_SOURCE] == PangeaMetadataValues.DATA_SOURCE_JIRA:
+                issues.append(int(metadata.get(PangeaMetadataKeys.JIRA_ISSUE_ID, "")))
                 filtered.append(node)
-        return filtered
+
+        allowed_issues = JiraAPI.get_allowed_issues(self.auth, self._account_id, issues)
+        return list(filter(lambda x: (int(self.get_node_metadata(x).get(PangeaMetadataKeys.JIRA_ISSUE_ID, ""))) in allowed_issues, filtered))
 
     def get_filter(
         self,
@@ -174,7 +188,7 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
 class JiraAPI:
     @staticmethod
-    def _request(auth: JiraAuth, path: str, params: dict = {}) -> dict:
+    def _get(auth: JiraAuth, path: str, params: dict = {}) -> dict:
         """
         Makes a request to the Jira API.
 
@@ -194,6 +208,26 @@ class JiraAPI:
         return response.json()
 
     @staticmethod
+    def _post(auth: JiraAuth, path: str, body: dict = {}) -> dict:
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+
+        basic_auth = HTTPBasicAuth(auth.email, auth.token)
+
+        response = requests.request(
+            "POST",
+            f"https://{auth.url}{path}",
+            data=json.dumps(body),
+            headers=headers,
+            auth=basic_auth
+        )
+
+        response.raise_for_status()
+        return json.loads(response.text)
+
+    @staticmethod
     def get_issue(auth: JiraAuth, issue_id: str) -> dict:
         """
         Retrieves details of a specific Jira issue.
@@ -206,7 +240,7 @@ class JiraAPI:
             dict: The JSON response containing issue details.
         """
 
-        return JiraAPI._request(auth, f"/rest/api/3/issue/{issue_id}")
+        return JiraAPI._get(auth, f"/rest/api/3/issue/{issue_id}")
 
     @staticmethod
     def myself(auth: JiraAuth) -> dict:
@@ -222,7 +256,7 @@ class JiraAPI:
         Raises:
             HTTPError: If the request to Jira fails.
         """
-        return JiraAPI._request(auth, "/rest/api/3/myself")
+        return JiraAPI._get(auth, "/rest/api/3/myself")
 
     @staticmethod
     def search(auth: JiraAuth, params: dict = {}) -> dict:
@@ -245,7 +279,7 @@ class JiraAPI:
         Raises:
             HTTPError: If the request to Jira fails.
         """
-        return JiraAPI._request(auth, "/rest/api/3/search", params)
+        return JiraAPI._get(auth, "/rest/api/3/search", params)
 
     @staticmethod
     def get_issue_ids(auth: JiraAuth) -> List[str]:
@@ -286,3 +320,24 @@ class JiraAPI:
             keep_iterating = start_at < total
 
         return issue_ids
+
+    @staticmethod
+    def get_permission_check(auth: JiraAuth, account_id: str, issues: List[int]):
+        body = {
+            "accountId": account_id,
+            "projectPermissions": [
+                {
+                    "issues": issues,
+                    "permissions": [
+                        "EDIT_ISSUES"
+                    ],
+                }
+            ]
+        }
+
+        return JiraAPI._post(auth=auth, path="rest/api/3/permissions/check", body=body)
+    
+    @staticmethod
+    def get_allowed_issues(auth: JiraAuth, account_id: str, issues: List[int]) -> List[int]:
+        resp = JiraAPI.get_permission_check(auth, account_id, issues)
+        return resp.get("projectPermissions", [])[0].get("issues", [])

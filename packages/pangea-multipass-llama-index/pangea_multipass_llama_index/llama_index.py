@@ -81,10 +81,11 @@ class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
+        account_id (Optional[str]): Jira user's account id to check issues permissions.
     """
 
-    def __init__(self, auth: JiraAuth):
-        super().__init__(auth, get_node_metadata=get_node_metadata)
+    def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
+        super().__init__(auth, get_node_metadata=get_node_metadata, account_id=account_id)
 
 
 class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
@@ -166,7 +167,7 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
 
         Args:
             nodes (List[NodeWithScore]): The nodes to be postprocessed.
-            query_bundle (Optional[QueryBundle], optional): Query context for processing. Defaults to None.
+            query_bundle (Optional[QueryBundle]): Query context for processing. Defaults to None.
 
         Returns:
             List[NodeWithScore]: The list of postprocessed nodes.
