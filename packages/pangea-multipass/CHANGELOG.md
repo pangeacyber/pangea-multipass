@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Github repository's reader and processor.
 - Slack channel's reader and processor.
+- `account_id` support on JiraProcessor.
 
 ## 0.1.0 - 2024-12-24
 
