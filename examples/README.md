@@ -42,3 +42,14 @@ In order to use Confluence as a source it's needed to set some environment varia
 In order to use Github as a source it's needed to set some environment variables:
 - `GITHUB_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the repositories this token has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). This could be a `Fine-grained personal access token` with access to all the respositories owned by the admin account and `repository permission` to `read access to code and metadata`.
 - `GITHUB_USER_TOKEN`: Token user in inference time. It will be used to validate which files returned by the LLM the user has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic). This must be a `classic personal access token` with scoped access to (at least) all the `repo` items.
+
+
+### Slack
+
+In order to use Slack as a source it's needed to set some environment variables, those are `SLACK_ADMIN_TOKEN` and `SLACK_USER_TOKEN`.
+
+To get these tokens, you must create a Slack App and generate the tokens. The default app settings are sufficient. For further instructions about how to get slack tokens you could [click here](https://api.slack.com/tutorials/tracks/getting-a-token).
+
+For this particular application the token's scope should be at least: `channels:history` and `groups:history` to process all public and private channels.
+- `SLACK_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the channels this token has access to.
+- `SLACK_USER_TOKEN`: Token user in inference time. It will be used to validate which files returned by the LLM the user has access to.

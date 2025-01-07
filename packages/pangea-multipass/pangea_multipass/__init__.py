@@ -7,4 +7,5 @@ from .core import (Constant, DocumentReader, FilterOperator, HasherSHA256,
                    PangeaMetadataValues, PangeaNodeProcessorMixer,
                    enrich_metadata, generate_id, get_document_metadata)
 from .github_reader import GithubReader
+from .slack_reader import SlackReader
 from .sources import *
