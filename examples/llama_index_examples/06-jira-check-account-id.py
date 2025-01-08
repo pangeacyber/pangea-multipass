@@ -13,13 +13,6 @@ from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
 # Suppress specific warning
 warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
 
-SCOPES = [
-    "openid",
-    "https://www.googleapis.com/auth/userinfo.email",
-    "https://www.googleapis.com/auth/userinfo.profile",
-    "https://www.googleapis.com/auth/drive.metadata.readonly",
-]
-
 
 def jira_load_data(reader: JiraReader, query: str = "") -> List[Document]:
     max_results = 100

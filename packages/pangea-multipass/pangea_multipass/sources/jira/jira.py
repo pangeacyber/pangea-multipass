@@ -219,13 +219,13 @@ class JiraAPI:
         response = requests.request(
             "POST",
             f"https://{auth.url}{path}",
-            data=json.dumps(body),
+            json=body,
             headers=headers,
             auth=basic_auth
         )
 
         response.raise_for_status()
-        return json.loads(response.text)
+        return response.json()
 
     @staticmethod
     def get_issue(auth: JiraAuth, issue_id: str) -> dict:
