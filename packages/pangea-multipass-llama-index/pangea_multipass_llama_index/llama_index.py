@@ -108,10 +108,11 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
 
     Args:
         creds (Credentials): Google OAuth2 credentials.
+        user_email (Optional[str]): User email to check access to files.
     """
 
-    def __init__(self, creds: Credentials):
-        super().__init__(creds, get_node_metadata=get_node_metadata)
+    def __init__(self, creds: Credentials, user_email: Optional[str] = None):
+        super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)
 
 
 class LlamaIndexGithubProcessor(GithubProcessor[NodeWithScore]):

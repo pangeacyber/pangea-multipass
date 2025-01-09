@@ -2,7 +2,7 @@
 # Author: Pangea Cyber Corporation
 
 import enum
-from typing import Any, Callable, Generic, List
+from typing import Any, Callable, Generic, List, Optional
 
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -220,17 +220,20 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
         creds (Credentials): Google API credentials.
         files_ids (List[str]): List of accessible Google Drive file IDs.
         get_node_metadata (Callable): Function to retrieve metadata for nodes.
+        user_email (Optional[str]): User email to check access to files.
     """
 
     files_access_cache: dict[str, bool] = {}
     creds: Credentials
     files_ids: List[str] = []
     get_node_metadata: Callable[[T], dict[str, Any]]
+    _user_email: Optional[str]
 
-    def __init__(self, creds: Credentials, get_node_metadata: Callable[[T], dict[str, Any]]):
+    def __init__(self, creds: Credentials, get_node_metadata: Callable[[T], dict[str, Any]], user_email: Optional[str] = None):
         super().__init__()
         self.creds = creds
         self.get_node_metadata = get_node_metadata
+        self._user_email = user_email
 
     def filter(
         self,
@@ -280,7 +283,14 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
         if access is not None:
             return access
 
-        access = GDriveAPI.check_file_access(self.creds, id)
+        # If user email is set, we could use it to search among the file permissions (using the admin token)
+        if self._user_email:
+            access_level = GDriveAPI.check_user_access(self.creds, id, self._user_email)
+            access = True if access_level else False
+        else:
+            # If user email is not set, we only request the file info to see if current credentials has access to it.
+            access = GDriveAPI.check_file_access(self.creds, id)
+
         self.files_access_cache[id] = access
         return access
 
@@ -410,3 +420,23 @@ class GDriveAPI:
                 break
 
         return file_ids
+
+    @staticmethod
+    def check_user_access(creds: Credentials, file_id: str, user_email: str) -> Optional[str]:
+        """
+        Check if a specific user has access to a Google Drive file.
+        
+        :return: Access level (e.g., "owner", "writer", "reader") or None if no access.
+        """
+
+        service = build("drive", "v3", credentials=creds)
+        try:
+            # List the file's permissions
+            permissions = service.permissions().list(fileId=file_id, fields="permissions").execute()
+            for permission in permissions.get("permissions", []):
+                if permission.get("emailAddress") == user_email:
+                    return permission.get("role")  # e.g., "owner", "writer", "reader"
+            return None
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
