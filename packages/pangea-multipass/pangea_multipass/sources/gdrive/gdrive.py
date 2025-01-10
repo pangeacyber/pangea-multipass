@@ -437,6 +437,5 @@ class GDriveAPI:
                 if permission.get("emailAddress") == user_email:
                     return permission.get("role")  # e.g., "owner", "writer", "reader"
             return None
-        except Exception as e:
-            print(f"Error: {e}")
+        except Exception:
             return None
