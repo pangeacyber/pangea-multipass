@@ -286,7 +286,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
         # If user email is set, we could use it to search among the file permissions (using the admin token)
         if self._user_email:
             access_level = GDriveAPI.check_user_access(self.creds, id, self._user_email)
-            access = True if access_level else False
+            access = access_level is not None
         else:
             # If user email is not set, we only request the file info to see if current credentials has access to it.
             access = GDriveAPI.check_file_access(self.creds, id)

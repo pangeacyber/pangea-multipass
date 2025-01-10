@@ -41,7 +41,7 @@ def google_drive_read_docs() -> List:
     # Google Drive Data Ingestion
     credentials_filepath = os.path.abspath("../credentials.json")
 
-    # # Invoke Google /auth endpoint and save he token for later use
+    # Invoke Google /auth endpoint and save the token for later use
     if not os.path.isfile(admin_token_filepath):
         print("Sign in with the admin user account:")
         GDriveAPI.get_and_save_access_token(credentials_filepath, admin_token_filepath, SCOPES)
@@ -78,7 +78,7 @@ user_email = "alice@gondwana.cloud"
 gdrive_processor = LlamaIndexGDriveProcessor(creds, user_email=user_email)
 node_processor = NodePostprocessorMixer([gdrive_processor])
 
-# Proccess documents
+# Process documents
 authorized_docs = node_processor.postprocess_nodes(documents)
 unauthorized_docs = node_processor.get_unauthorized_nodes()
 
