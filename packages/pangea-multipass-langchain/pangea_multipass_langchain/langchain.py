@@ -86,10 +86,11 @@ class LangChainGithubFilter(GithubProcessor[Document]):
 
     Args:
         token (str): Github classic token.
+        username (Optional[str]): Github username to check permissions.
     """
 
-    def __init__(self, token: str):
-        super().__init__(token, get_node_metadata=get_doc_metadata)
+    def __init__(self, token: str, username: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_doc_metadata, username=username)
 
 
 class DocumentFilterMixer:
