@@ -16,9 +16,9 @@ Run the following command to install all dependencies:
 poetry install
 ```
 
-### Running the Github check:
+### Running the GitHub check:
 
-After you set the Github environment variables in the `examples\README.md` file, run this command:
+After you set the GitHub environment variables in the `examples\README.md` file, run this command:
 
 ```bash
 poetry run python 01-github-check.py

@@ -3,8 +3,8 @@
 
 import os
 
-from pangea_multipass import GithubReader, PangeaMetadataKeys
-from pangea_multipass_llama_index import (LlamaIndexGithubProcessor,
+from pangea_multipass import GithubReader, PangeaMetadataKeys  # type: ignore[attr-defined]
+from pangea_multipass_llama_index import (LlamaIndexGitHubProcessor,
                                           from_multipass)
 
 # Ingestion time
@@ -24,7 +24,7 @@ for doc in documents:
 user_token = os.getenv("GITHUB_USER_TOKEN")
 assert user_token
 
-processor = LlamaIndexGithubProcessor(user_token)
+processor = LlamaIndexGitHubProcessor(user_token)
 authorized_docs = processor.filter(documents)
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")

@@ -115,14 +115,14 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
         super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)
 
 
-class LlamaIndexGithubProcessor(GithubProcessor[NodeWithScore]):
-    """Processor for Github integration with Llama Index nodes.
+class LlamaIndexGitHubProcessor(GithubProcessor[NodeWithScore]):
+    """Processor for GitHub integration with Llama Index nodes.
 
-    Uses Github token to access nodes in the Llama Index.
+    Uses GitHub token to access nodes in the Llama Index.
 
     Args:
-        token (str): Github classic token.
-        username (Optional[str]): Github username to check permissions.
+        token (str): GitHub classic token.
+        username (Optional[str]): GitHub username to check permissions.
     """
 
     def __init__(self, token: str, username: Optional[str] = None):

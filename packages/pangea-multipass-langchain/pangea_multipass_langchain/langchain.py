@@ -5,11 +5,11 @@ from typing import Any, List, Optional
 
 from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
-from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
+from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,  # type: ignore[attr-defined]
                               DocumentReader, FilterOperator, GDriveProcessor,
-                              GithubProcessor, JiraAuth, JiraProcessor, SlackProcessor)
+                              GitHubProcessor, JiraAuth, JiraProcessor, SlackProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
+from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,  # type: ignore[attr-defined]
                               PangeaNodeProcessorMixer)
 
 
@@ -49,7 +49,7 @@ class LangChainJiraFilter(JiraProcessor[Document]):
     """
 
     def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
-        super().__init__(auth, get_node_metadata=get_doc_metadata, account_id=account_id)
+        super().__init__(auth, get_node_metadata=get_doc_metadata, account_id=account_id)  # type: ignore[call-arg]
 
 
 class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
@@ -76,17 +76,17 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
     """
 
     def __init__(self, creds: Credentials, user_email: Optional[str] = None):
-        super().__init__(creds, get_node_metadata=get_doc_metadata, user_email=user_email)
+        super().__init__(creds, get_node_metadata=get_doc_metadata, user_email=user_email)  # type: ignore[call-arg]
 
 
-class LangChainGithubFilter(GithubProcessor[Document]):
-    """Filter for Github integration with LangChain documents.
+class LangChainGitHubFilter(GitHubProcessor[Document]):
+    """Filter for GitHub integration with LangChain documents.
 
-    Uses Github classic token to access documents in the LangChain.
+    Uses GitHub classic token to access documents in the LangChain.
 
     Args:
-        token (str): Github classic token.
-        username (Optional[str]): Github username to check permissions.
+        token (str): GitHub classic token.
+        username (Optional[str]): GitHub username to check permissions.
     """
 
     def __init__(self, token: str, username: Optional[str] = None):

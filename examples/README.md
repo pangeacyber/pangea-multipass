@@ -38,9 +38,9 @@ In order to use Confluence as a source it's needed to set some environment varia
 - `CONFLUENCE_USER_TOKEN`: Access token of the user email set above. [Learn more](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
 
 
-### Github
+### GitHub
 
-In order to use Github as a source it's needed to set some environment variables:
+In order to use GitHub as a source it's needed to set some environment variables:
 - `GITHUB_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the repositories this token has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). This could be a `Fine-grained personal access token` with access to all the respositories owned by the admin account and `repository permission` to `read access to code and metadata`.
 - `GITHUB_USER_TOKEN`: Token user in inference time. It will be used to validate which files returned by the LLM the user has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic). This must be a `classic personal access token` with scoped access to (at least) all the `repo` items.
 
