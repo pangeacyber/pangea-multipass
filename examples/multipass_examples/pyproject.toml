@@ -12,6 +12,9 @@ python = ">=3.10,<3.13"
 pangea-sdk = "^5.1.0"
 pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
 
+[tool.poetry.group.dev.dependencies]
+mypy = "1.14.1"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

@@ -6,13 +6,13 @@ from io import BytesIO
 from pathlib import Path
 from typing import List
 
-import boto3
+import boto3  # type: ignore[import-untyped]
 from google.oauth2.credentials import Credentials
 from langchain.document_loaders import ConfluenceLoader
 from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
-from langchain_google_community import GoogleDriveLoader
+from langchain_google_community import GoogleDriveLoader  # type: ignore[import-untyped]
 from pangea_multipass import ConfluenceME, GDriveAPI, GDriveME, enrich_metadata
 from pangea_multipass_langchain import (ConfluenceAuth, DocumentFilterMixer,
                                         LangChainConfluenceFilter,

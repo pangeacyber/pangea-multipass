@@ -19,11 +19,11 @@ class SlackReader:
         documents: List[MultipassDocument] = []
         channels = SlackAPI.list_channels(token=self._token)
         for channel in channels:
-            channel_id = channel['id']
-            channel_name = channel['name']
+            channel_id = channel['id']  # type: ignore[index]
+            channel_name = channel['name']  # type: ignore[index]
 
             # Fetch messages for each channel
-            messages = self._fetch_messages(channel['id'])
+            messages = self._fetch_messages(channel['id'])  # type: ignore[index]
             # print(f"Channel has {len(messages)} messages")
             for message in messages:
                 subtype = message.get("subtype", "")
@@ -40,7 +40,7 @@ class SlackReader:
                     PangeaMetadataKeys.SLACK_USER: user,
                     PangeaMetadataKeys.DATA_SOURCE: PangeaMetadataValues.DATA_SOURCE_SLACK,
                 }
-                documents.append(MultipassDocument(id=generate_id(), content=text, metadata=metadata))
+                documents.append(MultipassDocument(id=generate_id(), content=text, metadata=metadata))  # type: ignore[arg-type]
 
         return documents
 
