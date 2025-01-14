@@ -7,7 +7,7 @@ from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
 from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
                               DocumentReader, FilterOperator, GDriveProcessor,
-                              GithubProcessor, JiraAuth, JiraProcessor)
+                              GithubProcessor, JiraAuth, JiraProcessor, SlackProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
 from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
                               PangeaNodeProcessorMixer)
@@ -91,6 +91,19 @@ class LangChainGithubFilter(GithubProcessor[Document]):
 
     def __init__(self, token: str, username: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_doc_metadata, username=username)
+
+class LangChainSlackFilter(SlackProcessor[Document]):
+    """Filter for Slack integration with LangChain documents.
+
+    Uses Slack token to access channels in the LangChain.
+
+    Args:
+        token (str): Slack token.
+        user_email (Optional[str]): User email to check access to channels.
+    """
+
+    def __init__(self, token: str, user_email: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_doc_metadata, user_email=user_email)
 
 
 class DocumentFilterMixer:

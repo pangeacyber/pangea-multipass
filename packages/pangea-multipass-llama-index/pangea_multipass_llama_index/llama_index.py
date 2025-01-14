@@ -12,7 +12,7 @@ from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
                                             MetadataFilter, MetadataFilters)
 from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
                               DocumentReader, GDriveProcessor, GithubProcessor,
-                              JiraAuth, JiraProcessor)
+                              JiraAuth, JiraProcessor, SlackProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
 from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
                               PangeaNodeProcessorMixer)
@@ -127,6 +127,20 @@ class LlamaIndexGithubProcessor(GithubProcessor[NodeWithScore]):
 
     def __init__(self, token: str, username: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_node_metadata, username=username)
+
+class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
+    """Processor for Slack integration with Llama Index nodes.
+
+    Uses Slack token to access nodes in the Llama Index.
+
+    Args:
+        token (str): Slack token.
+        user_email (Optional[str]): User email to check access to files.
+    """
+
+    def __init__(self, token: str, user_email: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_node_metadata, user_email=user_email)
+
 
 
 class NodePostprocessorMixer(BaseNodePostprocessor):

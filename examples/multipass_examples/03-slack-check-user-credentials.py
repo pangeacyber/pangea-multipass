@@ -2,12 +2,8 @@
 # Author: Pangea Cyber Corporation
 
 import os
-import warnings
-from typing import List
 from pangea_multipass import SlackReader
 
-# Suppress specific warning
-warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
 
 admin_token = os.getenv("SLACK_ADMIN_TOKEN")
 assert admin_token
@@ -15,10 +11,6 @@ assert admin_token
 reader = SlackReader(token=admin_token, max_messages=2)
 documents = reader.load_data()
 print(f"Loaded {len(documents)} messages.")
-
-# for doc in documents:
-#     print(doc)
-
 
 # Inference time
 from pangea_multipass import SlackProcessor, get_document_metadata
