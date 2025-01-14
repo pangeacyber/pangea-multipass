@@ -85,7 +85,7 @@ class SlackAPI:
         try:
             response = client.users_lookupByEmail(email=user_email)
             return response["user"]["id"]
-        except SlackApiError as e:
+        except SlackApiError:
             return None
 
     @staticmethod
@@ -113,7 +113,8 @@ class SlackAPI:
                 if e.response["error"] == "not_in_channel":
                     continue  # User is not in this channel
                 else:
-                    print(f"Error checking channel {channel_id}: {e.response['error']}")
+                    # TODO: log error to logger.
+                    pass
         return accessible_channels
 
 
@@ -198,7 +199,7 @@ class SlackProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
         user_id = SlackAPI.get_user_id(token, user_email)
         if not user_id:
-            print(f"User with email {user_email} not found.")
+            # TODO: Log error to logger
             return False
 
         channel_members = SlackAPI.get_channel_members(token, channel_id)
