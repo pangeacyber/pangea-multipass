@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Github repository's reader and processor.
+- GitHub repository's reader and processor.
 - Slack channel's reader and processor.
 - `account_id` support on JiraProcessor.
 - Check user email permissions with admin credentials in GDriveProcessor.
-- Check username permissions with admin token in GithubProcessor.
+- Check username permissions with admin token in GitHubProcessor.
 - Check user email permissions with admin token in SlackProcessor.
 
 ## 0.1.0 - 2024-12-24
