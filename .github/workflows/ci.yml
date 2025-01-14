@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+  merge_group:
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  POETRY_VERSION: 1.8.5
+
+jobs:
+  mypy:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        package: [pangea-multipass, pangea-multipass-langchain, pangea-multipass-llama-index]
+    defaults:
+      run:
+        working-directory: ./packages/${{ matrix.package }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Install poetry
+        run: |
+          pip install --upgrade poetry==${{ env.POETRY_VERSION }}
+          poetry --version
+
+      - name: Setup Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version: 3.12
+          cache: poetry
+          cache-dependency-path: ./packages/${{ matrix.package }}/poetry.lock
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: mypy
+        run: poetry run mypy .

@@ -10,11 +10,11 @@ from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
 from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
                                             MetadataFilter, MetadataFilters)
-from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
-                              DocumentReader, GDriveProcessor, GithubProcessor,
+from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,  # type: ignore[attr-defined]
+                              DocumentReader, GDriveProcessor, GitHubProcessor,
                               JiraAuth, JiraProcessor, SlackProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
+from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,  # type: ignore[attr-defined]
                               PangeaNodeProcessorMixer)
 
 
@@ -85,7 +85,7 @@ class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
     """
 
     def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
-        super().__init__(auth, get_node_metadata=get_node_metadata, account_id=account_id)
+        super().__init__(auth, get_node_metadata=get_node_metadata, account_id=account_id)  # type: ignore[call-arg]
 
 
 class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
@@ -112,10 +112,10 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
     """
 
     def __init__(self, creds: Credentials, user_email: Optional[str] = None):
-        super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)
+        super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)  # type: ignore[call-arg]
 
 
-class LlamaIndexGitHubProcessor(GithubProcessor[NodeWithScore]):
+class LlamaIndexGitHubProcessor(GitHubProcessor[NodeWithScore]):
     """Processor for GitHub integration with Llama Index nodes.
 
     Uses GitHub token to access nodes in the Llama Index.
@@ -159,7 +159,7 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
         get_authorized_nodes() -> List[NodeWithScore]: Retrieves nodes that are authorized for access.
     """
 
-    node_processor: PangeaNodeProcessorMixer[NodeWithScore] = Field(default=None)
+    node_processor: PangeaNodeProcessorMixer[NodeWithScore] = Field(default=None)  # type: ignore[arg-type]
 
     def __init__(self, node_processors: List[PangeaGenericNodeProcessor]):
         """Initializes the NodePostprocessorMixer with a list of node processors.

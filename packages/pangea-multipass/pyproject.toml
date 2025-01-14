@@ -19,6 +19,14 @@ google-auth = "^2.35.0"
 openpyxl = "^3.1.5"
 slack-sdk = "^3.34.0"
 
+[tool.poetry.group.dev.dependencies]
+mypy = "1.14.1"
+types-requests = "2.32.0.20241016"
+
+[[tool.mypy.overrides]]
+module = ["google_auth_oauthlib.flow.*", "googleapiclient.discovery.*"]
+follow_untyped_imports = true
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

@@ -22,7 +22,7 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.conversations_list(types="public_channel,private_channel")
-            channels = response.get('channels', [])
+            channels = response.get('channels', [])  # type: ignore[var-annotated]
             return channels
         except SlackApiError as e:
             return []
@@ -60,7 +60,7 @@ class SlackAPI:
         """
 
         client = WebClient(token=token)
-        channels = []
+        channels = []  # type: ignore[var-annotated]
         try:
             response = client.conversations_list(types="public_channel,private_channel", limit=1000)
             channels = response.get("channels", [])
@@ -106,7 +106,7 @@ class SlackAPI:
         for channel_id in channel_ids:
             try:
                 response = client.conversations_members(channel=channel_id)
-                members = response.get("members", [])
+                members = response.get("members", [])  # type: ignore[var-annotated]
                 if user_id in members:
                     accessible_channels.append(channel_id)
             except SlackApiError as e:
