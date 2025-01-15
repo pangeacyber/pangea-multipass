@@ -50,6 +50,7 @@ class PangeaMetadataKeys(str, enum.Enum):
     SLACK_USER = f"{_PANGEA_METADATA_KEY_PREFIX}slack_user"
     SLACK_TIMESTAMP = f"{_PANGEA_METADATA_KEY_PREFIX}slack_timestamp"
 
+
 class PangeaMetadataValues(str, enum.Enum):
     DATA_SOURCE_CONFLUENCE = "confluence"
     DATA_SOURCE_GDRIVE = "gdrive"

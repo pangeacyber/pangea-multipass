@@ -1,4 +1,4 @@
-from typing import Any, Callable, Generic, List, Tuple, Optional
+from typing import Any, Callable, Generic, List, Optional, Tuple
 
 import requests
 from pangea_multipass.core import (FilterOperator, MetadataFilter,
@@ -110,8 +110,10 @@ class GitHubProcessor(PangeaGenericNodeProcessor, Generic[T]):
             return has_access
 
         if self._username:
-            has_access = GitHubAPI.user_has_access(admin_token=self._token, owner=owner, repo_name=repo_name, username=self._username)
-        else: 
+            has_access = GitHubAPI.user_has_access(
+                admin_token=self._token, owner=owner, repo_name=repo_name, username=self._username
+            )
+        else:
             has_access = GitHubAPI.has_access(token=self._token, owner=owner, repo_name=repo_name)
 
         self._access_cache[access_tuple] = has_access

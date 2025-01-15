@@ -229,7 +229,9 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
     get_node_metadata: Callable[[T], dict[str, Any]]
     _user_email: Optional[str]
 
-    def __init__(self, creds: Credentials, get_node_metadata: Callable[[T], dict[str, Any]], user_email: Optional[str] = None):
+    def __init__(
+        self, creds: Credentials, get_node_metadata: Callable[[T], dict[str, Any]], user_email: Optional[str] = None
+    ):
         super().__init__()
         self.creds = creds
         self.get_node_metadata = get_node_metadata
@@ -425,7 +427,7 @@ class GDriveAPI:
     def check_user_access(creds: Credentials, file_id: str, user_email: str) -> Optional[str]:
         """
         Check if a specific user has access to a Google Drive file.
-        
+
         :return: Access level (e.g., "owner", "writer", "reader") or None if no access.
         """
 

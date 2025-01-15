@@ -2,6 +2,7 @@
 # Author: Pangea Cyber Corporation
 
 import dataclasses
+import json
 from typing import Any, Callable, Generic, List, Optional
 
 import requests
@@ -11,7 +12,6 @@ from pangea_multipass.core import (_PANGEA_METADATA_KEY_PREFIX, FilterOperator,
                                    PangeaMetadataKeys, PangeaMetadataValues, T)
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
-import json
 
 
 @dataclasses.dataclass
@@ -105,7 +105,9 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
     get_node_metadata: Callable[[T], dict[str, Any]]
     _account_id: Optional[str]
 
-    def __init__(self, auth: JiraAuth, get_node_metadata: Callable[[T], dict[str, Any]], account_id: Optional[str] = None):
+    def __init__(
+        self, auth: JiraAuth, get_node_metadata: Callable[[T], dict[str, Any]], account_id: Optional[str] = None
+    ):
         super().__init__()
         self.auth = auth
         self.issue_ids_cache = {}
@@ -140,7 +142,12 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
                 filtered.append(node)
 
         allowed_issues = JiraAPI.get_allowed_issues(self.auth, self._account_id, issues)
-        return list(filter(lambda x: (int(self.get_node_metadata(x).get(PangeaMetadataKeys.JIRA_ISSUE_ID, ""))) in allowed_issues, filtered))
+        return list(
+            filter(
+                lambda x: (int(self.get_node_metadata(x).get(PangeaMetadataKeys.JIRA_ISSUE_ID, ""))) in allowed_issues,
+                filtered,
+            )
+        )
 
     def get_filter(
         self,
@@ -209,20 +216,11 @@ class JiraAPI:
 
     @staticmethod
     def _post(auth: JiraAuth, path: str, body: dict = {}) -> dict:
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
         basic_auth = HTTPBasicAuth(auth.email, auth.token)
 
-        response = requests.request(
-            "POST",
-            f"https://{auth.url}{path}",
-            json=body,
-            headers=headers,
-            auth=basic_auth
-        )
+        response = requests.request("POST", f"https://{auth.url}{path}", json=body, headers=headers, auth=basic_auth)
 
         response.raise_for_status()
         return response.json()
@@ -328,15 +326,13 @@ class JiraAPI:
             "projectPermissions": [
                 {
                     "issues": issues,
-                    "permissions": [
-                        "EDIT_ISSUES"
-                    ],
+                    "permissions": ["EDIT_ISSUES"],
                 }
-            ]
+            ],
         }
 
         return JiraAPI._post(auth=auth, path="rest/api/3/permissions/check", body=body)
-    
+
     @staticmethod
     def get_allowed_issues(auth: JiraAuth, account_id: str, issues: List[int]) -> List[int]:
         resp = JiraAPI.get_permission_check(auth, account_id, issues)

@@ -11,7 +11,8 @@ from google.oauth2.credentials import Credentials
 from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
-from langchain_google_community import GoogleDriveLoader  # type: ignore[import-untyped]
+from langchain_google_community import \
+    GoogleDriveLoader  # type: ignore[import-untyped]
 from pangea_multipass import GDriveAPI, GDriveME, enrich_metadata
 from pangea_multipass_langchain import (DocumentFilterMixer,
                                         LangChainDocumentReader)

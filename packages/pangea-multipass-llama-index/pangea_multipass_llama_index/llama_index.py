@@ -10,12 +10,14 @@ from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
 from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
                                             MetadataFilter, MetadataFilters)
-from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,  # type: ignore[attr-defined]
-                              DocumentReader, GDriveProcessor, GitHubProcessor,
-                              JiraAuth, JiraProcessor, SlackProcessor)
+from pangea_multipass import ConfluenceProcessor  # type: ignore[attr-defined]
+from pangea_multipass import \
+    PangeaGenericNodeProcessor  # type: ignore[attr-defined]
+from pangea_multipass import (ConfluenceAuth, DocumentReader, GDriveProcessor,
+                              GitHubProcessor, JiraAuth, JiraProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,  # type: ignore[attr-defined]
-                              PangeaNodeProcessorMixer)
+from pangea_multipass import (MultipassDocument, PangeaNodeProcessorMixer,
+                              SlackProcessor)
 
 
 class LIDocumentReader(DocumentReader):
@@ -131,6 +133,7 @@ class LlamaIndexGitHubProcessor(GitHubProcessor[NodeWithScore]):
     def __init__(self, token: str, username: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_node_metadata, username=username)
 
+
 class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
     """Processor for Slack integration with Llama Index nodes.
 
@@ -143,7 +146,6 @@ class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
 
     def __init__(self, token: str, user_email: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_node_metadata, user_email=user_email)
-
 
 
 class NodePostprocessorMixer(BaseNodePostprocessor):

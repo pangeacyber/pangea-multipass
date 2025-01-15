@@ -5,12 +5,15 @@ from typing import Any, List, Optional
 
 from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
-from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,  # type: ignore[attr-defined]
-                              DocumentReader, FilterOperator, GDriveProcessor,
-                              GitHubProcessor, JiraAuth, JiraProcessor, SlackProcessor)
+from pangea_multipass import ConfluenceProcessor  # type: ignore[attr-defined]
+from pangea_multipass import \
+    PangeaGenericNodeProcessor  # type: ignore[attr-defined]
+from pangea_multipass import (ConfluenceAuth, DocumentReader, FilterOperator,
+                              GDriveProcessor, GitHubProcessor, JiraAuth,
+                              JiraProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,  # type: ignore[attr-defined]
-                              PangeaNodeProcessorMixer)
+from pangea_multipass import (MultipassDocument, PangeaNodeProcessorMixer,
+                              SlackProcessor)
 
 
 class LangChainDocumentReader(DocumentReader):
@@ -67,6 +70,7 @@ class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
     def __init__(self, auth: ConfluenceAuth, space_id: Optional[int] = None, account_id: Optional[str] = None):
         super().__init__(auth, get_node_metadata=get_doc_metadata, space_id=space_id, account_id=account_id)
 
+
 class LangChainGDriveFilter(GDriveProcessor[Document]):
     """Filter for Google Drive integration with LangChain documents.
 
@@ -93,6 +97,7 @@ class LangChainGitHubFilter(GitHubProcessor[Document]):
 
     def __init__(self, token: str, username: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_doc_metadata, username=username)
+
 
 class LangChainSlackFilter(SlackProcessor[Document]):
     """Filter for Slack integration with LangChain documents.

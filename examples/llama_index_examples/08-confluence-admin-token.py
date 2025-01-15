@@ -4,9 +4,9 @@
 import os
 
 from llama_index.readers.confluence import ConfluenceReader
-from pangea_multipass import (ConfluenceAuth, ConfluenceME, PangeaMetadataKeys, enrich_metadata)
+from pangea_multipass import (ConfluenceAuth, ConfluenceME, PangeaMetadataKeys,
+                              enrich_metadata)
 from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
-
 
 # Fetch documents from Confluence
 confluence_space_key = "~71202041f9bfec117041348629ccf3e3c751b3"
@@ -18,6 +18,7 @@ admin_email = os.getenv("CONFLUENCE_ADMIN_EMAIL")
 assert admin_email
 url = os.getenv("CONFLUENCE_BASE_URL")
 assert url
+
 
 def confluence_read_docs():
     """Fetch all documents from Confluence using ConfluenceReader."""

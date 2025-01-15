@@ -77,7 +77,11 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
     _account_id: Optional[str]
 
     def __init__(
-        self, auth: ConfluenceAuth, get_node_metadata: Callable[[T], dict[str, Any]], space_id: Optional[int] = None, account_id: Optional[str] = None,
+        self,
+        auth: ConfluenceAuth,
+        get_node_metadata: Callable[[T], dict[str, Any]],
+        space_id: Optional[int] = None,
+        account_id: Optional[str] = None,
     ):
         super().__init__()
         self.auth = auth
@@ -131,7 +135,7 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
         try:
             if self._account_id:
                 access = ConfluenceAPI.check_user_access(auth, self.auth.url, id, self._account_id)
-            else: 
+            else:
                 ConfluenceAPI.get_page(auth, self.auth.url, id)
                 access = True
         except HTTPError as e:
@@ -230,7 +234,7 @@ class ConfluenceAPI:
             auth (HTTPBasicAuth): The authentication credentials for Confluence.
             url (str): The base URL of the Confluence instance.
             page_id (str): ID of the Confluence page.
-        
+
         Returns:
             Page details including the parent page ID.
         """
@@ -254,7 +258,7 @@ class ConfluenceAPI:
             auth (HTTPBasicAuth): The authentication credentials for Confluence.
             url (str): The base URL of the Confluence instance.
             page_id (str): ID of the Confluence page.
-        
+
         Returns:
             List of restrictions.
         """

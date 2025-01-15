@@ -6,6 +6,7 @@ from pangea_multipass.core import (FilterOperator, MetadataFilter,
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
+
 class SlackAPI:
     @staticmethod
     def list_channels(token: str) -> List[str]:
@@ -14,7 +15,7 @@ class SlackAPI:
 
         Args:
             token (str): Slack token.
-        
+
         Returns:
             List of channel ids that the authenticated user has access to.
         """
@@ -22,7 +23,7 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.conversations_list(types="public_channel,private_channel")
-            channels = response.get('channels', [])  # type: ignore[var-annotated]
+            channels = response.get("channels", [])  # type: ignore[var-annotated]
             return channels
         except SlackApiError as e:
             return []
@@ -52,7 +53,7 @@ class SlackAPI:
         """
         Retrieve all channels in the workspace.
 
-        Args: 
+        Args:
             token (str): Slack token
 
         Returns:
@@ -180,19 +181,17 @@ class SlackProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
         channels = list(self._channels_id_cache.keys())
 
-        return MetadataFilter(
-            key=PangeaMetadataKeys.SLACK_CHANNEL_ID, value=channels, operator=FilterOperator.IN
-        )
+        return MetadataFilter(key=PangeaMetadataKeys.SLACK_CHANNEL_ID, value=channels, operator=FilterOperator.IN)
 
     def check_user_access(self, token: str, channel_id: str, user_email: str):
         """
         Check if a user has access to a specific Slack channel.
-        
+
         Args:
             token (str): Slack token.
             channel_id (srt): ID of the Slack channel.
             user_email (str): Email of the user to check.
-        
+
         Returns:
             True if the user is a member of the channel, False otherwise.
         """
@@ -229,7 +228,7 @@ class SlackProcessor(PangeaGenericNodeProcessor, Generic[T]):
             return
 
         for channel in SlackAPI.list_channels(self._token):
-            self._channels_id_cache[channel['id']] = True
+            self._channels_id_cache[channel["id"]] = True
 
     def _is_authorized(self, node: T) -> bool:
         metadata = self.get_node_metadata(node)

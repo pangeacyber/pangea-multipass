@@ -2,8 +2,8 @@
 # Author: Pangea Cyber Corporation
 
 import os
-from pangea_multipass import SlackReader
 
+from pangea_multipass import SlackReader
 
 admin_token = os.getenv("SLACK_ADMIN_TOKEN")
 assert admin_token
@@ -26,4 +26,3 @@ for id in filter.value:
 
 filtered_docs = processor.filter(nodes=documents)
 print(f"User has access to {len(filtered_docs)} messages")
-
