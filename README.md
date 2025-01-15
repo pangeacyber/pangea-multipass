@@ -61,16 +61,14 @@ In general, the authorized list will be more important but you may log or notify
 
 At release, this library supports Google Workspace, Confluence, and Jira. For adding systems, our top priorities are:
 
-- Slack
-- GitHub
-- Salesforce
 - Box
+- Dropbox
+- Office 365
 
 Others we plan to support or are looking for contributions are:
 
-- Office 365
 - Zoom
-- Dropbox
+- Salesforce
 - Gitlab
 - Zendesk
 - Notion
