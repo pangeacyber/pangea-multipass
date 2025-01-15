@@ -1,15 +1,15 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
-from typing import Any, List
+from typing import Any, List, Optional
 
 from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
-from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
+from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,  # type: ignore[attr-defined]
                               DocumentReader, FilterOperator, GDriveProcessor,
-                              GithubProcessor, JiraAuth, JiraProcessor)
+                              GitHubProcessor, JiraAuth, JiraProcessor, SlackProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
+from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,  # type: ignore[attr-defined]
                               PangeaNodeProcessorMixer)
 
 
@@ -45,10 +45,11 @@ class LangChainJiraFilter(JiraProcessor[Document]):
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
+        account_id (Optional[str]): Jira user's account id to check issues permissions.
     """
 
-    def __init__(self, auth: JiraAuth):
-        super().__init__(auth, get_node_metadata=get_doc_metadata)
+    def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
+        super().__init__(auth, get_node_metadata=get_doc_metadata, account_id=account_id)  # type: ignore[call-arg]
 
 
 class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
@@ -71,23 +72,38 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
 
     Args:
         creds (Credentials): Google OAuth2 credentials.
+        user_email (Optional[str]): User email to check access to files.
     """
 
-    def __init__(self, creds: Credentials):
-        super().__init__(creds, get_node_metadata=get_doc_metadata)
+    def __init__(self, creds: Credentials, user_email: Optional[str] = None):
+        super().__init__(creds, get_node_metadata=get_doc_metadata, user_email=user_email)  # type: ignore[call-arg]
 
 
-class LangChainGithubFilter(GithubProcessor[Document]):
-    """Filter for Github integration with LangChain documents.
+class LangChainGitHubFilter(GitHubProcessor[Document]):
+    """Filter for GitHub integration with LangChain documents.
 
-    Uses Github classic token to access documents in the LangChain.
+    Uses GitHub classic token to access documents in the LangChain.
 
     Args:
-        token (str): Github classic token.
+        token (str): GitHub classic token.
+        username (Optional[str]): GitHub username to check permissions.
     """
 
-    def __init__(self, token: str):
-        super().__init__(token, get_node_metadata=get_doc_metadata)
+    def __init__(self, token: str, username: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_doc_metadata, username=username)
+
+class LangChainSlackFilter(SlackProcessor[Document]):
+    """Filter for Slack integration with LangChain documents.
+
+    Uses Slack token to access channels in the LangChain.
+
+    Args:
+        token (str): Slack token.
+        user_email (Optional[str]): User email to check access to channels.
+    """
+
+    def __init__(self, token: str, user_email: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_doc_metadata, user_email=user_email)
 
 
 class DocumentFilterMixer:

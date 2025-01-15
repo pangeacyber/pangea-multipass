@@ -45,13 +45,17 @@ class PangeaMetadataKeys(str, enum.Enum):
     GITHUB_REPOSITORY_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}repository_name"
     GITHUB_REPOSITORY_OWNER = f"{_PANGEA_METADATA_KEY_PREFIX}repository_owner"
     GITHUB_REPOSITORY_OWNER_AND_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}repository_owner_and_name"
-
+    SLACK_CHANNEL_ID = f"{_PANGEA_METADATA_KEY_PREFIX}slack_channel_id"
+    SLACK_CHANNEL_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}slack_channel_name"
+    SLACK_USER = f"{_PANGEA_METADATA_KEY_PREFIX}slack_user"
+    SLACK_TIMESTAMP = f"{_PANGEA_METADATA_KEY_PREFIX}slack_timestamp"
 
 class PangeaMetadataValues(str, enum.Enum):
     DATA_SOURCE_CONFLUENCE = "confluence"
     DATA_SOURCE_GDRIVE = "gdrive"
     DATA_SOURCE_JIRA = "jira"
     DATA_SOURCE_GITHUB = "github"
+    DATA_SOURCE_SLACK = "slack"
 
 
 @dataclasses.dataclass

@@ -3,17 +3,13 @@
 
 import os
 import sys
-import warnings
 from typing import List
 
 from google.oauth2.credentials import Credentials
 from llama_index.readers.google import GoogleDriveReader
-from pangea_multipass import (GDriveAPI, GDriveME, PangeaMetadataKeys,
-                              enrich_metadata)
+from pangea_multipass import (GDriveAPI, GDriveME, PangeaMetadataKeys, enrich_metadata)
 from pangea_multipass_llama_index import LIDocumentReader
 
-# Suppress specific warning
-warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
 
 if len(sys.argv) != 2:
     print(f"usage: {sys.argv[0]} <gdrive_folder_id>")
@@ -67,10 +63,8 @@ def google_drive_read_docs() -> List:
 documents = google_drive_read_docs()
 
 # Inference
-
 from pangea_multipass import GDriveAPI
-from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
-                                          NodePostprocessorMixer)
+from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor, NodePostprocessorMixer)
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../credentials.json")

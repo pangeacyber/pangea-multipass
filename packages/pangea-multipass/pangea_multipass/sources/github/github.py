@@ -1,4 +1,4 @@
-from typing import Any, Callable, Generic, List, Tuple
+from typing import Any, Callable, Generic, List, Tuple, Optional
 
 import requests
 from pangea_multipass.core import (FilterOperator, MetadataFilter,
@@ -6,7 +6,7 @@ from pangea_multipass.core import (FilterOperator, MetadataFilter,
                                    PangeaMetadataKeys, PangeaMetadataValues, T)
 
 
-class GithubAPI:
+class GitHubAPI:
     @staticmethod
     def get_auth_headers(token: str) -> dict[str, str]:
         """Authenticate to GitHub using a personal access token."""
@@ -18,9 +18,12 @@ class GithubAPI:
 
     @staticmethod
     def has_access(token: str, owner: str, repo_name: str) -> bool:
+        """
+        Check if this token has access to this particular GitHub repository
+        """
         access = False
 
-        headers = GithubAPI.get_auth_headers(token)
+        headers = GitHubAPI.get_auth_headers(token)
         url = f"https://api.github.com/repos/{owner}/{repo_name}"
         response = requests.get(url, headers=headers)
 
@@ -36,10 +39,28 @@ class GithubAPI:
         return access
 
     @staticmethod
+    def user_has_access(admin_token: str, owner: str, repo_name: str, username: str) -> bool:
+        """
+        Checks if a user has access to a specific GitHub repository using an admin token
+        """
+        headers = GitHubAPI.get_auth_headers(admin_token)
+        url = f"https://api.github.com/repos/{owner}/{repo_name}/collaborators/{username}"
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 204:
+            return True
+        elif response.status_code == 404:
+            return False
+        elif response.status_code == 403:
+            raise Exception("Admin token does not have sufficient permissions to check access.")
+        else:
+            raise Exception(f"Unexpected error: {response.status_code} - {response.json()}")
+
+    @staticmethod
     def get_user_repos(token: str):
         """Get all repositories the authenticated user has access to."""
 
-        headers = GithubAPI.get_auth_headers(token)
+        headers = GitHubAPI.get_auth_headers(token)
         url = "https://api.github.com/user/repos"
         repos = []
         page = 1
@@ -59,16 +80,18 @@ class GithubAPI:
         return repos
 
 
-class GithubProcessor(PangeaGenericNodeProcessor, Generic[T]):
+class GitHubProcessor(PangeaGenericNodeProcessor, Generic[T]):
     _access_cache: dict[tuple, bool] = {}
     _token: str
     _repos: List[Tuple[str, str]] = []
+    _username: Optional[str]
 
-    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]]):
+    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]], username: Optional[str] = None):
         super().__init__()
         self._token = token
         self._access_cache = {}
         self.get_node_metadata = get_node_metadata
+        self._username = username
 
     def _has_access(self, metadata: dict[str, Any]) -> bool:
         """Check if the authenticated user has access to a repository."""
@@ -81,13 +104,16 @@ class GithubProcessor(PangeaGenericNodeProcessor, Generic[T]):
         if owner is None:
             raise KeyError(f"Invalid metadata key: {PangeaMetadataKeys.GITHUB_REPOSITORY_OWNER}")
 
-        # print(f"Checking access to '{owner}/{repo_name}'")
         access_tuple = (owner, repo_name)
         has_access = self._access_cache.get(access_tuple, None)
         if has_access is not None:
             return has_access
 
-        has_access = GithubAPI.has_access(token=self._token, owner=owner, repo_name=repo_name)
+        if self._username:
+            has_access = GitHubAPI.user_has_access(admin_token=self._token, owner=owner, repo_name=repo_name, username=self._username)
+        else: 
+            has_access = GitHubAPI.has_access(token=self._token, owner=owner, repo_name=repo_name)
+
         self._access_cache[access_tuple] = has_access
         return has_access
 
@@ -95,7 +121,7 @@ class GithubProcessor(PangeaGenericNodeProcessor, Generic[T]):
         self,
         nodes: List[T],
     ) -> List[T]:
-        """Filter Github files by access permissions.
+        """Filter GitHub files by access permissions.
 
         Args:
             nodes (List[T]): List of nodes to process.
@@ -120,7 +146,7 @@ class GithubProcessor(PangeaGenericNodeProcessor, Generic[T]):
         """
 
         if not self._repos:
-            repos_info = GithubAPI.get_user_repos(self._token)
+            repos_info = GitHubAPI.get_user_repos(self._token)
             repos = []
 
             for repo in repos_info:

@@ -4,10 +4,10 @@ import requests
 
 from .core import (MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues,
                    generate_id)
-from .sources.github import GithubAPI
+from .sources.github import GitHubAPI
 
 
-class GithubReader:
+class GitHubReader:
     _token: str
     """GitHub personal access token"""
 
@@ -18,10 +18,10 @@ class GithubReader:
         self,
     ) -> List[MultipassDocument]:
         # Authenticate
-        headers = GithubAPI.get_auth_headers(self._token)
+        headers = GitHubAPI.get_auth_headers(self._token)
 
         # Get repositories
-        repos = GithubAPI.get_user_repos(self._token)
+        repos = GitHubAPI.get_user_repos(self._token)
 
         documents: List[MultipassDocument] = []
 

@@ -10,11 +10,11 @@ from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
 from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
                                             MetadataFilter, MetadataFilters)
-from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,
-                              DocumentReader, GDriveProcessor, GithubProcessor,
-                              JiraAuth, JiraProcessor)
+from pangea_multipass import (ConfluenceAuth, ConfluenceProcessor,  # type: ignore[attr-defined]
+                              DocumentReader, GDriveProcessor, GitHubProcessor,
+                              JiraAuth, JiraProcessor, SlackProcessor)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,
+from pangea_multipass import (MultipassDocument, PangeaGenericNodeProcessor,  # type: ignore[attr-defined]
                               PangeaNodeProcessorMixer)
 
 
@@ -81,10 +81,11 @@ class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
+        account_id (Optional[str]): Jira user's account id to check issues permissions.
     """
 
-    def __init__(self, auth: JiraAuth):
-        super().__init__(auth, get_node_metadata=get_node_metadata)
+    def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
+        super().__init__(auth, get_node_metadata=get_node_metadata, account_id=account_id)  # type: ignore[call-arg]
 
 
 class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
@@ -107,23 +108,39 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
 
     Args:
         creds (Credentials): Google OAuth2 credentials.
+        user_email (Optional[str]): User email to check access to files.
     """
 
-    def __init__(self, creds: Credentials):
-        super().__init__(creds, get_node_metadata=get_node_metadata)
+    def __init__(self, creds: Credentials, user_email: Optional[str] = None):
+        super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)  # type: ignore[call-arg]
 
 
-class LlamaIndexGithubProcessor(GithubProcessor[NodeWithScore]):
-    """Processor for Github integration with Llama Index nodes.
+class LlamaIndexGitHubProcessor(GitHubProcessor[NodeWithScore]):
+    """Processor for GitHub integration with Llama Index nodes.
 
-    Uses Github token to access nodes in the Llama Index.
+    Uses GitHub token to access nodes in the Llama Index.
 
     Args:
-        token (str): Github classic token.
+        token (str): GitHub classic token.
+        username (Optional[str]): GitHub username to check permissions.
     """
 
-    def __init__(self, token: str):
-        super().__init__(token, get_node_metadata=get_node_metadata)
+    def __init__(self, token: str, username: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_node_metadata, username=username)
+
+class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
+    """Processor for Slack integration with Llama Index nodes.
+
+    Uses Slack token to access nodes in the Llama Index.
+
+    Args:
+        token (str): Slack token.
+        user_email (Optional[str]): User email to check access to files.
+    """
+
+    def __init__(self, token: str, user_email: Optional[str] = None):
+        super().__init__(token, get_node_metadata=get_node_metadata, user_email=user_email)
+
 
 
 class NodePostprocessorMixer(BaseNodePostprocessor):
@@ -142,7 +159,7 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
         get_authorized_nodes() -> List[NodeWithScore]: Retrieves nodes that are authorized for access.
     """
 
-    node_processor: PangeaNodeProcessorMixer[NodeWithScore] = Field(default=None)
+    node_processor: PangeaNodeProcessorMixer[NodeWithScore] = Field(default=None)  # type: ignore[arg-type]
 
     def __init__(self, node_processors: List[PangeaGenericNodeProcessor]):
         """Initializes the NodePostprocessorMixer with a list of node processors.
@@ -166,7 +183,7 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
 
         Args:
             nodes (List[NodeWithScore]): The nodes to be postprocessed.
-            query_bundle (Optional[QueryBundle], optional): Query context for processing. Defaults to None.
+            query_bundle (Optional[QueryBundle]): Query context for processing. Defaults to None.
 
         Returns:
             List[NodeWithScore]: The list of postprocessed nodes.

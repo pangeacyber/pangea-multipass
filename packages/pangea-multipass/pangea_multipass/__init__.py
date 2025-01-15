@@ -6,5 +6,6 @@ from .core import (Constant, DocumentReader, FilterOperator, HasherSHA256,
                    PangeaGenericNodeProcessor, PangeaMetadataKeys,
                    PangeaMetadataValues, PangeaNodeProcessorMixer,
                    enrich_metadata, generate_id, get_document_metadata)
-from .github_reader import GithubReader
+from .github_reader import GitHubReader
+from .slack_reader import SlackReader
 from .sources import *

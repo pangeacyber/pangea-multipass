@@ -3,19 +3,17 @@
 
 import os
 
-from pangea_multipass import GitHubReader, PangeaMetadataKeys
-from pangea_multipass_langchain import LangChainGitHubFilter, from_multipass
+from pangea_multipass import (GitHubProcessor, GitHubReader,
+                              PangeaMetadataKeys, get_document_metadata)
 
 # Ingestion time
 admin_token = os.getenv("GITHUB_ADMIN_TOKEN")
 assert admin_token
 
 reader = GitHubReader(admin_token)
-mp_documents = reader.load_data()
-print(f"Loaded {len(mp_documents)} docs:")
+documents = reader.load_data()
+print(f"Loaded {len(documents)} docs:")
 
-# Convert documents to LangChain format
-documents = from_multipass(mp_documents)
 for doc in documents:
     print(doc.metadata.get(PangeaMetadataKeys.FILE_NAME), "")
 
@@ -23,7 +21,7 @@ for doc in documents:
 user_token = os.getenv("GITHUB_USER_TOKEN")
 assert user_token
 
-processor = LangChainGitHubFilter(user_token)
+processor = GitHubProcessor(user_token, get_document_metadata)
 authorized_docs = processor.filter(documents)
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")

@@ -18,10 +18,10 @@ for doc in documents:
     print(doc.metadata.get(PangeaMetadataKeys.FILE_NAME), "")
 
 # Inference time
-user_token = os.getenv("GITHUB_USER_TOKEN")
-assert user_token
+username = os.getenv("GITHUB_USERNAME")
+assert username
 
-processor = GithubProcessor(user_token, get_document_metadata)
+processor = GithubProcessor(admin_token, get_document_metadata, username=username)
 authorized_docs = processor.filter(documents)
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")
