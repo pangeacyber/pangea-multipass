@@ -95,10 +95,13 @@ class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
 
     Args:
         auth (ConfluenceAuth): Confluence authentication credentials.
+        space_id (Optional[int]): The space ID to filter pages by.
+        account_id (Optional[str]): User account id to check permissions using admin token.
+
     """
 
-    def __init__(self, auth: ConfluenceAuth):
-        super().__init__(auth, get_node_metadata=get_node_metadata)
+    def __init__(self, auth: ConfluenceAuth, space_id: Optional[int] = None, account_id: Optional[str] = None):
+        super().__init__(auth, get_node_metadata=get_node_metadata, space_id=space_id, account_id=account_id)
 
 
 class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
