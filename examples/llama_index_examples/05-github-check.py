@@ -3,8 +3,8 @@
 
 import os
 
-from pangea_multipass import (GitHubReader,  # type: ignore[attr-defined]
-                              PangeaMetadataKeys)
+from pangea_multipass import GitHubReader  # type: ignore[attr-defined]
+from pangea_multipass import PangeaMetadataKeys
 from pangea_multipass_llama_index import (LlamaIndexGitHubProcessor,
                                           from_multipass)
 

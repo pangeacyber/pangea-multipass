@@ -367,7 +367,6 @@ class ConfluenceAPI:
                 start += limit
 
             except requests.RequestException as e:
-                print(e)
                 raise Exception(f"Error fetching group members for group '{group_id}': {e}")
 
         return group_members
