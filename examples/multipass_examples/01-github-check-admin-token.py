@@ -3,14 +3,14 @@
 
 import os
 
-from pangea_multipass import (GithubProcessor, GithubReader,
+from pangea_multipass import (GitHubProcessor, GitHubReader,
                               PangeaMetadataKeys, get_document_metadata)
 
 # Ingestion time
 admin_token = os.getenv("GITHUB_ADMIN_TOKEN")
 assert admin_token
 
-reader = GithubReader(admin_token)
+reader = GitHubReader(admin_token)
 documents = reader.load_data()
 print(f"Loaded {len(documents)} docs:")
 
@@ -21,7 +21,7 @@ for doc in documents:
 username = os.getenv("GITHUB_USERNAME")
 assert username
 
-processor = GithubProcessor(admin_token, get_document_metadata, username=username)
+processor = GitHubProcessor(admin_token, get_document_metadata, username=username)
 authorized_docs = processor.filter(documents)
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")

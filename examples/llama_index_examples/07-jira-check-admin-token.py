@@ -7,7 +7,8 @@ from typing import List
 
 from llama_index.core import Document
 from llama_index.readers.jira import JiraReader
-from pangea_multipass import (JiraAuth, JiraME, enrich_metadata, PangeaMetadataKeys)
+from pangea_multipass import (JiraAuth, JiraME, PangeaMetadataKeys,
+                              enrich_metadata)
 from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
 
 # Suppress specific warning
@@ -68,7 +69,9 @@ assert jira_url
 jira_account_id = os.getenv("JIRA_USER_ACCOUNT_ID")
 assert jira_account_id
 
-jira_processor = LlamaIndexJiraProcessor(JiraAuth(jira_user_email, jira_user_token, jira_url), account_id=jira_account_id)
+jira_processor = LlamaIndexJiraProcessor(
+    JiraAuth(jira_user_email, jira_user_token, jira_url), account_id=jira_account_id
+)
 authorized_docs = jira_processor.filter(documents)
 
 print(f"\nAuthorized issues: {len(authorized_docs)}")

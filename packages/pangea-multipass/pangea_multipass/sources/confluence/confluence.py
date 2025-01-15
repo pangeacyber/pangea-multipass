@@ -74,14 +74,20 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
     auth: ConfluenceAuth
     space_id: Optional[int] = None
     get_node_metadata: Callable[[T], dict[str, Any]]
+    _account_id: Optional[str]
 
     def __init__(
-        self, auth: ConfluenceAuth, get_node_metadata: Callable[[T], dict[str, Any]], space_id: Optional[int] = None
+        self,
+        auth: ConfluenceAuth,
+        get_node_metadata: Callable[[T], dict[str, Any]],
+        space_id: Optional[int] = None,
+        account_id: Optional[str] = None,
     ):
         super().__init__()
         self.auth = auth
         self.space_id = space_id
         self.get_node_metadata = get_node_metadata
+        self._account_id = account_id
 
     def filter(
         self,
@@ -125,9 +131,13 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
         if access is not None:
             return access
 
+        auth = HTTPBasicAuth(self.auth.email, self.auth.token)
         try:
-            ConfluenceAPI.get_page(HTTPBasicAuth(self.auth.email, self.auth.token), self.auth.url, id)
-            access = True
+            if self._account_id:
+                access = ConfluenceAPI.check_user_access(auth, self.auth.url, id, self._account_id)
+            else:
+                ConfluenceAPI.get_page(auth, self.auth.url, id)
+                access = True
         except HTTPError as e:
             if e.response is None or e.response.status_code == 404:
                 access = False
@@ -190,7 +200,7 @@ class ConfluenceAPI:
         return ids
 
     @staticmethod
-    def get_page(auth, url: str, page_id: int | str) -> dict:
+    def get_page(auth: HTTPBasicAuth, url: str, page_id: int | str) -> dict:
         """
         Fetches details of a specific Confluence page by its ID.
 
@@ -214,3 +224,149 @@ class ConfluenceAPI:
         )
         response.raise_for_status()
         return json.loads(response.text)
+
+    @staticmethod
+    def get_page_details(auth: HTTPBasicAuth, url: str, page_id: str) -> dict:
+        """
+        Fetch details of a Confluence page, including its parent.
+
+        Args:
+            auth (HTTPBasicAuth): The authentication credentials for Confluence.
+            url (str): The base URL of the Confluence instance.
+            page_id (str): ID of the Confluence page.
+
+        Returns:
+            Page details including the parent page ID.
+        """
+
+        url = f"{url}/wiki/rest/api/content/{page_id}?expand=ancestors"
+        headers = {"Accept": "application/json"}
+
+        try:
+            response = requests.get(url, auth=auth, headers=headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            raise Exception(f"Error fetching page details for page {page_id}: {e}")
+
+    @staticmethod
+    def get_page_restrictions(auth: HTTPBasicAuth, url: str, page_id: str) -> dict:
+        """
+        Fetch restrictions for a given Confluence page.
+
+        Args:
+            auth (HTTPBasicAuth): The authentication credentials for Confluence.
+            url (str): The base URL of the Confluence instance.
+            page_id (str): ID of the Confluence page.
+
+        Returns:
+            List of restrictions.
+        """
+        url = f"{url}/wiki/rest/api/content/{page_id}/restriction/byOperation"
+        headers = {"Accept": "application/json"}
+
+        try:
+            response = requests.get(url, auth=auth, headers=headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            raise Exception(f"Error fetching restrictions for page {page_id}: {e}")
+
+    @staticmethod
+    def check_user_access(auth: HTTPBasicAuth, url: str, page_id: str, account_id: str) -> bool:
+        """
+        Recursively checks if a user has access to a Confluence page or its parent pages.
+
+        Args:
+            auth (HTTPBasicAuth): The authentication credentials for Confluence.
+            url (str): The base URL of the Confluence instance.
+            page_id (str): ID of the Confluence page.
+            account_id (str): Account ID of the user to check access for.
+
+        Returns:
+            Boolean indicating whether the user has access.
+        """
+        current_page: Optional[str] = page_id
+
+        while current_page:
+            # TODO: Log to logger
+            # print(f"Checking restrictions for page {current_page}...")
+            restrictions = ConfluenceAPI.get_page_restrictions(auth, url, current_page)
+            if restrictions:
+                # TODO: Check group permissions too
+                details = restrictions.get("read", {})
+                if details:
+                    restriction_user = details.get("restrictions", {}).get("user", {})
+                    if restriction_user.get("size", 0) > 0:
+                        for restriction in restriction_user.get("results", []):
+                            if restriction.get("accountId") == account_id:
+                                # TODO: Log to logger
+                                # print(f"User '{account_id}' has 'read' access to page {page_id} because of {current_page} permission.")
+                                return True
+
+                    restriction_group = details.get("restrictions", {}).get("group", {})
+                    if restriction_group.get("size", 0) > 0:
+                        # Check group restrictions
+                        for group in restriction_group.get("results", []):
+                            if account_id in ConfluenceAPI.get_group_members(auth, url, group.get("id")):
+                                return True
+
+                    if restriction_group.get("size", 0) > 0 or restriction_user.get("size", 0) > 0:
+                        # If there is restrictions but didn't allow this users, just return false.
+                        # print(f"User '{account_id}' does not have access to the page {page_id}.")
+                        return False
+            else:
+                # TODO: log to logger
+                # print(f"No restrictions found for page {current_page}.")
+                pass
+
+            # Get parent page ID
+            page_details = ConfluenceAPI.get_page_details(auth, url, current_page)
+            if page_details.get("ancestors"):
+                current_page = page_details["ancestors"][-1]["id"]
+            else:
+                current_page = None
+
+        # TODO: Log to logger
+        # print(f"User '{account_id}' has access to the page {page_id}. There were not restrictions applied.")
+        return True
+
+    @staticmethod
+    def get_group_members(auth: HTTPBasicAuth, url: str, group_id: str) -> List[str]:
+        """
+        Fetch all members of a Confluence group.
+
+        Args:
+            auth (HTTPBasicAuth): The authentication credentials for Confluence.
+            url (str): The base URL of the Confluence instance.
+            group_id (str): group id to request members.
+
+        Returns:
+            List of account IDs of group members.
+        """
+        group_members = []
+        start = 0
+        limit = 50  # Confluence API returns a limited number of results per request
+
+        while True:
+            url = f"{url}/wiki/rest/api/group/{group_id}/membersByGroupId?start={start}&limit={limit}"
+            headers = {"Accept": "application/json"}
+
+            try:
+                response = requests.get(url, auth=auth, headers=headers)
+                response.raise_for_status()
+                data = response.json()
+
+                for member in data.get("results", []):
+                    group_members.append(member["accountId"])
+
+                # Check if there are more members to fetch
+                if data.get("size", 0) + start >= data.get("totalSize", 0):
+                    break
+
+                start += limit
+
+            except requests.RequestException as e:
+                raise Exception(f"Error fetching group members for group '{group_id}': {e}")
+
+        return group_members

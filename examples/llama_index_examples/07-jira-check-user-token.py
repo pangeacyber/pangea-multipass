@@ -7,7 +7,8 @@ from typing import List
 
 from llama_index.core import Document
 from llama_index.readers.jira import JiraReader
-from pangea_multipass import (JiraAuth, JiraME, enrich_metadata, PangeaMetadataKeys)
+from pangea_multipass import (JiraAuth, JiraME, PangeaMetadataKeys,
+                              enrich_metadata)
 from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
 
 # Suppress specific warning

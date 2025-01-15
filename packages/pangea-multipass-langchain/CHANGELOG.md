@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Check user email permissions with admin token in SlackProcessor.
 - `py.typed` marker file.
 - Check user account id permissions with admin token in JiraProcessor.
+- Check user account id permission with admin token in ConfluenceProcessor.
 
 ## 0.1.0 - 2024-12-24
 
