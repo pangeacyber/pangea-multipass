@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pangea-multipass"
-version = "0.1.0"
+version = "0.2.0"
 description = "Pangea Multipass authorization library"
 authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
 license = "MIT"
