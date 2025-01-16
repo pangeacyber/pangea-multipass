@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pangea-multipass-llama-index"
-version = "0.1.0"
+version = "0.2.0"
 description = "Pangea Multipass authorization library for Llama Index"
 authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
 license = "MIT"
@@ -19,7 +19,7 @@ llama-index-embeddings-bedrock = "0.3.1"
 llama-index-readers-google = "^0.4.1"
 llama-index-readers-confluence = "^0.2.1"
 llama-index-readers-jira = "^0.3.1"
-pangea-multipass = "0.1.0"
+pangea-multipass = "0.2.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.14.1"
