@@ -20,7 +20,7 @@ assert user_email
 
 processor = SlackProcessor(token=admin_token, get_node_metadata=get_document_metadata, user_email=user_email)
 filter = processor.get_filter()
-print("User has acess to channel ids:")
+print("User has access to channel ids:")
 for id in filter.value:
     print(f"\t{id}")
 
