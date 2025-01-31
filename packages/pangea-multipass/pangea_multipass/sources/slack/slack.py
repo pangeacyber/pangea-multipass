@@ -15,7 +15,7 @@ from pangea_multipass.core import (
 
 class SlackAPI:
     @staticmethod
-    def list_channels(token: str) -> List[str]:
+    def list_channels(token: str) -> List[dict[str, Any]]:
         """
         List all channels the authenticated user has access to.
 
@@ -29,13 +29,13 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.conversations_list(types="public_channel,private_channel")
-            channels = response.get("channels", [])  # type: ignore[var-annotated]
+            channels: List[dict[str, Any]] = response.get("channels", [])
             return channels
         except SlackApiError as e:
             return []
 
     @staticmethod
-    def get_channel_members(token: str, channel_id: str):
+    def get_channel_members(token: str, channel_id: str) -> Optional[List[str]]:
         """
         Retrieve the list of members in a Slack channel.
 
@@ -50,12 +50,12 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.conversations_members(channel=channel_id)
-            return response["members"]
+            return response["members"]  # type: ignore[no-any-return]
         except SlackApiError as e:
             return None
 
     @staticmethod
-    def get_all_channels(token: str):
+    def get_all_channels(token: str) -> Optional[List[str]]:
         """
         Retrieve all channels in the workspace.
 
@@ -67,16 +67,16 @@ class SlackAPI:
         """
 
         client = WebClient(token=token)
-        channels = []  # type: ignore[var-annotated]
+        channels: List[dict[str, Any]] = []
         try:
             response = client.conversations_list(types="public_channel,private_channel", limit=1000)
             channels = response.get("channels", [])
             return [channel["id"] for channel in channels]
         except SlackApiError as e:
-            return []
+            return None
 
     @staticmethod
-    def get_user_id(token: str, user_email: str):
+    def get_user_id(token: str, user_email: str) -> Optional[str]:
         """
         Retrieve the Slack user ID for a given email address.
 
@@ -91,12 +91,12 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.users_lookupByEmail(email=user_email)
-            return response["user"]["id"]
+            return response["user"]["id"]  # type: ignore[no-any-return]
         except SlackApiError:
             return None
 
     @staticmethod
-    def get_channels_for_user(token: str, user_id: str, channel_ids: List[str]):
+    def get_channels_for_user(token: str, user_id: str, channel_ids: List[str]) -> List[str]:
         """
         Check which channels a user has access to.
 
@@ -113,7 +113,7 @@ class SlackAPI:
         for channel_id in channel_ids:
             try:
                 response = client.conversations_members(channel=channel_id)
-                members = response.get("members", [])  # type: ignore[var-annotated]
+                members: List[str] = response.get("members", [])
                 if user_id in members:
                     accessible_channels.append(channel_id)
             except SlackApiError as e:
@@ -125,8 +125,8 @@ class SlackAPI:
         return accessible_channels
 
 
-class SlackProcessor(PangeaGenericNodeProcessor, Generic[T]):
-    _channels_id_cache: dict[tuple, bool] = {}
+class SlackProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
+    _channels_id_cache: dict[str, bool] = {}
     _token: str
     _user_email: Optional[str] = None
     _user_id: Optional[str] = None
@@ -189,7 +189,7 @@ class SlackProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
         return MetadataFilter(key=PangeaMetadataKeys.SLACK_CHANNEL_ID, value=channels, operator=FilterOperator.IN)
 
-    def check_user_access(self, token: str, channel_id: str, user_email: str):
+    def check_user_access(self, token: str, channel_id: str, user_email: str) -> bool:
         """
         Check if a user has access to a specific Slack channel.
 
@@ -213,23 +213,25 @@ class SlackProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
         return user_id in channel_members
 
-    def _load_channels_with_email(self):
+    def _load_channels_with_email(self) -> None:
         if self._channels_id_cache:
             return
 
-        if not self._user_id:
+        if not self._user_id and self._user_email is not None:
             self._user_id = SlackAPI.get_user_id(self._token, self._user_email)
 
         if not self._user_id:
             return
 
         all_channels = SlackAPI.get_all_channels(self._token)
+        if all_channels is None:
+            return
 
         channels = SlackAPI.get_channels_for_user(self._token, user_id=self._user_id, channel_ids=all_channels)
         for channel in channels:
             self._channels_id_cache[channel] = True
 
-    def _load_channels_from_token(self):
+    def _load_channels_from_token(self) -> None:
         if self._channels_id_cache:
             return
 

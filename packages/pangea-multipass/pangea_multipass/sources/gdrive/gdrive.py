@@ -43,14 +43,14 @@ class GDriveME(MetadataEnricher):
 
         """Google Drive file fields"""
 
-        def __str__(self):
+        def __str__(self) -> str:
             return str(self.value)
 
-        def __repr__(self):
+        def __repr__(self) -> str:
             return str(self.value)
 
     _creds: Credentials
-    _files: dict[str, dict]
+    _files: dict[str, dict[str, Any]]
     _fields: dict[FileField, str]
     _fields_param: str
 
@@ -117,9 +117,9 @@ class GDriveME(MetadataEnricher):
 
     def _get_id_from_metadata(self, metadata: dict[str, Any]) -> str:
         # Llama index "file_id" key
-        value = metadata.get("file id", None)
+        value = metadata.get("file id", "")
         if value:
-            return value
+            return str(value)
 
         # Langchain does not have id in metadata, it need to be extracted from "source"
         # "source": f"https://docs.google.com/document/d/{id}/edit",
@@ -127,7 +127,7 @@ class GDriveME(MetadataEnricher):
         if source and type(source) is str:
             value = self._get_id_from_source(source)
             if value:
-                return value
+                return str(value)
 
         return ""
 
@@ -148,11 +148,11 @@ class GDriveME(MetadataEnricher):
         if not parent_file:
             return ""
 
-        return parent_file.get("name", "")
+        return str(parent_file.get("name", ""))
 
     def _set_fields_param(
         self,
-    ):
+    ) -> None:
         if not self._fields:
             self._fields_param = "nextPageToken, files(id)"
             return
@@ -164,7 +164,7 @@ class GDriveME(MetadataEnricher):
         self._fields_param = f"nextPageToken, files({keys})"
 
     # Get all the files belonging to the user (only top 10 for this example)
-    def _getGDrivePermissions(self):
+    def _getGDrivePermissions(self) -> None:
         # Create the Google Drive API service
         service = build("drive", "v3", credentials=self._creds)
 
@@ -217,7 +217,7 @@ class GDriveME(MetadataEnricher):
         self._files = files_dict
 
 
-class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
+class GDriveProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     """Processes Google Drive documents to determine access permissions.
 
     Filters documents based on access permissions for Google Drive files.
@@ -265,7 +265,7 @@ class GDriveProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
     def get_filter(
         self,
-    ):
+    ) -> MetadataFilter:
         """Generate a filter for processing Google Drive file IDs.
 
         Returns:
@@ -315,7 +315,7 @@ class GDriveAPI:
     _user_token_filepath: str = "gdrive_access_token.json"
 
     @staticmethod
-    def get_and_save_access_token(credentials_filepath, token_filepath, scopes):
+    def get_and_save_access_token(credentials_filepath: str, token_filepath: str, scopes: List[str]) -> None:
         """
         Retrieves and saves the OAuth2 access token for Google Drive.
 
@@ -334,7 +334,7 @@ class GDriveAPI:
             token.write(creds.to_json())
 
     @staticmethod
-    def get_user_info(creds: Credentials):
+    def get_user_info(creds: Credentials) -> dict[str, Any]:
         """
         Retrieves user profile information using the Google OAuth2 API.
 
@@ -347,12 +347,12 @@ class GDriveAPI:
 
         service = build("oauth2", "v2", credentials=creds)
         user_info = service.userinfo().get().execute()
-        return user_info
+        return user_info  # type: ignore[no-any-return]
 
     @staticmethod
     def get_user_credentials(
-        credentials_filepath: str, user_token_filepath: str = _user_token_filepath, scopes=_SCOPES
-    ):
+        credentials_filepath: str, user_token_filepath: str = _user_token_filepath, scopes: List[str] = _SCOPES
+    ) -> Credentials:
         """
         Retrieves and saves user credentials for Google Drive authentication.
 
@@ -444,7 +444,7 @@ class GDriveAPI:
             permissions = service.permissions().list(fileId=file_id, fields="permissions").execute()
             for permission in permissions.get("permissions", []):
                 if permission.get("emailAddress") == user_email:
-                    return permission.get("role")  # e.g., "owner", "writer", "reader"
+                    return str(permission.get("role"))  # e.g., "owner", "writer", "reader"
             return None
         except Exception:
             return None

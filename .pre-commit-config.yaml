@@ -17,29 +17,28 @@ repos:
         args:
           - --branch
           - main
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
-    hooks:
-      - id: black
-        args:
-          - --line-length
-          - "120"
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
       - id: isort
         args:
-          - --profile
-          - black
-          - --line-length
-          - "120"
+          - --profile=black
+          - --line-length=120
           - --resolve-all-configs
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        args:
+          - --line-length=120
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.13.0
     hooks:
       - id: mypy
         args:
           - --ignore-missing-imports
+          - --strict
+          - --implicit-reexport
         additional_dependencies:
           - types-Deprecated==1.2.9.3
           - types-python-dateutil==2.8.19.14

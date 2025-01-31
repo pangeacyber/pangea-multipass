@@ -6,18 +6,15 @@ from io import BytesIO
 from pathlib import Path
 from typing import List
 
-import boto3  # type: ignore[import-untyped]
+import boto3
 from google.oauth2.credentials import Credentials
 from langchain.document_loaders import ConfluenceLoader
 from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
-from langchain_google_community import \
-    GoogleDriveLoader  # type: ignore[import-untyped]
-from pangea_multipass import ConfluenceME, GDriveAPI, GDriveME, enrich_metadata
-from pangea_multipass_langchain import (ConfluenceAuth, DocumentFilterMixer,
-                                        LangChainConfluenceFilter,
-                                        LangChainDocumentReader, get_doc_id)
+from langchain_google_community import GoogleDriveLoader
+from pangea_multipass import ConfluenceAuth, ConfluenceME, GDriveAPI, GDriveME, enrich_metadata
+from pangea_multipass_langchain import DocumentFilterMixer, LangChainConfluenceFilter, LangChainDocumentReader
 
 # Initialization
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-west-2")
@@ -41,7 +38,7 @@ embedding_model = BedrockEmbeddings(model_id="amazon.titan-embed-g1-text-02", cl
 class TextLoader:
     file: BytesIO
 
-    def __init__(self, file):
+    def __init__(self, file: BytesIO):
         self.file = file
 
     def load(self) -> List[Document]:
@@ -65,7 +62,7 @@ def load_gdrive_documents() -> List[Document]:
         file_loader_cls=TextLoader,
     )
 
-    docs = loader.load()
+    docs: List[Document] = loader.load()
     print(f"GDrive docs loaded: {len(docs)}.")
 
     # Metadata enricher library
@@ -103,7 +100,7 @@ def confluence_read_docs() -> List[Document]:
         api_key=token,
         space_key=confluence_space_key,
     )
-    documents = loader.load()
+    documents: List[Document] = loader.load()
 
     # Enrich metadata process
     print(f"Processing {len(documents)} Confluence docs...")

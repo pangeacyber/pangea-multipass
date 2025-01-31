@@ -53,7 +53,7 @@ class GitHubReader:
 
         return documents
 
-    def _get_repo_files(self, headers, owner, repo, path=""):
+    def _get_repo_files(self, headers: dict[str, Any], owner: str, repo: str, path: str = "") -> List[dict[str, Any]]:
         """Recursively fetch all files and directories in a repository."""
 
         url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
@@ -61,7 +61,7 @@ class GitHubReader:
 
         if response.status_code == 200:
             items = response.json()
-            files = []
+            files: List[dict[str, Any]] = []
             for item in items:
                 if item["type"] == "file":
                     files.append(item)
@@ -73,10 +73,10 @@ class GitHubReader:
         else:
             raise Exception(f"Error fetching files for repository '{repo}': {response.json()}")
 
-    def _download_file_content(self, headers, url):
+    def _download_file_content(self, headers: dict[str, Any], url: str) -> str:
         """Download the content of a file from GitHub."""
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            return response.content
+            return str(response.content)
         else:
             raise Exception(f"Error downloading file: {response.json()}")

@@ -5,10 +5,9 @@ from typing import Any, List, Optional
 
 from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
-from pangea_multipass import ConfluenceProcessor  # type: ignore[attr-defined]
-from pangea_multipass import PangeaGenericNodeProcessor  # type: ignore[attr-defined]
 from pangea_multipass import (
     ConfluenceAuth,
+    ConfluenceProcessor,
     DocumentReader,
     FilterOperator,
     GDriveProcessor,
@@ -17,14 +16,14 @@ from pangea_multipass import (
     JiraProcessor,
 )
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import MultipassDocument, PangeaNodeProcessorMixer, SlackProcessor
+from pangea_multipass import MultipassDocument, PangeaGenericNodeProcessor, PangeaNodeProcessorMixer, SlackProcessor
 
 
 class LangChainDocumentReader(DocumentReader):
     """Lang chain document reader"""
 
     def read(self, doc: Document) -> str:
-        return doc.page_content
+        return str(doc.page_content)
 
 
 def get_doc_id(doc: Document) -> str:
@@ -32,7 +31,7 @@ def get_doc_id(doc: Document) -> str:
 
 
 def get_doc_metadata(doc: Document) -> dict[str, Any]:
-    return doc.metadata
+    return dict(doc.metadata)
 
 
 def from_multipass(documents: List[MultipassDocument]) -> List[Document]:
@@ -56,7 +55,7 @@ class LangChainJiraFilter(JiraProcessor[Document]):
     """
 
     def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
-        super().__init__(auth, get_node_metadata=get_doc_metadata, account_id=account_id)  # type: ignore[call-arg]
+        super().__init__(auth, get_node_metadata=get_doc_metadata, account_id=account_id)
 
 
 class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
@@ -86,7 +85,7 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
     """
 
     def __init__(self, creds: Credentials, user_email: Optional[str] = None):
-        super().__init__(creds, get_node_metadata=get_doc_metadata, user_email=user_email)  # type: ignore[call-arg]
+        super().__init__(creds, get_node_metadata=get_doc_metadata, user_email=user_email)
 
 
 class LangChainGitHubFilter(GitHubProcessor[Document]):
@@ -120,7 +119,7 @@ class LangChainSlackFilter(SlackProcessor[Document]):
 class DocumentFilterMixer:
     node_processor: PangeaNodeProcessorMixer[Document]
 
-    def __init__(self, document_filters: List[PangeaGenericNodeProcessor]):
+    def __init__(self, document_filters: List[PangeaGenericNodeProcessor[Document]]):
         super().__init__()
         self.node_processor = PangeaNodeProcessorMixer[Document](
             get_node_metadata=get_doc_metadata,
