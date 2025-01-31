@@ -2,8 +2,7 @@ from typing import Any, List
 
 import requests
 
-from .core import (MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues,
-                   generate_id)
+from .core import MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues, generate_id
 from .sources.github import GitHubAPI
 
 

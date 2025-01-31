@@ -1,9 +1,15 @@
 from typing import Any, Callable, Generic, List, Optional, Tuple
 
 import requests
-from pangea_multipass.core import (FilterOperator, MetadataFilter,
-                                   PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
+
+from pangea_multipass.core import (
+    FilterOperator,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 class GitHubAPI:

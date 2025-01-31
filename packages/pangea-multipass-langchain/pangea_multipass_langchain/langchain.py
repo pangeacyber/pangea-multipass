@@ -6,14 +6,18 @@ from typing import Any, List, Optional
 from google.oauth2.credentials import Credentials
 from langchain_core.documents import Document
 from pangea_multipass import ConfluenceProcessor  # type: ignore[attr-defined]
-from pangea_multipass import \
-    PangeaGenericNodeProcessor  # type: ignore[attr-defined]
-from pangea_multipass import (ConfluenceAuth, DocumentReader, FilterOperator,
-                              GDriveProcessor, GitHubProcessor, JiraAuth,
-                              JiraProcessor)
+from pangea_multipass import PangeaGenericNodeProcessor  # type: ignore[attr-defined]
+from pangea_multipass import (
+    ConfluenceAuth,
+    DocumentReader,
+    FilterOperator,
+    GDriveProcessor,
+    GitHubProcessor,
+    JiraAuth,
+    JiraProcessor,
+)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaNodeProcessorMixer,
-                              SlackProcessor)
+from pangea_multipass import MultipassDocument, PangeaNodeProcessorMixer, SlackProcessor
 
 
 class LangChainDocumentReader(DocumentReader):

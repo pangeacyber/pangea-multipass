@@ -7,9 +7,16 @@ from typing import Any, Callable, Generic, List, Optional
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from pangea_multipass.core import (FilterOperator, MetadataEnricher,
-                                   MetadataFilter, PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
+
+from pangea_multipass.core import (
+    FilterOperator,
+    MetadataEnricher,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 class GDriveME(MetadataEnricher):

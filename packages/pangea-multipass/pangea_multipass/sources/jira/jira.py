@@ -6,12 +6,19 @@ import json
 from typing import Any, Callable, Generic, List, Optional
 
 import requests
-from pangea_multipass.core import (_PANGEA_METADATA_KEY_PREFIX, FilterOperator,
-                                   MetadataEnricher, MetadataFilter,
-                                   PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
+
+from pangea_multipass.core import (
+    _PANGEA_METADATA_KEY_PREFIX,
+    FilterOperator,
+    MetadataEnricher,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 @dataclasses.dataclass

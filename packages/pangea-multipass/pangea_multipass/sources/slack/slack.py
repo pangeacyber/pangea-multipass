@@ -1,10 +1,16 @@
 from typing import Any, Callable, Generic, List, Optional
 
-from pangea_multipass.core import (FilterOperator, MetadataFilter,
-                                   PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+
+from pangea_multipass.core import (
+    FilterOperator,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 class SlackAPI:

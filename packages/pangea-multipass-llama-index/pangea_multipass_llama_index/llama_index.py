@@ -8,16 +8,12 @@ from llama_index.core import Document as LIDocument
 from llama_index.core.bridge.pydantic import Field
 from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
-from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
-                                            MetadataFilter, MetadataFilters)
+from llama_index.core.vector_stores import FilterCondition, FilterOperator, MetadataFilter, MetadataFilters
 from pangea_multipass import ConfluenceProcessor  # type: ignore[attr-defined]
-from pangea_multipass import \
-    PangeaGenericNodeProcessor  # type: ignore[attr-defined]
-from pangea_multipass import (ConfluenceAuth, DocumentReader, GDriveProcessor,
-                              GitHubProcessor, JiraAuth, JiraProcessor)
+from pangea_multipass import PangeaGenericNodeProcessor  # type: ignore[attr-defined]
+from pangea_multipass import ConfluenceAuth, DocumentReader, GDriveProcessor, GitHubProcessor, JiraAuth, JiraProcessor
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaNodeProcessorMixer,
-                              SlackProcessor)
+from pangea_multipass import MultipassDocument, PangeaNodeProcessorMixer, SlackProcessor
 
 
 class LIDocumentReader(DocumentReader):
