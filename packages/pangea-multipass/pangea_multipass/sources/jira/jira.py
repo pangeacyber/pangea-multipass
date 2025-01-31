@@ -319,7 +319,7 @@ class JiraAPI:
             total = resp.get("total", 0)
 
             ids = [issue["id"] for issue in issues]
-            issue_ids.extend(ids)  # type: ignore
+            issue_ids.extend(ids)
 
             start_at = start_at + len(ids)
             keep_iterating = start_at < total
