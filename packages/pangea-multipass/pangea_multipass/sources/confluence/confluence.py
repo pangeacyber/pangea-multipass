@@ -185,7 +185,7 @@ class ConfluenceAPI:
             auth=auth,
         )
         response.raise_for_status()
-        return json.loads(response.text)  # type: ignore[no-any-return]
+        return json.loads(response.text)
 
     @staticmethod
     def load_page_ids(email: str, token: str, url: str, space_id: Optional[int]) -> List[str]:
@@ -254,7 +254,7 @@ class ConfluenceAPI:
         try:
             response = requests.get(url, auth=auth, headers=headers)
             response.raise_for_status()
-            return response.json()  # type: ignore[no-any-return]
+            return response.json()
         except requests.RequestException as e:
             raise Exception(f"Error fetching page details for page {page_id}: {e}")
 
@@ -277,7 +277,7 @@ class ConfluenceAPI:
         try:
             response = requests.get(url, auth=auth, headers=headers)
             response.raise_for_status()
-            return response.json()  # type: ignore[no-any-return]
+            return response.json()
         except requests.RequestException as e:
             raise Exception(f"Error fetching restrictions for page {page_id}: {e}")
 

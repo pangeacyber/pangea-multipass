@@ -219,7 +219,7 @@ class JiraAPI:
         url = f"https://{auth.url}{path}"
         response = requests.get(url, headers={"Accept": "application/json"}, params=params, auth=basic_auth)
         response.raise_for_status()
-        return response.json()  # type: ignore[no-any-return]
+        return response.json()
 
     @staticmethod
     def _post(auth: JiraAuth, path: str, body: dict[str, Any] = {}) -> dict[str, Any]:
@@ -230,7 +230,7 @@ class JiraAPI:
         response = requests.request("POST", f"https://{auth.url}{path}", json=body, headers=headers, auth=basic_auth)
 
         response.raise_for_status()
-        return response.json()  # type: ignore[no-any-return]
+        return response.json()
 
     @staticmethod
     def get_issue(auth: JiraAuth, issue_id: str) -> dict[str, Any]:
@@ -343,4 +343,4 @@ class JiraAPI:
     @staticmethod
     def get_allowed_issues(auth: JiraAuth, account_id: str, issues: List[int]) -> List[int]:
         resp = JiraAPI.get_permission_check(auth, account_id, issues)
-        return resp.get("projectPermissions", [])[0].get("issues", [])  # type: ignore[no-any-return]
+        return resp.get("projectPermissions", [])[0].get("issues", [])

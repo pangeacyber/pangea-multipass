@@ -150,7 +150,7 @@ class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
         super().__init__(token, get_node_metadata=get_node_metadata, user_email=user_email)
 
 
-class NodePostprocessorMixer(BaseNodePostprocessor):  # type: ignore[misc]
+class NodePostprocessorMixer(BaseNodePostprocessor):
     """Postprocessor mixer for processing nodes with multiple processors.
 
     This class mixes multiple node processors and applies them to Llama Index nodes.

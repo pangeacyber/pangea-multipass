@@ -50,7 +50,7 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.conversations_members(channel=channel_id)
-            return response["members"]  # type: ignore[no-any-return]
+            return response["members"]
         except SlackApiError as e:
             return None
 
@@ -91,7 +91,7 @@ class SlackAPI:
         client = WebClient(token=token)
         try:
             response = client.users_lookupByEmail(email=user_email)
-            return response["user"]["id"]  # type: ignore[no-any-return]
+            return response["user"]["id"]
         except SlackApiError:
             return None
 

@@ -347,7 +347,7 @@ class GDriveAPI:
 
         service = build("oauth2", "v2", credentials=creds)
         user_info = service.userinfo().get().execute()
-        return user_info  # type: ignore[no-any-return]
+        return user_info
 
     @staticmethod
     def get_user_credentials(
