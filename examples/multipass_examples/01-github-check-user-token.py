@@ -3,8 +3,7 @@
 
 import os
 
-from pangea_multipass import (GitHubProcessor, GitHubReader,
-                              PangeaMetadataKeys, get_document_metadata)
+from pangea_multipass import GitHubProcessor, GitHubReader, PangeaMetadataKeys, get_document_metadata
 
 # Ingestion time
 admin_token = os.getenv("GITHUB_ADMIN_TOKEN")

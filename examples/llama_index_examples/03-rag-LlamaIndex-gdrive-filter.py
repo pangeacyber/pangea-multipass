@@ -6,13 +6,12 @@ import warnings
 from typing import List
 
 from google.oauth2.credentials import Credentials
-from llama_index.core import (Settings, StorageContext, VectorStoreIndex,
-                              load_index_from_storage)
+from llama_index.core import Settings, StorageContext, VectorStoreIndex, load_index_from_storage
 from llama_index.embeddings.bedrock import BedrockEmbedding
 from llama_index.llms.bedrock import Bedrock
 from llama_index.readers.google import GoogleDriveReader
 from pangea_multipass import GDriveAPI, GDriveME, enrich_metadata
-from pangea_multipass_llama_index import LIDocumentReader
+from pangea_multipass_llama_index import LIDocument, LIDocumentReader
 
 # Suppress specific warning
 warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
@@ -52,7 +51,7 @@ Settings.chunk_size = 1000
 Settings.chunk_overlap = 100
 
 
-def google_drive_read_docs() -> List:
+def google_drive_read_docs() -> List[LIDocument]:
     print("Loading Google Drive docs...")
     # Google Drive Data Ingestion
     credentials_filepath = os.path.abspath("../credentials.json")
@@ -70,7 +69,7 @@ def google_drive_read_docs() -> List:
     gdrive_reader = GoogleDriveReader(
         folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
-    documents = gdrive_reader.load_data(folder_id=gdrive_fid)
+    documents: List[LIDocument] = gdrive_reader.load_data(folder_id=gdrive_fid)
 
     print(f"Processing {len(documents)} docs...")
 
@@ -96,12 +95,11 @@ if not os.path.exists(PERSIST_DIR):
 else:
     # load the existing index
     storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
-    index = load_index_from_storage(storage_context)  # type: ignore
+    index = load_index_from_storage(storage_context)
 
 
 # Inference
-from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
-                                          NodePostprocessorMixer)
+from pangea_multipass_llama_index import LlamaIndexGDriveProcessor, NodePostprocessorMixer
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../credentials.json")

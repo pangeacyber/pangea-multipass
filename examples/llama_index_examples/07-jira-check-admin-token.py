@@ -7,9 +7,8 @@ from typing import List
 
 from llama_index.core import Document
 from llama_index.readers.jira import JiraReader
-from pangea_multipass import (JiraAuth, JiraME, PangeaMetadataKeys,
-                              enrich_metadata)
-from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
+from pangea_multipass import JiraAuth, JiraME, PangeaMetadataKeys, enrich_metadata
+from pangea_multipass_llama_index import LIDocument, LIDocumentReader
 
 # Suppress specific warning
 warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
@@ -31,7 +30,7 @@ def jira_load_data(reader: JiraReader, query: str = "") -> List[Document]:
     return all_documents
 
 
-def jira_read_docs():
+def jira_read_docs() -> List[LIDocument]:
     # Jira credentials and base URL
     JIRA_BASE_URL = os.getenv("JIRA_BASE_URL") or ""
     assert JIRA_BASE_URL

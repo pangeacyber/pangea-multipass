@@ -6,11 +6,18 @@ import json
 from typing import Any, Callable, Generic, List, Optional
 
 import requests
-from pangea_multipass.core import (FilterOperator, MetadataEnricher,
-                                   MetadataFilter, PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
+
+from pangea_multipass.core import (
+    FilterOperator,
+    MetadataEnricher,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 @dataclasses.dataclass
@@ -25,7 +32,9 @@ class ConfluenceAuth:
 class ConfluenceME(MetadataEnricher):
     """Enriches Confluence-specific metadata for documents."""
 
-    def __init__(self):
+    def __init__(
+        self,
+    ) -> None:
         super().__init__("unused_key")
 
     def extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
@@ -54,19 +63,19 @@ class ConfluenceME(MetadataEnricher):
 
     def _get_id_from_metadata(self, metadata: dict[str, Any]) -> str:
         # Langchain metadata id value
-        value = metadata.get("id", None)
+        value = metadata.get("id", "")
         if value:
-            return value
+            return str(value)
 
         # Llama Index metadata id value
-        value = metadata.get("page_id", None)
+        value = metadata.get("page_id", "")
         if value:
-            return value
+            return str(value)
 
         return ""
 
 
-class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
+class ConfluenceProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     """Processor for handling Confluence documents with authorization checks."""
 
     page_ids: List[str] = []
@@ -151,7 +160,7 @@ class ConfluenceProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
 class ConfluenceAPI:
     @staticmethod
-    def get_pages(auth: HTTPBasicAuth, url: str, space_id: Optional[int]) -> dict:
+    def get_pages(auth: HTTPBasicAuth, url: str, space_id: Optional[int]) -> dict[str, Any]:
         """
         Fetches a list of pages from a Confluence space.
 
@@ -200,7 +209,7 @@ class ConfluenceAPI:
         return ids
 
     @staticmethod
-    def get_page(auth: HTTPBasicAuth, url: str, page_id: int | str) -> dict:
+    def get_page(auth: HTTPBasicAuth, url: str, page_id: int | str) -> dict[str, Any]:
         """
         Fetches details of a specific Confluence page by its ID.
 
@@ -223,10 +232,10 @@ class ConfluenceAPI:
             auth=auth,
         )
         response.raise_for_status()
-        return json.loads(response.text)
+        return dict(json.loads(response.text))
 
     @staticmethod
-    def get_page_details(auth: HTTPBasicAuth, url: str, page_id: str) -> dict:
+    def get_page_details(auth: HTTPBasicAuth, url: str, page_id: str) -> dict[str, Any]:
         """
         Fetch details of a Confluence page, including its parent.
 
@@ -250,7 +259,7 @@ class ConfluenceAPI:
             raise Exception(f"Error fetching page details for page {page_id}: {e}")
 
     @staticmethod
-    def get_page_restrictions(auth: HTTPBasicAuth, url: str, page_id: str) -> dict:
+    def get_page_restrictions(auth: HTTPBasicAuth, url: str, page_id: str) -> dict[str, Any]:
         """
         Fetch restrictions for a given Confluence page.
 

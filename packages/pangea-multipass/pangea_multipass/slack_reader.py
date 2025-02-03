@@ -1,10 +1,9 @@
-from typing import List
+from typing import Any, List
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-from .core import (MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues,
-                   generate_id)
+from .core import MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues, generate_id
 from .sources import SlackAPI
 
 
@@ -13,7 +12,7 @@ class SlackReader:
     _client: WebClient
     _max_messages: int
 
-    def __init__(self, token: str, max_messages=1000):
+    def __init__(self, token: str, max_messages: int = 1000) -> None:
         self._token = token
         self._client = WebClient(token=self._token)
         self._max_messages = max_messages
@@ -22,11 +21,11 @@ class SlackReader:
         documents: List[MultipassDocument] = []
         channels = SlackAPI.list_channels(token=self._token)
         for channel in channels:
-            channel_id = channel["id"]  # type: ignore[index]
-            channel_name = channel["name"]  # type: ignore[index]
+            channel_id = channel["id"]
+            channel_name = channel["name"]
 
             # Fetch messages for each channel
-            messages = self._fetch_messages(channel["id"])  # type: ignore[index]
+            messages = self._fetch_messages(channel["id"])
             # print(f"Channel has {len(messages)} messages")
             for message in messages:
                 subtype = message.get("subtype", "")
@@ -47,7 +46,7 @@ class SlackReader:
 
         return documents
 
-    def _fetch_messages(self, channel_id: str, max_messages: int = 1000) -> List:
+    def _fetch_messages(self, channel_id: str, max_messages: int = 1000) -> List[dict[str, Any]]:
         """
         Fetch the messages from a given channel.
         """
@@ -61,7 +60,7 @@ class SlackReader:
         try:
             while total_messages < max_messages:
                 response = self._client.conversations_history(channel=channel_id, latest=latest, limit=page_size)
-                new_messages: List[dict] = response.get("messages", [])
+                new_messages: List[dict[str, Any]] = response.get("messages", [])
                 total_messages += len(new_messages)
                 messages.extend(new_messages)
 

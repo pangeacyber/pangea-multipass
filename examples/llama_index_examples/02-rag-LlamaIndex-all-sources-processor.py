@@ -6,16 +6,14 @@ import warnings
 from typing import List
 
 from google.oauth2.credentials import Credentials
-from llama_index.core import (Document, Settings, StorageContext,
-                              VectorStoreIndex, load_index_from_storage)
+from llama_index.core import Document, Settings, StorageContext, VectorStoreIndex, load_index_from_storage
 from llama_index.embeddings.bedrock import BedrockEmbedding
 from llama_index.llms.bedrock import Bedrock
 from llama_index.readers.confluence import ConfluenceReader
 from llama_index.readers.google import GoogleDriveReader
 from llama_index.readers.jira import JiraReader
-from pangea_multipass import (ConfluenceAuth, ConfluenceME, GDriveAPI,
-                              GDriveME, JiraAuth, JiraME, enrich_metadata)
-from pangea_multipass_llama_index import LIDocumentReader, get_doc_id
+from pangea_multipass import ConfluenceAuth, ConfluenceME, GDriveAPI, GDriveME, JiraAuth, JiraME, enrich_metadata
+from pangea_multipass_llama_index import LIDocument, LIDocumentReader
 
 # Suppress specific warning
 warnings.filterwarnings("ignore", message='Field "model_name" has conflict with protected namespace')
@@ -55,7 +53,7 @@ Settings.chunk_size = 1000
 Settings.chunk_overlap = 100
 
 
-def google_drive_read_docs() -> List:
+def google_drive_read_docs() -> List[LIDocument]:
     print("Loading Google Drive docs...")
     # Google Drive Data Ingestion
     credentials_filepath = os.path.abspath("../credentials.json")
@@ -73,7 +71,7 @@ def google_drive_read_docs() -> List:
     gdrive_reader = GoogleDriveReader(
         folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
-    documents = gdrive_reader.load_data(folder_id=gdrive_fid)
+    documents: List[LIDocument] = gdrive_reader.load_data(folder_id=gdrive_fid)
 
     print(f"Processing {len(documents)} docs...")
 
@@ -91,7 +89,7 @@ confluence_space_key = "~71202041f9bfec117041348629ccf3e3c751b3"
 confluence_space_id = 393230
 
 
-def confluence_read_docs():
+def confluence_read_docs() -> List[LIDocument]:
     """Fetch all documents from Confluence using ConfluenceReader."""
 
     token = os.getenv("CONFLUENCE_ADMIN_TOKEN")
@@ -108,7 +106,7 @@ def confluence_read_docs():
         user_name=email,
         password=token,
     )
-    documents = reader.load_data(space_key=confluence_space_key, include_attachments=True)
+    documents: List[LIDocument] = reader.load_data(space_key=confluence_space_key, include_attachments=True)
 
     # Enrich metadata process
     print(f"Processing {len(documents)} Confluence docs...")
@@ -134,7 +132,7 @@ def jira_load_data(reader: JiraReader, query: str = "") -> List[Document]:
     return all_documents
 
 
-def jira_read_docs():
+def jira_read_docs() -> List[LIDocument]:
     # Jira credentials and base URL
     JIRA_BASE_URL = os.getenv("JIRA_BASE_URL") or ""
     assert JIRA_BASE_URL
@@ -175,15 +173,17 @@ if not os.path.exists(PERSIST_DIR):
 else:
     # load the existing index
     storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
-    index = load_index_from_storage(storage_context)  # type: ignore
+    index = load_index_from_storage(storage_context)
 
 
 # Inference
 
-from pangea_multipass_llama_index import (LlamaIndexConfluenceProcessor,
-                                          LlamaIndexGDriveProcessor,
-                                          LlamaIndexJiraProcessor,
-                                          NodePostprocessorMixer)
+from pangea_multipass_llama_index import (
+    LlamaIndexConfluenceProcessor,
+    LlamaIndexGDriveProcessor,
+    LlamaIndexJiraProcessor,
+    NodePostprocessorMixer,
+)
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../credentials.json")

@@ -1,9 +1,15 @@
 from typing import Any, Callable, Generic, List, Optional, Tuple
 
 import requests
-from pangea_multipass.core import (FilterOperator, MetadataFilter,
-                                   PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
+
+from pangea_multipass.core import (
+    FilterOperator,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 class GitHubAPI:
@@ -57,12 +63,12 @@ class GitHubAPI:
             raise Exception(f"Unexpected error: {response.status_code} - {response.json()}")
 
     @staticmethod
-    def get_user_repos(token: str):
+    def get_user_repos(token: str) -> List[dict[str, Any]]:
         """Get all repositories the authenticated user has access to."""
 
         headers = GitHubAPI.get_auth_headers(token)
         url = "https://api.github.com/user/repos"
-        repos = []
+        repos: List[dict[str, Any]] = []
         page = 1
 
         while True:
@@ -80,8 +86,8 @@ class GitHubAPI:
         return repos
 
 
-class GitHubProcessor(PangeaGenericNodeProcessor, Generic[T]):
-    _access_cache: dict[tuple, bool] = {}
+class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
+    _access_cache: dict[Tuple[str, str], bool] = {}
     _token: str
     _repos: List[Tuple[str, str]] = []
     _username: Optional[str]

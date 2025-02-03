@@ -8,16 +8,18 @@ from llama_index.core import Document as LIDocument
 from llama_index.core.bridge.pydantic import Field
 from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
-from llama_index.core.vector_stores import (FilterCondition, FilterOperator,
-                                            MetadataFilter, MetadataFilters)
-from pangea_multipass import ConfluenceProcessor  # type: ignore[attr-defined]
-from pangea_multipass import \
-    PangeaGenericNodeProcessor  # type: ignore[attr-defined]
-from pangea_multipass import (ConfluenceAuth, DocumentReader, GDriveProcessor,
-                              GitHubProcessor, JiraAuth, JiraProcessor)
+from llama_index.core.vector_stores import FilterCondition, FilterOperator, MetadataFilter, MetadataFilters
+from pangea_multipass import (
+    ConfluenceAuth,
+    ConfluenceProcessor,
+    DocumentReader,
+    GDriveProcessor,
+    GitHubProcessor,
+    JiraAuth,
+    JiraProcessor,
+)
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import (MultipassDocument, PangeaNodeProcessorMixer,
-                              SlackProcessor)
+from pangea_multipass import MultipassDocument, PangeaGenericNodeProcessor, PangeaNodeProcessorMixer, SlackProcessor
 
 
 class LIDocumentReader(DocumentReader):
@@ -38,7 +40,7 @@ class LIDocumentReader(DocumentReader):
         Returns:
             str: The content of the document.
         """
-        return doc.get_content()
+        return str(doc.get_content())
 
 
 # pangea-metadata-llama-index
@@ -51,7 +53,7 @@ def get_doc_id(doc: LIDocument) -> str:
     Returns:
         str: The document ID.
     """
-    return doc.doc_id
+    return str(doc.doc_id)
 
 
 def get_node_metadata(node: NodeWithScore) -> dict[str, Any]:
@@ -63,7 +65,7 @@ def get_node_metadata(node: NodeWithScore) -> dict[str, Any]:
     Returns:
         dict[str, Any]: A dictionary containing node metadata.
     """
-    return node.metadata
+    return dict(node.metadata)
 
 
 def from_multipass(documents: List[MultipassDocument]) -> List[LIDocument]:
@@ -87,7 +89,7 @@ class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
     """
 
     def __init__(self, auth: JiraAuth, account_id: Optional[str] = None):
-        super().__init__(auth, get_node_metadata=get_node_metadata, account_id=account_id)  # type: ignore[call-arg]
+        super().__init__(auth, get_node_metadata=get_node_metadata, account_id=account_id)
 
 
 class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
@@ -117,7 +119,7 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
     """
 
     def __init__(self, creds: Credentials, user_email: Optional[str] = None):
-        super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)  # type: ignore[call-arg]
+        super().__init__(creds, get_node_metadata=get_node_metadata, user_email=user_email)
 
 
 class LlamaIndexGitHubProcessor(GitHubProcessor[NodeWithScore]):
@@ -164,9 +166,9 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
         get_authorized_nodes() -> List[NodeWithScore]: Retrieves nodes that are authorized for access.
     """
 
-    node_processor: PangeaNodeProcessorMixer[NodeWithScore] = Field(default=None)  # type: ignore[arg-type]
+    node_processor: PangeaNodeProcessorMixer[NodeWithScore]
 
-    def __init__(self, node_processors: List[PangeaGenericNodeProcessor]):
+    def __init__(self, node_processors: List[PangeaGenericNodeProcessor[NodeWithScore]]):
         """Initializes the NodePostprocessorMixer with a list of node processors.
 
         Args:

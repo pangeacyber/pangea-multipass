@@ -132,7 +132,7 @@ class MetadataUpdater(ABC):
     """Interface for updating document metadata."""
 
     @abstractmethod
-    def update_metadata(self, doc: Any, metadata: dict[str, Any]):
+    def update_metadata(self, doc: Any, metadata: dict[str, Any]) -> None:
         """Updates document with provided metadata."""
         pass
 
@@ -140,7 +140,7 @@ class MetadataUpdater(ABC):
 class GenericMetadataUpdater(MetadataUpdater):
     """Updates metadata of a Llama Index or Lang Chain Document."""
 
-    def update_metadata(self, doc: Any, metadata: dict[str, Any]):
+    def update_metadata(self, doc: Any, metadata: dict[str, Any]) -> None:
         """Updates document metadata with given key-value pairs."""
         doc.metadata.update(metadata)
 
@@ -172,7 +172,7 @@ def enrich_metadata(
     metadata_enrichers: List[MetadataEnricher],
     reader: DocumentReader,
     updater: MetadataUpdater = GenericMetadataUpdater(),
-):
+) -> None:
     """Enriches metadata of documents by applying specified enrichers.
 
     Args:
@@ -206,7 +206,7 @@ class PangeaNodeProcessorMixer(Generic[T]):
         _authorized_nodes (List[T]): Cached list of authorized nodes.
     """
 
-    _node_processors: List[PangeaGenericNodeProcessor] = []
+    _node_processors: List[PangeaGenericNodeProcessor[T]] = []
     _get_node_metadata: Callable[[T], dict[str, Any]]
     _unauthorized_nodes: List[T] = []
     _authorized_nodes: List[T] = []
@@ -214,7 +214,7 @@ class PangeaNodeProcessorMixer(Generic[T]):
     def __init__(
         self,
         get_node_metadata: Callable[[T], dict[str, Any]],
-        node_processors: List[PangeaGenericNodeProcessor],
+        node_processors: List[PangeaGenericNodeProcessor[T]],
     ):
         self._node_processors = node_processors
         self._get_node_metadata = get_node_metadata

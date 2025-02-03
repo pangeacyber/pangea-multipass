@@ -6,12 +6,19 @@ import json
 from typing import Any, Callable, Generic, List, Optional
 
 import requests
-from pangea_multipass.core import (_PANGEA_METADATA_KEY_PREFIX, FilterOperator,
-                                   MetadataEnricher, MetadataFilter,
-                                   PangeaGenericNodeProcessor,
-                                   PangeaMetadataKeys, PangeaMetadataValues, T)
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import HTTPError
+
+from pangea_multipass.core import (
+    _PANGEA_METADATA_KEY_PREFIX,
+    FilterOperator,
+    MetadataEnricher,
+    MetadataFilter,
+    PangeaGenericNodeProcessor,
+    PangeaMetadataKeys,
+    PangeaMetadataValues,
+    T,
+)
 
 
 @dataclasses.dataclass
@@ -87,7 +94,7 @@ class JiraME(MetadataEnricher):
         return metadata
 
 
-class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
+class JiraProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     """Processes Jira documents for access control.
 
     Filters Jira documents based on issue ID permissions and caches access results.
@@ -195,7 +202,7 @@ class JiraProcessor(PangeaGenericNodeProcessor, Generic[T]):
 
 class JiraAPI:
     @staticmethod
-    def _get(auth: JiraAuth, path: str, params: dict = {}) -> dict:
+    def _get(auth: JiraAuth, path: str, params: dict[str, Any] = {}) -> dict[str, Any]:
         """
         Makes a request to the Jira API.
 
@@ -215,7 +222,7 @@ class JiraAPI:
         return response.json()
 
     @staticmethod
-    def _post(auth: JiraAuth, path: str, body: dict = {}) -> dict:
+    def _post(auth: JiraAuth, path: str, body: dict[str, Any] = {}) -> dict[str, Any]:
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
         basic_auth = HTTPBasicAuth(auth.email, auth.token)
@@ -226,7 +233,7 @@ class JiraAPI:
         return response.json()
 
     @staticmethod
-    def get_issue(auth: JiraAuth, issue_id: str) -> dict:
+    def get_issue(auth: JiraAuth, issue_id: str) -> dict[str, Any]:
         """
         Retrieves details of a specific Jira issue.
 
@@ -241,7 +248,7 @@ class JiraAPI:
         return JiraAPI._get(auth, f"/rest/api/3/issue/{issue_id}")
 
     @staticmethod
-    def myself(auth: JiraAuth) -> dict:
+    def myself(auth: JiraAuth) -> dict[str, Any]:
         """
         Retrieves the profile information of the currently authenticated user in Jira.
 
@@ -257,7 +264,7 @@ class JiraAPI:
         return JiraAPI._get(auth, "/rest/api/3/myself")
 
     @staticmethod
-    def search(auth: JiraAuth, params: dict = {}) -> dict:
+    def search(auth: JiraAuth, params: dict[str, Any] = {}) -> dict[str, Any]:
         """
         Searches for issues in Jira using specified query parameters.
 
@@ -312,7 +319,7 @@ class JiraAPI:
             total = resp.get("total", 0)
 
             ids = [issue["id"] for issue in issues]
-            issue_ids.extend(ids)  # type: ignore
+            issue_ids.extend(ids)
 
             start_at = start_at + len(ids)
             keep_iterating = start_at < total
@@ -320,7 +327,7 @@ class JiraAPI:
         return issue_ids
 
     @staticmethod
-    def get_permission_check(auth: JiraAuth, account_id: str, issues: List[int]):
+    def get_permission_check(auth: JiraAuth, account_id: str, issues: List[int]) -> dict[str, Any]:
         body = {
             "accountId": account_id,
             "projectPermissions": [

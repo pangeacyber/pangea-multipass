@@ -7,9 +7,8 @@ from typing import List
 
 from google.oauth2.credentials import Credentials
 from llama_index.readers.google import GoogleDriveReader
-from pangea_multipass import (GDriveAPI, GDriveME, PangeaMetadataKeys,
-                              enrich_metadata)
-from pangea_multipass_llama_index import LIDocumentReader
+from pangea_multipass import GDriveAPI, GDriveME, PangeaMetadataKeys, enrich_metadata
+from pangea_multipass_llama_index import LIDocument, LIDocumentReader
 
 if len(sys.argv) != 2:
     print(f"usage: {sys.argv[0]} <gdrive_folder_id>")
@@ -30,7 +29,7 @@ SCOPES = [
 gdrive_fid = sys.argv[1]
 
 
-def google_drive_read_docs() -> List:
+def google_drive_read_docs() -> List[LIDocument]:
     print(f"Loading Google Drive docs. Folder ID: {gdrive_fid}.")
     # Google Drive Data Ingestion
     credentials_filepath = os.path.abspath("../credentials.json")
@@ -47,7 +46,7 @@ def google_drive_read_docs() -> List:
     gdrive_reader = GoogleDriveReader(
         folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
-    documents = gdrive_reader.load_data(folder_id=gdrive_fid)
+    documents: List[LIDocument] = gdrive_reader.load_data(folder_id=gdrive_fid)
 
     print(f"Processing {len(documents)} docs...")
 
@@ -64,8 +63,7 @@ documents = google_drive_read_docs()
 
 # Inference
 from pangea_multipass import GDriveAPI
-from pangea_multipass_llama_index import (LlamaIndexGDriveProcessor,
-                                          NodePostprocessorMixer)
+from pangea_multipass_llama_index import LlamaIndexGDriveProcessor, NodePostprocessorMixer
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../credentials.json")
