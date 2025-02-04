@@ -42,7 +42,8 @@ In order to use Confluence as a source it's needed to set some environment varia
 
 In order to use GitHub as a source it's needed to set some environment variables:
 - `GITHUB_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the repositories this token has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). This could be a `Fine-grained personal access token` with access to all the respositories owned by the admin account and `repository permission` to `read access to code and metadata`.
-- `GITHUB_USER_TOKEN`: Token user in inference time. It will be used to validate which files returned by the LLM the user has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic). This must be a `classic personal access token` with scoped access to (at least) all the `repo` items.
+- `GITHUB_USER_TOKEN`: (Deprecated. Use `GITHUB_USERNAME` and `GITHUB_ADMIN_TOKEN` instead.) Token user in inference time. It will be used to validate which files returned by the LLM the user has access to. [Learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic). This must be a `classic personal access token` with scoped access to (at least) all the `repo` items.
+- `GITHUB_USERNAME`: Username used in inference time. This email will be used to validate which files returned by the LLM the user has access to.
 
 
 ### Slack
@@ -54,4 +55,5 @@ To get these tokens, you must create a Slack App and generate the tokens. The de
 For this particular application the token's scope should be at least: `channels:history`, `groups:history`, `users:read`, `users:read.email` to process all public and private channels and access to user emails to check its permissions.
 
 - `SLACK_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the channels this token has access to.
-- `SLACK_USER_TOKEN`: Token user in inference time. It will be used to validate which files returned by the LLM the user has access to.
+- `SLACK_USER_TOKEN`: (Deprecated. Use `SLACK_USER_EMAIL` and `SLACK_ADMIN_TOKEN` instead.) Token user in inference time. It will be used to validate which files returned by the LLM the user has access to.
+- `SLACK_USER_EMAIL`: User email used in inference time. This email will be used to validate which files returned by the LLM the user has access to.
