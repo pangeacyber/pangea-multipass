@@ -166,7 +166,7 @@ class NodePostprocessorMixer(BaseNodePostprocessor):
         get_authorized_nodes() -> List[NodeWithScore]: Retrieves nodes that are authorized for access.
     """
 
-    node_processor: PangeaNodeProcessorMixer[NodeWithScore]
+    node_processor: PangeaNodeProcessorMixer[NodeWithScore] = PangeaNodeProcessorMixer(get_node_metadata, [])
 
     def __init__(self, node_processors: List[PangeaGenericNodeProcessor[NodeWithScore]]):
         """Initializes the NodePostprocessorMixer with a list of node processors.

@@ -117,7 +117,7 @@ class LangChainSlackFilter(SlackProcessor[Document]):
 
 
 class DocumentFilterMixer:
-    node_processor: PangeaNodeProcessorMixer[Document]
+    node_processor: PangeaNodeProcessorMixer[Document] = PangeaNodeProcessorMixer(get_doc_metadata, [])
 
     def __init__(self, document_filters: List[PangeaGenericNodeProcessor[Document]]):
         super().__init__()
