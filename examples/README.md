@@ -61,7 +61,7 @@ For this particular application the token's scope should be at least: `channels:
 
 ### Dropbox
 
-When using Dropbox as a source, the admin user need to authenticate on Dropbox using [Oauth2 protocol](https://developers.dropbox.com/oauth-guide) and allow our Pangea's `pangea-multipass` Dropbox App. In order to do it, it should follow the Oauth2 flow using PKCE and the `pangea-multipass`'s app key. This app key could be saved in `DROPBOX_APP_KEY` and currently should be set to:
+When using Dropbox as a source, the admin user need to authenticate on Dropbox using [Oauth2 protocol](https://developers.dropbox.com/oauth-guide) and allow Pangea's `pangea-multipass` Dropbox App. To do so, follow the Oauth2 flow using PKCE and the `pangea-multipass`'s app key. This app key could be saved in `DROPBOX_APP_KEY` like so:
 
 ```bash
 export DROPBOX_APP_KEY='hmhe1wh0koy8cv6'
