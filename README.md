@@ -36,7 +36,7 @@ poetry install
 
 There are full runnable demos in the `pangea_multipass_lib\examples` directory but here are the key aspects.
 
-Using a set of Google Drive credentials - follow the steps in the examples - you initialize the data source:
+Using a set of Google Drive credentials - following the steps in the llama_index_examples folder - you initialize the data source:
 
 ```python
     gdrive_reader = GoogleDriveReader(
@@ -45,7 +45,7 @@ Using a set of Google Drive credentials - follow the steps in the examples - you
     documents = gdrive_reader.load_data(folder_id=gdrive_fid)
 ```
 
-This gives you a list of files which you can then use the processors to filter into the authorized and unauthorized resource lists:
+This gives you a list of files. You can then use the processors to filter into the authorized and unauthorized resource lists:
 
 ```python
 gdrive_processor = LlamaIndexGDriveProcessor(creds)
@@ -55,7 +55,7 @@ authorized_docs = node_processor.postprocess_nodes(documents)
 unauthorized_docs = node_processor.get_unauthorized_nodes()
 ```
 
-In general, the authorized list will be more important but you may log or notify an admin if a user is attempting to access a folder where they have limited access. It could be an attempt at data theft or their permissions are incomplete.
+In general, the authorized list will be more important but you may notify an admin or log if a user is attempting to access a folder where they have limited access. It could be an attempt at data theft or their permissions are incomplete.
 
 ## Roadmap
 
