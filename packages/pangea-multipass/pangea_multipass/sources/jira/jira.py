@@ -2,8 +2,8 @@
 # Author: Pangea Cyber Corporation
 
 import dataclasses
-import json
 from typing import Any, Callable, Generic, List, Optional
+from urllib.parse import urljoin
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -48,10 +48,10 @@ class JiraME(MetadataEnricher):
     _auth: JiraAuth
 
     def __init__(self, url: str, email: str, api_token: str):
-        self._url = url
+        self._url = url.rstrip("/")
         self._email = email
         self._api_token = api_token
-        self._auth = JiraAuth(email, api_token, url)
+        self._auth = JiraAuth(email, api_token, self._url)
 
     def extract_metadata(self, doc: Any, file_content: str) -> dict[str, Any]:
         """Fetch Jira-related metadata for the document.
@@ -78,18 +78,21 @@ class JiraME(MetadataEnricher):
 
         # New metadata
         issue = JiraAPI.get_issue(self._auth, id)
-        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_assignee_account_id"] = (
-            issue.get("fields", {}).get("assignee", {}).get("accountId", "")
-        )
-        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_assignee_name"] = (
-            issue.get("fields", {}).get("assignee", {}).get("displayName", "")
-        )
-        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_reporter_account_id"] = (
-            issue.get("fields", {}).get("reporter", {}).get("accountId", "")
-        )
-        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_reporter_name"] = (
-            issue.get("fields", {}).get("reporter", {}).get("displayName", "")
-        )
+        # Sometimes field is present but it's null, so we should handle that case
+        fields = issue.get("fields", {})
+        if fields is None:
+            fields = {}
+        assignee = fields.get("assignee", {})
+        if assignee is None:
+            assignee = {}
+        reporter = fields.get("reporter", {})
+        if reporter is None:
+            reporter = {}
+
+        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_assignee_account_id"] = assignee.get("accountId", "")
+        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_assignee_name"] = assignee.get("displayName", "")
+        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_reporter_account_id"] = reporter.get("accountId", "")
+        metadata[f"{_PANGEA_METADATA_KEY_PREFIX}jira_reporter_name"] = reporter.get("displayName", "")
 
         return metadata
 
@@ -216,7 +219,7 @@ class JiraAPI:
         """
 
         basic_auth = HTTPBasicAuth(auth.email, auth.token)
-        url = f"https://{auth.url}{path}"
+        url = urljoin(f"https://{auth.url}", path)
         response = requests.get(url, headers={"Accept": "application/json"}, params=params, auth=basic_auth)
         response.raise_for_status()
         return response.json()
@@ -227,7 +230,9 @@ class JiraAPI:
 
         basic_auth = HTTPBasicAuth(auth.email, auth.token)
 
-        response = requests.request("POST", f"https://{auth.url}{path}", json=body, headers=headers, auth=basic_auth)
+        response = requests.request(
+            "POST", urljoin(f"https://{auth.url}", path), json=body, headers=headers, auth=basic_auth
+        )
 
         response.raise_for_status()
         return response.json()

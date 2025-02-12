@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Handle null fields on issues in JiraME
+- Handle trailing slash in Jira URL
+
+
 ## 0.2.0 - 2025-01-15
 
 ### Added
