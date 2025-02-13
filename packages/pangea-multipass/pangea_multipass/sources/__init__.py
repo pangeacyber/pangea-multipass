@@ -2,6 +2,7 @@
 # Author: Pangea Cyber Corporation
 
 from .confluence import *
+from .dropbox import *
 from .gdrive import *
 from .github import *
 from .jira import *
