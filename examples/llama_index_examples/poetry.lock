@@ -2431,20 +2431,22 @@ name = "pangea-multipass"
 version = "0.2.0"
 description = "Pangea Multipass authorization library"
 optional = false
-python-versions = "<3.13,>=3.10"
-files = [
-    {file = "pangea_multipass-0.2.0-py3-none-any.whl", hash = "sha256:0f4399a9c0edbebe35512c7aa43d4bda42027042295f5fffa13efa65e3789225"},
-    {file = "pangea_multipass-0.2.0.tar.gz", hash = "sha256:dc7777a166ec58d85f385040a10bab1f9e3cb52458b37b0339ed66fc43db0b39"},
-]
+python-versions = ">=3.10,<3.13"
+files = []
+develop = true
 
 [package.dependencies]
-google-api-python-client = ">=2.149.0,<3.0.0"
-google-auth = ">=2.35.0,<3.0.0"
-google-auth-httplib2 = ">=0.2.0,<0.3.0"
-google-auth-oauthlib = ">=1.2.1,<2.0.0"
-openpyxl = ">=3.1.5,<4.0.0"
-pangea-sdk = ">=5.1.0,<6.0.0"
-slack-sdk = ">=3.34.0,<4.0.0"
+google-api-python-client = "^2.149.0"
+google-auth = "^2.35.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+openpyxl = "^3.1.5"
+pangea-sdk = "^5.1.0"
+slack-sdk = "^3.34.0"
+
+[package.source]
+type = "directory"
+url = "../../packages/pangea-multipass"
 
 [[package]]
 name = "pangea-multipass-llama-index"
@@ -2463,7 +2465,7 @@ llama-index-llms-bedrock = "0.2.1"
 llama-index-readers-confluence = "^0.2.1"
 llama-index-readers-google = "^0.4.1"
 llama-index-readers-jira = "^0.3.1"
-pangea-multipass = "0.2.0"
+pangea-multipass = {path = "../pangea-multipass", develop = true}
 pangea-sdk = "^5.1.0"
 
 [package.source]
