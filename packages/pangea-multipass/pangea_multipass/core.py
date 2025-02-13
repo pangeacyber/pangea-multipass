@@ -50,6 +50,7 @@ class PangeaMetadataKeys(str, enum.Enum):
     SLACK_USER = f"{_PANGEA_METADATA_KEY_PREFIX}slack_user"
     SLACK_TIMESTAMP = f"{_PANGEA_METADATA_KEY_PREFIX}slack_timestamp"
     DROPBOX_ID = f"{_PANGEA_METADATA_KEY_PREFIX}dropbox_id"
+    DROPBOX_FILE_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}file_path"
 
 
 class PangeaMetadataValues(str, enum.Enum):
