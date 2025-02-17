@@ -13,13 +13,13 @@ packages = [
 python = ">=3.10,<3.13"
 pangea-sdk = "^5.4.0"
 google-auth-oauthlib = "^1.2.1"
-llama-index = "0.11.11"
-llama-index-llms-bedrock = "0.2.1"
-llama-index-embeddings-bedrock = "0.3.1"
-llama-index-readers-google = "^0.4.1"
-llama-index-readers-confluence = "^0.2.1"
-llama-index-readers-jira = "^0.3.1"
-pangea-multipass = "0.2.0"
+llama-index = "0.12.17"
+llama-index-llms-bedrock = "0.3.3"
+llama-index-embeddings-bedrock = "0.5.0"
+llama-index-readers-google = "^0.6.0"
+llama-index-readers-confluence = "^0.3.1"
+llama-index-readers-jira = "^0.4.1"
+pangea-multipass = { path = "../pangea-multipass", develop = true }
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.15.0"
