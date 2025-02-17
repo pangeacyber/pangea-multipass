@@ -11,7 +11,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
-pangea-sdk = "^5.1.0"
+pangea-sdk = "^5.4.0"
 google-auth-oauthlib = "^1.2.1"
 llama-index = "0.11.11"
 llama-index-llms-bedrock = "0.2.1"
