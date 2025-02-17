@@ -1613,13 +1613,13 @@ url = "../pangea-multipass"
 
 [[package]]
 name = "pangea-sdk"
-version = "5.5.0"
+version = "5.5.1"
 description = "Pangea API SDK"
 optional = false
 python-versions = "<4.0.0,>=3.9"
 files = [
-    {file = "pangea_sdk-5.5.0-py3-none-any.whl", hash = "sha256:ca4521e4585bfa7725484bb56d42eaeb2e49250d1c35b6147dfae40f6fa335ee"},
-    {file = "pangea_sdk-5.5.0.tar.gz", hash = "sha256:a2ec0123c4aeb156c0ee78d285c9990b495648de0c3f173f5d7b6df31b44c71b"},
+    {file = "pangea_sdk-5.5.1-py3-none-any.whl", hash = "sha256:bc00b2165754f005022b93d66ada341ef46434d551af96d8e9a6d95f55da3cbb"},
+    {file = "pangea_sdk-5.5.1.tar.gz", hash = "sha256:4b83587b526c835d3da2238f28f8a9173cafda6506e213315a027f4768f8b264"},
 ]
 
 [package.dependencies]

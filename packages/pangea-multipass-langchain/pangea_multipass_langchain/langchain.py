@@ -12,6 +12,7 @@ from pangea_multipass import (
     FilterOperator,
     GDriveProcessor,
     GitHubProcessor,
+    GitLabProcessor,
     JiraAuth,
     JiraProcessor,
 )
@@ -114,6 +115,20 @@ class LangChainSlackFilter(SlackProcessor[Document]):
 
     def __init__(self, token: str, user_email: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_doc_metadata, user_email=user_email)
+
+
+class LangChainGitLabFilter(GitLabProcessor[Document]):
+    """Filter for GitLab integration with LangChain documents.
+
+    Uses GitLab token to access nodes in the LangChain.
+
+    Args:
+        token (str): GitLab token.
+        username (str): Username to check access to files.
+    """
+
+    def __init__(self, admin_token: str, username: str):
+        super().__init__(admin_token=admin_token, username=username, get_node_metadata=get_doc_metadata)
 
 
 class DocumentFilterMixer:

@@ -5,6 +5,7 @@ default:
 
 stages:
   - build
+  - tests
   - publish
 
 .setup:
