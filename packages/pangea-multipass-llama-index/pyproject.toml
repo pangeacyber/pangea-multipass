@@ -10,7 +10,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
+python = ">=3.13.2,<3.14"
 google-auth-oauthlib = "^1.2.1"
 llama-index = "0.12.17"
 llama-index-llms-bedrock = "0.3.3"
