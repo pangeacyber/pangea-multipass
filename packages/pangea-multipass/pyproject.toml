@@ -20,7 +20,7 @@ openpyxl = "^3.1.5"
 slack-sdk = "^3.34.0"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "1.14.1"
+mypy = "1.15.0"
 types-requests = "2.32.0.20241016"
 
 [[tool.mypy.overrides]]

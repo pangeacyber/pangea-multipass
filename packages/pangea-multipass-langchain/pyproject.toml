@@ -19,7 +19,7 @@ langchain-aws = "0.2.1"
 pangea-multipass = "0.2.0"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "1.14.1"
+mypy = "1.15.0"
 
 [[tool.mypy.overrides]]
 module = ["pangea_multipass.*"]
