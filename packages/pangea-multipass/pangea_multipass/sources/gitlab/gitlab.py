@@ -119,7 +119,7 @@ class GitLabProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
             nodes (List[T]): List of nodes to process.
 
         Returns:
-            List[Any]: Nodes that have authorized access.
+            List[T]: Nodes that have authorized access.
         """
 
         filtered: List[T] = []
