@@ -1503,17 +1503,17 @@ nltk = ">3.8.1"
 
 [[package]]
 name = "llama-index-agent-openai"
-version = "0.4.5"
+version = "0.4.6"
 description = "llama-index agent openai integration"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "llama_index_agent_openai-0.4.5-py3-none-any.whl", hash = "sha256:3fcadce03420a1974e6cf5ecd8e58337652df2f81d5f30033b3b32a576dc790a"},
-    {file = "llama_index_agent_openai-0.4.5.tar.gz", hash = "sha256:c09be43e01b3d5b2d8859814fcdabd000769ab1b54958a7025b3ce391147b005"},
+    {file = "llama_index_agent_openai-0.4.6-py3-none-any.whl", hash = "sha256:4103e479c874cb3426aa59a13f91b6e2dc6b350c51457966631f8bdaf9a6a8e8"},
+    {file = "llama_index_agent_openai-0.4.6.tar.gz", hash = "sha256:4f66c1731836ab66c4b441255a95f33a51743e4993b8aa9daf430cb31aa7d48e"},
 ]
 
 [package.dependencies]
-llama-index-core = ">=0.12.11,<0.13.0"
+llama-index-core = ">=0.12.18,<0.13.0"
 llama-index-llms-openai = ">=0.3.0,<0.4.0"
 openai = ">=1.14.0"
 
@@ -2311,13 +2311,13 @@ signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
 
 [[package]]
 name = "openai"
-version = "1.63.1"
+version = "1.63.2"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "openai-1.63.1-py3-none-any.whl", hash = "sha256:1e30a8131fbbd4859c104137cf152901870ba346060df1934a74a71ae330f071"},
-    {file = "openai-1.63.1.tar.gz", hash = "sha256:79e53b16b3b26d151300364e0df69a863db73e85fbe117158f2639efca0d70e7"},
+    {file = "openai-1.63.2-py3-none-any.whl", hash = "sha256:1f38b27b5a40814c2b7d8759ec78110df58c4a614c25f182809ca52b080ff4d4"},
+    {file = "openai-1.63.2.tar.gz", hash = "sha256:aeabeec984a7d2957b4928ceaa339e2ead19c61cfcf35ae62b7c363368d26360"},
 ]
 
 [package.dependencies]
@@ -2469,13 +2469,13 @@ url = "../pangea-multipass"
 
 [[package]]
 name = "pangea-sdk"
-version = "5.5.0"
+version = "5.5.1"
 description = "Pangea API SDK"
 optional = false
 python-versions = "<4.0.0,>=3.9"
 files = [
-    {file = "pangea_sdk-5.5.0-py3-none-any.whl", hash = "sha256:ca4521e4585bfa7725484bb56d42eaeb2e49250d1c35b6147dfae40f6fa335ee"},
-    {file = "pangea_sdk-5.5.0.tar.gz", hash = "sha256:a2ec0123c4aeb156c0ee78d285c9990b495648de0c3f173f5d7b6df31b44c71b"},
+    {file = "pangea_sdk-5.5.1-py3-none-any.whl", hash = "sha256:bc00b2165754f005022b93d66ada341ef46434d551af96d8e9a6d95f55da3cbb"},
+    {file = "pangea_sdk-5.5.1.tar.gz", hash = "sha256:4b83587b526c835d3da2238f28f8a9173cafda6506e213315a027f4768f8b264"},
 ]
 
 [package.dependencies]

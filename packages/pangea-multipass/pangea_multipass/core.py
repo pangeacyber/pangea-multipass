@@ -49,6 +49,9 @@ class PangeaMetadataKeys(str, enum.Enum):
     SLACK_CHANNEL_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}slack_channel_name"
     SLACK_USER = f"{_PANGEA_METADATA_KEY_PREFIX}slack_user"
     SLACK_TIMESTAMP = f"{_PANGEA_METADATA_KEY_PREFIX}slack_timestamp"
+    GITLAB_REPOSITORY_ID = f"{_PANGEA_METADATA_KEY_PREFIX}gitlab_repository_id"
+    GITLAB_REPOSITORY_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}gitlab_repository_name"
+    GITLAB_REPOSITORY_NAMESPACE_WITH_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}gitlab_repository_namespace_with_path"
 
 
 class PangeaMetadataValues(str, enum.Enum):
@@ -57,6 +60,7 @@ class PangeaMetadataValues(str, enum.Enum):
     DATA_SOURCE_JIRA = "jira"
     DATA_SOURCE_GITHUB = "github"
     DATA_SOURCE_SLACK = "slack"
+    DATA_SOURCE_GITLAB = "gitlab"
 
 
 @dataclasses.dataclass

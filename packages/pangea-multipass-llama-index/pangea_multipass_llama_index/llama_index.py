@@ -5,7 +5,6 @@ from typing import Any, List, Optional
 
 from google.oauth2.credentials import Credentials
 from llama_index.core import Document as LIDocument
-from llama_index.core.bridge.pydantic import Field
 from llama_index.core.postprocessor.types import BaseNodePostprocessor
 from llama_index.core.schema import NodeWithScore, QueryBundle
 from llama_index.core.vector_stores import FilterCondition, FilterOperator, MetadataFilter, MetadataFilters
@@ -15,6 +14,7 @@ from pangea_multipass import (
     DocumentReader,
     GDriveProcessor,
     GitHubProcessor,
+    GitLabProcessor,
     JiraAuth,
     JiraProcessor,
 )
@@ -148,6 +148,20 @@ class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
 
     def __init__(self, token: str, user_email: Optional[str] = None):
         super().__init__(token, get_node_metadata=get_node_metadata, user_email=user_email)
+
+
+class LlamaIndexGitLabProcessor(GitLabProcessor[NodeWithScore]):
+    """Processor for GitLab integration with Llama Index nodes.
+
+    Uses GitLab token to access nodes in the Llama Index.
+
+    Args:
+        token (str): GitLab token.
+        username (str): Username to check access to files.
+    """
+
+    def __init__(self, admin_token: str, username: str):
+        super().__init__(admin_token=admin_token, username=username, get_node_metadata=get_node_metadata)
 
 
 class NodePostprocessorMixer(BaseNodePostprocessor):

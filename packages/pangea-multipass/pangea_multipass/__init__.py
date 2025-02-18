@@ -17,5 +17,6 @@ from .core import (
     get_document_metadata,
 )
 from .github_reader import GitHubReader
+from .gitlab_reader import GitLabReader
 from .slack_reader import SlackReader
 from .sources import *

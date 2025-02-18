@@ -69,7 +69,7 @@ Others we plan to support or are looking for contributions are:
 
 - Zoom
 - Salesforce
-- Gitlab
+- GitLab
 - Zendesk
 - Notion
 - Sharepoint

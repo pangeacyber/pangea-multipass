@@ -4,5 +4,6 @@
 from .confluence import *
 from .gdrive import *
 from .github import *
+from .gitlab import *
 from .jira import *
 from .slack import *
