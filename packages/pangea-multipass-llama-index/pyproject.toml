@@ -28,7 +28,7 @@ module = ["pangea_multipass.*"]
 follow_untyped_imports = true
 
 [build-system]
-requires = ["poetry-core>=1.9.1"]
+requires = ["poetry-core>=2.1.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
