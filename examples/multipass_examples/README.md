@@ -82,3 +82,28 @@ User has acess to channel ids:
 	C087K7JPQQ4
 User has access to 32 messages
 ```
+
+### Running the Dropbox check:
+
+After you set the Dropbox environment variables in the `examples\README.md` file, run this command:
+
+```bash
+poetry run python 04-dropbox-check.py 
+```
+
+The first time this runs, it will open a browser window to authorize the Dropbox application to your account and store the resulting tokens. Later runs will simply continue to the output below.
+
+Sample output:
+
+```bash
+Listening for authentication response on http://localhost:8080 ...
+127.0.0.1 - - [18/Feb/2025 11:18:32] "GET /?code=crD1VEFcJzAAAAAAAABLxoiqCA5-LbgQiaGWQR2R3gA HTTP/1.1" 200 -
+Loading documents from Dropbox...
+Loaded page: 1. Docs: 0
+Loaded page: 2. Docs: 20
+Loaded page: 3. Docs: 18
+Loaded page: 4. Docs: 23
+Loaded 61 docs
+Filtering authorized documents...
+Authorized docs: 22
+```
