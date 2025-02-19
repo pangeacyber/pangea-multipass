@@ -1,10 +1,24 @@
-[tool.poetry]
+[project]
 name = "pangea-multipass"
 version = "0.2.0"
 description = "Pangea Multipass authorization library"
-authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
+authors = [
+    { name = "Apurv Jawle", email = "apurv.jawle@pangea.cloud" }
+]
 license = "MIT"
 readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pangea-sdk",
+    "google-auth-oauthlib",
+    "google-auth-httplib2",
+    "google-api-python-client",
+    "google-auth",
+    "openpyxl",
+    "slack-sdk"
+]
+
+[tool.poetry]
 packages = [
     { include = "pangea_multipass" }
 ]
