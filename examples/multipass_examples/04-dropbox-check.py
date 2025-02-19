@@ -5,22 +5,23 @@ from requests.exceptions import HTTPError
 
 app_key = os.getenv("DROPBOX_APP_KEY")
 assert app_key
-app_secret = os.getenv("DROPBOX_APP_SECRET")
-assert app_secret
-
 
 # File to store tokens
 DROPBOX_TOKEN_FILE = "dropbox_tokens.json"
 
 if not os.path.exists(DROPBOX_TOKEN_FILE):
+    code_verifier, code_challenge = OauthFlow.generate_pkce_pair()
+
     flow = OauthFlow(
-        auth_url=DropboxAPI.AUTH_URL, token_url=DropboxAPI.TOKEN_URL, client_id=app_key, client_secret=app_secret
+        auth_url=DropboxAPI.AUTH_URL,
+        token_url=DropboxAPI.TOKEN_URL,
+        client_id=app_key,
     )
-    tokens = flow.run()
+    tokens = flow.run_pkce(code_verifier=code_verifier, code_challenge=code_challenge)
 else:
     tokens = data_load(DROPBOX_TOKEN_FILE)
     access_token = OauthFlow.refresh_access_token(
-        url=DropboxAPI.TOKEN_URL, refresh_token=tokens["refresh_token"], client_id=app_key, client_secret=app_secret
+        url=DropboxAPI.TOKEN_URL, refresh_token=tokens["refresh_token"], client_id=app_key
     )
     tokens.update(access_token)
 
