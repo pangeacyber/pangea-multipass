@@ -7,13 +7,9 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<4.0"
 dependencies = [
-    "pangea-multipass",
-    "langchain",
-    "langchain-community",
-    "langchain-aws",
-    "google-auth-oauthlib"
+    "langchain (==0.3.18)",
 ]
 
 [tool.poetry]
@@ -22,11 +18,6 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-google-auth-oauthlib = "^1.2.1"
-langchain = "0.3.18"
-langchain-community = "0.3.17"
-langchain-aws = "0.2.12"
 pangea-multipass = { path = "../pangea-multipass", develop = true }
 
 [tool.poetry.group.dev.dependencies]

@@ -53,10 +53,15 @@ def load_gdrive_documents() -> List[Document]:
     # Google Drive Data Ingestion
     admin_token_filepath = "admin_access_token.json"
 
+    credentials_filepath = os.path.abspath("../credentials.json")
+    GDriveAPI.get_and_save_access_token(
+        credentials_filepath, admin_token_filepath, ["https://www.googleapis.com/auth/drive.readonly"]
+    )
+
     loader = GoogleDriveLoader(
         folder_id="1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR",
         token_path=Path(admin_token_filepath),
-        credentials_path=Path("../credentials.json"),
+        credentials_path=Path(credentials_filepath),
         recursive=True,
         load_extended_metadata=True,
         file_loader_cls=TextLoader,
@@ -112,10 +117,9 @@ def confluence_read_docs() -> List[Document]:
 
 PERSIST_DIR = "./storage/data/langchain/faiss_index"
 if not os.path.exists(PERSIST_DIR):
-    # gdrive_docs = load_gdrive_documents()
+    gdrive_docs = load_gdrive_documents()
     confluence_docs = confluence_read_docs()
-    docs = confluence_docs
-    # docs = gdrive_docs + jira_docs
+    docs = gdrive_docs + confluence_docs
 
     # Initialize the vector store https://faiss.ai
     vectorstore = FAISS.from_documents(documents=docs, embedding=embedding_model)

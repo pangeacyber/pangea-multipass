@@ -52,10 +52,15 @@ if not os.path.exists(PERSIST_DIR):
     # Google Drive Data Ingestion
     admin_token_filepath = "admin_access_token.json"
 
+    credentials_filepath = os.path.abspath("../credentials.json")
+    GDriveAPI.get_and_save_access_token(
+        credentials_filepath, admin_token_filepath, ["https://www.googleapis.com/auth/drive.readonly"]
+    )
+
     loader = GoogleDriveLoader(
         folder_id="1Kj77oi2QGEOPKcIo_hKZPiHDJyKKFVgR",
         token_path=Path(admin_token_filepath),
-        credentials_path=Path("../credentials.json"),
+        credentials_path=Path(credentials_filepath),
         recursive=True,
         load_extended_metadata=True,
         file_loader_cls=TextLoader,
@@ -71,6 +76,7 @@ if not os.path.exists(PERSIST_DIR):
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/drive.metadata.readonly",
     ]
+
     creds = Credentials.from_authorized_user_file(admin_token_filepath, SCOPES)
     gdrive_me = GDriveME(creds, {})
     enrich_metadata(docs, [gdrive_me], reader=LangChainDocumentReader())
@@ -102,6 +108,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive.metadata.readonly",
 ]
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
+
 gdrive_filter = LangChainGDriveFilter(creds)
 filter_mixer = DocumentFilterMixer(document_filters=[gdrive_filter])
 
@@ -126,7 +133,7 @@ while True:
     user_prompt = input("Enter your question: ")
     similar_docs = retriever.invoke(user_prompt)
 
-    print(f"similar_docsilar: {len(similar_docs)}")
+    print(f"similar_docs: {len(similar_docs)}")
 
     filtered_docs = filter_mixer.filter(similar_docs)
     print(f"filtered_docs: {len(filtered_docs)}")

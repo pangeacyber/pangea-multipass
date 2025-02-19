@@ -10,12 +10,11 @@ readme = "README.md"
 package-mode = false
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "pangea-sdk",
-    "pangea-multipass"
+    "pangea-multipass",
+    "llama-index-readers-google (>=0.6.0)",
 ]
 
 [tool.poetry.dependencies]
-pangea-sdk = "^5.1.0"
 pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
 
 [tool.poetry.group.dev.dependencies]
