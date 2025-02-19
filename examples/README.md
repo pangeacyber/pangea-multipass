@@ -61,10 +61,9 @@ For this particular application the token's scope should be at least: `channels:
 
 ### Dropbox
 
-When using Dropbox as a source, the admin user need to authenticate on Dropbox using [Oauth2 protocol](https://developers.dropbox.com/oauth-guide) and allow Pangea's `pangea-multipass` Dropbox App. To do so, follow the Oauth2 flow using PKCE and the `pangea-multipass`'s app key. This app key could be saved in `DROPBOX_APP_KEY` like so:
+When using Dropbox as a source, the admin user needs to authenticate on Dropbox using [Oauth2 protocol](https://developers.dropbox.com/oauth-guide) and allow Pangea's `pangea-multipass` Dropbox App. To do so, follow the Oauth2 flow using PKCE and the `pangea-multipass`'s app key. This app key could be saved in `DROPBOX_APP_KEY` like so:
 
-```bash
-export DROPBOX_APP_KEY='hmhe1wh0koy8cv6'
-```
+In order to use Dropbox as a source, you need two environment variables:
 
-The whole Oauth2 flow could be checked on our [Dropbox's Example](./multipass_examples/04-dropbox-check.py)
+- `DROPBOX_APP_KEY`: The identifier for the Dropbox app that Multipass will use to access your files. For testing, you can use our Pangea app with key: `hmhe1wh0koy8cv6`
+- `DROPBOX_USER_EMAIL`: User email used in inference time. This email will be used to validate which files returned by the LLM the user has access to.
