@@ -71,10 +71,11 @@ class DropboxReader:
                 path = entrie.get("path_lower", None)
                 if not path:
                     continue
-                file = DropboxAPI.download_file(file_path=path, token=self._token)
+                file = DropboxAPI.download_file(token=self._token, file_path=path)
                 metadata: dict[str, str] = {
                     PangeaMetadataKeys.DATA_SOURCE: PangeaMetadataValues.DATA_SOURCE_DROPBOX,
                     PangeaMetadataKeys.DROPBOX_ID: entrie.get("id", ""),
+                    PangeaMetadataKeys.DROPBOX_FILE_PATH: path,
                     PangeaMetadataKeys.FILE_PATH: path,
                     PangeaMetadataKeys.FILE_NAME: entrie.get("name", ""),
                 }
