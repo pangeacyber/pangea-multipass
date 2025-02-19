@@ -7,19 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Added 
+### Added
 
 - GitLabReader and GitLabProcessor
+- Dropbox processor
 
 ### Fixed
 
 - `pydantic` error of `node_processor` default value.
-
-## 0.2.0 - 2025-01-15
-
-### Added
-
-- Dropbox processor
 
 ## 0.2.0 - 2025-01-15
 
