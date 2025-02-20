@@ -1,23 +1,24 @@
-[tool.poetry]
+[project]
 name = "pangea-multipass-llama-index"
 version = "0.2.0"
 description = "Pangea Multipass authorization library for Llama Index"
-authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
+authors = [
+    { name = "Apurv Jawle", email = "apurv.jawle@pangea.cloud" }
+]
 license = "MIT"
 readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "llama-index (==0.12.17)",
+    "pangea-multipass (>=0.2.0)",
+]
+
+[tool.poetry]
 packages = [
     { include = "pangea_multipass_llama_index" }
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-google-auth-oauthlib = "^1.2.1"
-llama-index = "0.12.17"
-llama-index-llms-bedrock = "0.3.3"
-llama-index-embeddings-bedrock = "0.5.0"
-llama-index-readers-google = "^0.6.0"
-llama-index-readers-confluence = "^0.3.1"
-llama-index-readers-jira = "^0.4.1"
 pangea-multipass = { path = "../pangea-multipass", develop = true }
 
 [tool.poetry.group.dev.dependencies]
