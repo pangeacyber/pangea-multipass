@@ -1012,19 +1012,19 @@ files = [
 
 [[package]]
 name = "langchain"
-version = "0.3.18"
+version = "0.3.19"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "langchain-0.3.18-py3-none-any.whl", hash = "sha256:1a6e629f02a25962aa5b16932e8f073248104a66804ed5af1f78618ad7c1d38d"},
-    {file = "langchain-0.3.18.tar.gz", hash = "sha256:311ac227a995545ff7c3f74c7767930c5349edef0b39f19d3105b86d39316b69"},
+    {file = "langchain-0.3.19-py3-none-any.whl", hash = "sha256:1e16d97db9106640b7de4c69f8f5ed22eeda56b45b9241279e83f111640eff16"},
+    {file = "langchain-0.3.19.tar.gz", hash = "sha256:b96f8a445f01d15d522129ffe77cc89c8468dbd65830d153a676de8f6b899e7b"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.3,<4.0.0"
 async-timeout = {version = ">=4.0.0,<5.0.0", markers = "python_version < \"3.11\""}
-langchain-core = ">=0.3.34,<1.0.0"
+langchain-core = ">=0.3.35,<1.0.0"
 langchain-text-splitters = ">=0.3.6,<1.0.0"
 langsmith = ">=0.1.17,<0.4"
 numpy = [
@@ -1052,6 +1052,7 @@ mistralai = ["langchain-mistralai"]
 ollama = ["langchain-ollama"]
 openai = ["langchain-openai"]
 together = ["langchain-together"]
+xai = ["langchain-xai"]
 
 [[package]]
 name = "langchain-aws"
@@ -2677,4 +2678,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "81218eb31a94398f72eaf8e2c5d993b01c8285c879aba45bb0f0b5f8a52d1e80"
+content-hash = "8c4dff3f4a9eb7e9cd083ad3f00948293d72afc0de0052abada6e6c44e2deecd"
