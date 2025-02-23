@@ -13,7 +13,7 @@ packages = [
 python = ">=3.10,<3.13"
 google-auth-oauthlib = "^1.2.1"
 langchain = "0.3.18"
-langchain-community = "0.3.17"
+langchain-community = "0.3.18"
 langchain-aws = "0.2.12"
 pangea-multipass = { path = "../pangea-multipass", develop = true }
 
