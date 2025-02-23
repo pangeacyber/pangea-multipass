@@ -52,6 +52,8 @@ class PangeaMetadataKeys(str, enum.Enum):
     GITLAB_REPOSITORY_ID = f"{_PANGEA_METADATA_KEY_PREFIX}gitlab_repository_id"
     GITLAB_REPOSITORY_NAME = f"{_PANGEA_METADATA_KEY_PREFIX}gitlab_repository_name"
     GITLAB_REPOSITORY_NAMESPACE_WITH_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}gitlab_repository_namespace_with_path"
+    DROPBOX_ID = f"{_PANGEA_METADATA_KEY_PREFIX}dropbox_id"
+    DROPBOX_FILE_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}file_path"
 
 
 class PangeaMetadataValues(str, enum.Enum):
@@ -61,6 +63,7 @@ class PangeaMetadataValues(str, enum.Enum):
     DATA_SOURCE_GITHUB = "github"
     DATA_SOURCE_SLACK = "slack"
     DATA_SOURCE_GITLAB = "gitlab"
+    DATA_SOURCE_DROPBOX = "dropbox"
 
 
 @dataclasses.dataclass
