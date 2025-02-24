@@ -1,4 +1,3 @@
-from time import sleep
 from typing import List, Optional
 
 import requests
@@ -10,9 +9,6 @@ DROPBOX_AUTH_URL = "https://www.dropbox.com/oauth2/authorize"
 DROPBOX_TOKEN_URL = "https://api.dropbox.com/oauth2/token"
 DROPBOX_LIST_FILES_URL = "https://api.dropboxapi.com/2/files/list_folder"
 DROPBOX_LIST_CONTINUE_URL = "https://api.dropboxapi.com/2/files/list_folder/continue"
-
-# File to store tokens
-DROPBOX_TOKEN_FILE = "dropbox_tokens.json"
 
 
 class DropboxReader:
