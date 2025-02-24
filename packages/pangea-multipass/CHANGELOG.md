@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - GitLabReader and GitLabProcessor
 - Dropbox reader and processor
+- Pagination support on GitHubReader
 
 ### Fixed
 

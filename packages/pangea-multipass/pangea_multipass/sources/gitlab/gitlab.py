@@ -77,6 +77,17 @@ class GitLabAPI:
 
         return user_projects
 
+    @staticmethod
+    def download_file(token: str, repo_id: str, file_path: str):
+        encoded_file_path = quote(file_path, safe="")  # Encode special chars
+        file_url = f"https://gitlab.com/api/v4/projects/{repo_id}/repository/files/{encoded_file_path}/raw"
+
+        response = requests.get(file_url, headers=GitLabAPI.get_auth_headers(token))
+        if response.status_code != 200:
+            raise Exception(f"Skipping {file_path}: Could not download file")
+
+        return response.content
+
 
 class GitLabProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     _access_cache: dict[str, bool] = {}
