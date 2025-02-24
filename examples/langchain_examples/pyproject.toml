@@ -1,25 +1,24 @@
-[tool.poetry]
+[project]
 name = "langchain_examples"
 version = "0.1.0"
 description = "Pangea Multipass authorization library for LangChain"
-authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
+authors = [
+    { name = "Apurv Jawle", email = "apurv.jawle@pangea.cloud" }
+]
 license = "MIT"
 package-mode = false
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "google-api-python-client (>=2.151.0)",
+    "google-auth-httplib2 (>=0.2.0)",
+    "langchain-google-community (>=2.0.2)",
+    "lxml (>=5.3.0)",
+    "faiss-cpu (>=1.9.0)",
+    "boto3 (>=1.36.22,<2.0.0)",
+]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-pangea-sdk = "^5.1.0"
-google-auth-oauthlib = "^1.2.1"
-langchain = "0.3.0"
-langchain-community = "0.3.0"
-langchain-aws = "0.2.1"
 pangea-multipass-langchain = { path = "../../packages/pangea-multipass-langchain", develop = true }
-google-api-python-client = "^2.151.0"
-google-auth-httplib2 = "^0.2.0"
-langchain-google-community = "^2.0.2"
-atlassian-python-api = "^3.41.16"
-lxml = "^5.3.0"
-faiss-cpu = "^1.9.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.14.1"
