@@ -20,6 +20,7 @@ class SlackReader:
         self._restart()
 
     def load_data(self, max_messages_per_channel: int = 1000) -> List[MultipassDocument]:
+        """Load all messages from all channels"""
         documents: List[MultipassDocument] = []
         channels = SlackAPI.list_channels(token=self._token)
         for channel in channels:
@@ -29,9 +30,15 @@ class SlackReader:
         return documents
 
     def get_channels(self) -> List[dict[str, Any]]:
+        """Get all the channels token has access to"""
         return SlackAPI.list_channels(token=self._token)
 
     def read_messages(self, channel: dict, page_size: int = 100) -> List[MultipassDocument]:
+        """
+        Read messages from a given channel
+        If the channel is different from the last one, it will restart the reader.
+        If the channel is the same, it will continue reading from the last message.
+        """
         new_channel_id = channel["id"]
         if self._channel_id is None or new_channel_id != self._channel_id:
             self._restart()
@@ -47,6 +54,7 @@ class SlackReader:
 
     @property
     def has_more_messages(self) -> bool:
+        """Check if there are more messages to read"""
         return self._has_more_messages
 
     def _restart(self) -> None:
@@ -55,6 +63,7 @@ class SlackReader:
         self._has_more_messages = True
 
     def _process_messages(self, messages: list[dict[str, Any]], channel: dict) -> List[MultipassDocument]:
+        """Process the messages and create the documents"""
         channel_id = channel["id"]
         channel_name = channel["name"]
         documents: List[MultipassDocument] = []

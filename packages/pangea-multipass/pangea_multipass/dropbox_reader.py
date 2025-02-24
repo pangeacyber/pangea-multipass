@@ -18,27 +18,26 @@ class DropboxReader:
     _has_more: bool
     _cursor: Optional[str]
     _folder_path: str
-    _page_size: int
     _recursive: bool
 
-    def __init__(self, token: str, folder_path: str = "", recursive: bool = True, page_size: int = 50):
+    def __init__(self, token: str, folder_path: str = "", recursive: bool = True):
         self._token = token
-        self._has_more = True
-        self._cursor = None
         self._folder_path = folder_path
-        self._page_size = page_size
         self._recursive = recursive
+        self.restart()
 
     def restart(self):
         self._has_more = True
         self._cursor = None
 
     @property
-    def has_more(self):
+    def has_more_files(self):
+        """Check if there are more files to read"""
         return self._has_more
 
     def load_data(
         self,
+        page_size: int = 50,
     ) -> List[MultipassDocument]:
         """
         Retrieves files in Dropbox using pagination.
@@ -50,7 +49,7 @@ class DropboxReader:
 
         if self._has_more:
             url = DROPBOX_LIST_FILES_URL if self._cursor is None else DROPBOX_LIST_CONTINUE_URL
-            data = {"path": self._folder_path, "recursive": self._recursive, "limit": self._page_size}
+            data = {"path": self._folder_path, "recursive": self._recursive, "limit": page_size}
             if self._cursor:
                 data = {"cursor": self._cursor}
 

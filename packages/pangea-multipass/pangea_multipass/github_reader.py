@@ -14,11 +14,17 @@ class GitHubReader:
 
     def __init__(self, token: str):
         self._token = token
-        self.restart()
+        self._restart()
 
     def load_data(
         self,
     ) -> List[MultipassDocument]:
+        """
+        Load all the data from the repositories
+        This will read all the files from all the repositories the token has access to.
+        This process is blocking and can take a long time. If working with a large number of repositories,
+        consider using the read_repo_files method.
+        """
         documents: List[MultipassDocument] = []
 
         # Get repositories
@@ -54,6 +60,11 @@ class GitHubReader:
         return documents
 
     def read_repo_files(self, repository: dict, page_size: int = 100) -> List[MultipassDocument]:
+        """
+        Read files from a given repository
+        If the repository is different from the last one, it will restart the reader.
+        If the repository is the same, it will continue reading from the last file.
+        """
         documents: List[MultipassDocument] = []
 
         self._read_repo_files_checks(repository)
@@ -91,13 +102,15 @@ class GitHubReader:
         return documents
 
     def get_repos(self) -> List[dict]:
+        """Get all the repositories the token has access to"""
         return GitHubAPI.get_user_repos(self._token)
 
     @property
     def has_more_files(self):
+        """Check if there are more files to read"""
         return self._repo_files is not None and self._current_file < len(self._repo_files)
 
-    def restart(self) -> None:
+    def _restart(self) -> None:
         self._current_file = 0
         self._repo_files = None
         self._current_repository = {}
@@ -107,7 +120,7 @@ class GitHubReader:
         new_repo_id = repository.get("id", None)
 
         if current_repo_id is None or current_repo_id != new_repo_id:
-            self.restart()
+            self._restart()
             self._current_repository = repository
 
         owner = self._current_repository["owner"]["login"]

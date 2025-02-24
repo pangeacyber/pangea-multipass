@@ -1,5 +1,4 @@
 from typing import Any, List, Optional
-from urllib.parse import quote
 
 import requests
 
@@ -15,20 +14,23 @@ class GitLabReader:
 
     def __init__(self, token: str):
         self._token = token
-        self.restart()
-
-    def _get_headers(self):
-        return {"Authorization": f"Bearer {self._token}"}
+        self._restart()
 
     def get_repos(self):
+        """Get all the repositories the token has access to"""
         return GitLabAPI.get_user_projects(self._token)
 
     def read_repo_files(self, repository: dict, page_size: int = 100) -> List[MultipassDocument]:
+        """
+        Read files from a given repository
+        If the repository is different from the last one, it will restart the reader.
+        If the repository is the same, it will continue reading from the last file.
+        """
         self._read_repo_files_checks(repository, page_size)
         if self._next_files_page is None:
             return []
 
-        response = requests.get(self._next_files_page, headers=self._get_headers())
+        response = requests.get(self._next_files_page, headers={"Authorization": f"Bearer {self._token}"})
 
         repo_id = self._current_repository.get("id", None)
         if response.status_code != 200:
@@ -59,6 +61,12 @@ class GitLabReader:
         return documents
 
     def load_data(self) -> List[MultipassDocument]:
+        """
+        Load all the data from the repositories
+        This will read all the files from all the repositories the token has access to.
+        This process is blocking and can take a long time. If working with a large number of repositories,
+        consider using the read_repo_files method.
+        """
         documents: List[MultipassDocument] = []
         repos = self.get_repos()
 
@@ -73,9 +81,10 @@ class GitLabReader:
 
     @property
     def has_more_files(self):
+        """Check if there are more files to read"""
         return self._has_more_files
 
-    def restart(self):
+    def _restart(self):
         self._has_more_files = True
         self._next_files_page = None
         self._current_repository = {}
@@ -84,7 +93,7 @@ class GitLabReader:
         current_repo_id = self._current_repository.get("id", None)
         new_repo_id = repository.get("id", None)
         if current_repo_id is None or current_repo_id != new_repo_id:
-            self.restart()
+            self._restart()
             self._current_repository = repository
 
         if self._has_more_files is True and self._next_files_page is None:

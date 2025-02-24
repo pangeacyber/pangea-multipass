@@ -27,14 +27,14 @@ else:
 
 data_save(DROPBOX_TOKEN_FILE, tokens)
 access_token = tokens["access_token"]
-reader = DropboxReader(access_token, page_size=20)
+reader = DropboxReader(access_token)
 page = 0
 documents = []
 
 print("Loading documents from Dropbox...")
 try:
-    while reader.has_more:
-        docs = reader.load_data()
+    while reader.has_more_files:
+        docs = reader.load_data(page_size=20)
         documents.extend(docs)
         page += 1
         print(f"Loaded page: {page}. Docs: {len(docs)}")
