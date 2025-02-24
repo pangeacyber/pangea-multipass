@@ -1,11 +1,25 @@
-[tool.poetry]
+[project]
 name = "llama_index_examples"
 version = "0.1.0"
 description = "Pangea Multipass authorization library for Llama Index"
-authors = ["Apurv Jawle <apurv.jawle@pangea.cloud>"]
+authors = [
+    { name = "Apurv Jawle", email = "apurv.jawle@pangea.cloud" }
+]
 license = "MIT"
 readme = "README.md"
 package-mode = false
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pangea-sdk",
+    "google-auth-oauthlib",
+    "llama-index",
+    "llama-index-llms-bedrock",
+    "llama-index-embeddings-bedrock",
+    "llama-index-readers-google",
+    "llama-index-readers-confluence",
+    "llama-index-readers-jira",
+    "pangea-multipass-llama-index"
+]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"

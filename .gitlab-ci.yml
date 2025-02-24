@@ -1,5 +1,5 @@
 default:
-  image: python:3.9.20@sha256:ef79f8314118b7cde6910d35f4166c902e7f87f47086686256556b97d991a0fb
+  image: python:3.10.16@sha256:76f22e4ce53774c1f5eb0ba145edb57b908e7aa329fee75eca69b511c1d0cd8a
   tags:
     - pangea-internal
 
@@ -14,7 +14,7 @@ stages:
     - pip --version
 
   update-poetry:
-    - pip install --upgrade "poetry<2.0"
+    - pip install --upgrade "poetry>=2.0"
     - poetry --version
 
 include:
