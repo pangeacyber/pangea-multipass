@@ -9,29 +9,18 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "pangea-sdk",
-    "google-auth-oauthlib",
-    "google-auth-httplib2",
-    "google-api-python-client",
-    "google-auth",
-    "openpyxl",
-    "slack-sdk"
+    "google-auth-oauthlib (>=1.2.1)",
+    "google-auth-httplib2 (>=0.2.0)",
+    "google-api-python-client (>=2.161.0)",
+    "google-auth (>=2.38.0)",
+    "openpyxl (>=3.1.5)",
+    "slack-sdk (>=3.34.0)",
 ]
 
 [tool.poetry]
 packages = [
     { include = "pangea_multipass" }
 ]
-
-[tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-pangea-sdk = "^5.5.1"
-google-auth-oauthlib = "^1.2.1"
-google-auth-httplib2 = "^0.2.0"
-google-api-python-client = "^2.161.0"
-google-auth = "^2.38.0"
-openpyxl = "^3.1.5"
-slack-sdk = "^3.34.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.15.0"

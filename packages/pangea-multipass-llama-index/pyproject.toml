@@ -7,16 +7,9 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<4.0"
 dependencies = [
-    "pangea-multipass",
-    "google-auth-oauthlib",
-    "llama-index",
-    "llama-index-llms-bedrock",
-    "llama-index-embeddings-bedrock",
-    "llama-index-readers-google",
-    "llama-index-readers-confluence",
-    "llama-index-readers-jira"
+    "llama-index (==0.12.17)",
 ]
 
 [tool.poetry]
@@ -25,14 +18,6 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-google-auth-oauthlib = "^1.2.1"
-llama-index = "0.12.17"
-llama-index-llms-bedrock = "0.3.3"
-llama-index-embeddings-bedrock = "0.5.0"
-llama-index-readers-google = "^0.6.0"
-llama-index-readers-confluence = "^0.3.1"
-llama-index-readers-jira = "^0.4.1"
 pangea-multipass = { path = "../pangea-multipass", develop = true }
 
 [tool.poetry.group.dev.dependencies]
