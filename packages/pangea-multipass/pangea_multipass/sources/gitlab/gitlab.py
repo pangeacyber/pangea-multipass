@@ -17,10 +17,10 @@ class GitLabAPI:
     @staticmethod
     def get_auth_headers(token: str) -> dict[str, str]:
         """Authenticate to GitLab using a personal access token."""
-        return {"Private-Token": token}
+        return {"Authorization": f"Bearer {token}"}
 
     @staticmethod
-    def user_has_access(admin_token: str, user_id: int, project_id: str) -> bool:
+    def user_has_access(admin_token: str, user_id: str, project_id: str) -> bool:
         """
         Check if a specific user has access to a GitLab project using an admin token.
         """
@@ -51,35 +51,39 @@ class GitLabAPI:
         return users[0] if len(users) else {}
 
     @staticmethod
-    def get_user_projects(admin_token: str, username: str) -> list[dict[str, Any]]:
-        """Get all projects a specific user has access to using an admin token."""
-
-        headers = GitLabAPI.get_auth_headers(admin_token)
-        url = f"https://gitlab.com/api/v4/users/{quote(username)}/projects"
+    def get_user_projects(admin_token: str) -> list[dict[str, Any]]:
+        """Fetch all projects the authenticated user has access to."""
         projects = []
-        page = 1
-
-        while True:
-            response = requests.get(url, headers=headers, params={"per_page": 100, "page": page})
+        headers = GitLabAPI.get_auth_headers(admin_token)
+        url = f"https://gitlab.com/api/v4/projects"
+        params = {"per_page": 100, "membership": True, "simple": True}
+        while url:
+            response = requests.get(url, headers=headers, params=params)
             if response.status_code != 200:
-                raise Exception(f"Error fetching projects for user {username}: {response.json()}")
+                raise Exception(f"Error fetching projects: {response.text}")
 
-            data = response.json()
-            if not data:
-                break
-
-            projects.extend(data)
-            page += 1
-
+            projects.extend(response.json())
+            url = response.links.get("next", {}).get("url")  # Pagination
         return projects
+
+    @staticmethod
+    def get_allowed_projects(admin_token: str, user_id: str) -> list[int]:
+        projects = GitLabAPI.get_user_projects(admin_token=admin_token)
+        user_projects = []
+
+        for project in projects:
+            if GitLabAPI.user_has_access(admin_token, user_id, project["id"]):
+                user_projects.append(project["id"])
+
+        return user_projects
 
 
 class GitLabProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     _access_cache: dict[str, bool] = {}
     _token: str
     _username: str
-    _user_id: Optional[int]
-    _projects: list[str] = []
+    _user_id: Optional[str]
+    _projects: list[int] = []
     _get_node_metadata: Callable[[T], dict[str, Any]]
 
     def __init__(self, admin_token: str, username: str, get_node_metadata: Callable[[T], dict[str, Any]]):
@@ -138,16 +142,13 @@ class GitLabProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
         """
 
         if not self._projects:
-            projects_info = GitLabAPI.get_user_projects(self._token, self._username)
-            projects = []
+            if self._user_id is None:
+                self._load_user_id()
 
-            for project in projects_info:
-                id = project.get("id", None)
-                if not id:
-                    continue
-                projects.append(id)
+            if self._user_id is None:
+                raise Exception("Could not load user ID")
 
-        self._projects = projects
+            self._projects = GitLabAPI.get_allowed_projects(self._token, self._user_id)
 
         return MetadataFilter(
             key=PangeaMetadataKeys.GITLAB_REPOSITORY_ID, value=self._projects, operator=FilterOperator.IN
