@@ -9,6 +9,7 @@ from pangea_multipass import (
     ConfluenceAuth,
     ConfluenceProcessor,
     DocumentReader,
+    DropboxProcessor,
     FilterOperator,
     GDriveProcessor,
     GitHubProcessor,
@@ -48,7 +49,7 @@ def from_multipass(documents: List[MultipassDocument]) -> List[Document]:
 class LangChainJiraFilter(JiraProcessor[Document]):
     """Filter for Jira integration with LangChain documents.
 
-    Uses Jira authentication to access documents in the LangChain.
+    Uses Jira authentication to check document access in the LangChain.
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
@@ -62,7 +63,7 @@ class LangChainJiraFilter(JiraProcessor[Document]):
 class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
     """Filter for Confluence integration with LangChain documents.
 
-    Uses Confluence authentication to access documents in the LangChain.
+    Uses Confluence authentication to check document access in the LangChain.
 
     Args:
         auth (ConfluenceAuth): Confluence authentication credentials.
@@ -78,7 +79,7 @@ class LangChainConfluenceFilter(ConfluenceProcessor[Document]):
 class LangChainGDriveFilter(GDriveProcessor[Document]):
     """Filter for Google Drive integration with LangChain documents.
 
-    Uses Google Drive credentials to access documents in the LangChain.
+    Uses Google Drive credentials to check document access in the LangChain.
 
     Args:
         creds (Credentials): Google OAuth2 credentials.
@@ -92,7 +93,7 @@ class LangChainGDriveFilter(GDriveProcessor[Document]):
 class LangChainGitHubFilter(GitHubProcessor[Document]):
     """Filter for GitHub integration with LangChain documents.
 
-    Uses GitHub classic token to access documents in the LangChain.
+    Uses GitHub classic token to check document access in the LangChain.
 
     Args:
         token (str): GitHub classic token.
@@ -106,7 +107,7 @@ class LangChainGitHubFilter(GitHubProcessor[Document]):
 class LangChainSlackFilter(SlackProcessor[Document]):
     """Filter for Slack integration with LangChain documents.
 
-    Uses Slack token to access channels in the LangChain.
+    Uses Slack token to check access to channels in the LangChain.
 
     Args:
         token (str): Slack token.
@@ -129,6 +130,20 @@ class LangChainGitLabFilter(GitLabProcessor[Document]):
 
     def __init__(self, admin_token: str, username: str):
         super().__init__(admin_token=admin_token, username=username, get_node_metadata=get_doc_metadata)
+
+
+class LangChainDropboxFilter(DropboxProcessor[Document]):
+    """Filter for Dropbox integration with LangChain documents.
+
+    Uses Dropbox token to check access to documents in the LangChain.
+
+    Args:
+        token (str): Dropbox token.
+        user_email (str): User email to check access to files.
+    """
+
+    def __init__(self, token: str, user_email: str):
+        super().__init__(token, get_node_metadata=get_doc_metadata, user_email=user_email)
 
 
 class DocumentFilterMixer:

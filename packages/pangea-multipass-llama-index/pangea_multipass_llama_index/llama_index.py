@@ -12,6 +12,7 @@ from pangea_multipass import (
     ConfluenceAuth,
     ConfluenceProcessor,
     DocumentReader,
+    DropboxProcessor,
     GDriveProcessor,
     GitHubProcessor,
     GitLabProcessor,
@@ -81,7 +82,7 @@ def from_multipass(documents: List[MultipassDocument]) -> List[LIDocument]:
 class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
     """Processor for Jira integration with Llama Index nodes.
 
-    Uses Jira authentication to access nodes in the Llama Index.
+    Uses Jira authentication to access nodes.
 
     Args:
         auth (JiraAuth): Jira authentication credentials.
@@ -95,7 +96,7 @@ class LlamaIndexJiraProcessor(JiraProcessor[NodeWithScore]):
 class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
     """Processor for Confluence integration with Llama Index nodes.
 
-    Uses Confluence authentication to access nodes in the Llama Index.
+    Uses Confluence authentication to check nodes access.
 
     Args:
         auth (ConfluenceAuth): Confluence authentication credentials.
@@ -111,7 +112,7 @@ class LlamaIndexConfluenceProcessor(ConfluenceProcessor[NodeWithScore]):
 class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
     """Processor for Google Drive integration with Llama Index nodes.
 
-    Uses Google Drive credentials to access nodes in the Llama Index.
+    Uses Google Drive credentials to check nodes access.
 
     Args:
         creds (Credentials): Google OAuth2 credentials.
@@ -125,7 +126,7 @@ class LlamaIndexGDriveProcessor(GDriveProcessor[NodeWithScore]):
 class LlamaIndexGitHubProcessor(GitHubProcessor[NodeWithScore]):
     """Processor for GitHub integration with Llama Index nodes.
 
-    Uses GitHub token to access nodes in the Llama Index.
+    Uses GitHub token to check node access.
 
     Args:
         token (str): GitHub classic token.
@@ -139,7 +140,7 @@ class LlamaIndexGitHubProcessor(GitHubProcessor[NodeWithScore]):
 class LlamaIndexSlackProcessor(SlackProcessor[NodeWithScore]):
     """Processor for Slack integration with Llama Index nodes.
 
-    Uses Slack token to access nodes in the Llama Index.
+    Uses Slack token to check node access.
 
     Args:
         token (str): Slack token.
@@ -162,6 +163,20 @@ class LlamaIndexGitLabProcessor(GitLabProcessor[NodeWithScore]):
 
     def __init__(self, admin_token: str, username: str):
         super().__init__(admin_token=admin_token, username=username, get_node_metadata=get_node_metadata)
+
+
+class LlamaIndexDropboxProcessor(DropboxProcessor[NodeWithScore]):
+    """Processor for Dropbox integration with Llama Index nodes.
+
+    Uses Dropbox token to check node access.
+
+    Args:
+        token (str): Dropbox token.
+        user_email (str): User email to check access to files.
+    """
+
+    def __init__(self, token: str, user_email: str):
+        super().__init__(token, get_node_metadata=get_node_metadata, user_email=user_email)
 
 
 class NodePostprocessorMixer(BaseNodePostprocessor):

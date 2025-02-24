@@ -57,3 +57,13 @@ For this particular application the token's scope should be at least: `channels:
 - `SLACK_ADMIN_TOKEN`: Access token used in the ingestion time. System will process all the channels this token has access to.
 - `SLACK_USER_TOKEN`: (Deprecated. Use `SLACK_USER_EMAIL` and `SLACK_ADMIN_TOKEN` instead.) Token user in inference time. It will be used to validate which files returned by the LLM the user has access to.
 - `SLACK_USER_EMAIL`: User email used in inference time. This email will be used to validate which files returned by the LLM the user has access to.
+
+
+### Dropbox
+
+When using Dropbox as a source, the admin user needs to authenticate on Dropbox using [Oauth2 protocol](https://developers.dropbox.com/oauth-guide) and allow Pangea's `pangea-multipass` Dropbox App. To do so, follow the Oauth2 flow using PKCE and the `pangea-multipass`'s app key. This app key could be saved in `DROPBOX_APP_KEY` like so:
+
+In order to use Dropbox as a source, you need two environment variables:
+
+- `DROPBOX_APP_KEY`: The identifier for the Dropbox app that Multipass will use to access your files. For testing, you can use our Pangea app with key: `hmhe1wh0koy8cv6`
+- `DROPBOX_USER_EMAIL`: User email used in inference time. This email will be used to validate which files returned by the LLM the user has access to.

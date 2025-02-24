@@ -1595,6 +1595,71 @@ files = [
 ]
 
 [[package]]
+name = "pangea-multipass"
+version = "0.2.0"
+description = "Pangea Multipass authorization library"
+optional = false
+python-versions = ">=3.10,<3.13"
+files = []
+develop = true
+
+[package.dependencies]
+google-api-python-client = "^2.149.0"
+google-auth = "^2.35.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+openpyxl = "^3.1.5"
+pangea-sdk = "^5.1.0"
+slack-sdk = "^3.34.0"
+
+[package.source]
+type = "directory"
+url = "../../packages/pangea-multipass"
+
+[[package]]
+name = "pangea-multipass-langchain"
+version = "0.2.0"
+description = "Pangea Multipass authorization library for LangChain"
+optional = false
+python-versions = ">=3.10,<3.13"
+files = []
+develop = true
+
+[package.dependencies]
+google-auth-oauthlib = "^1.2.1"
+langchain = "0.3.0"
+langchain-aws = "0.2.1"
+langchain-community = "0.3.0"
+pangea-multipass = {path = "../pangea-multipass", develop = true}
+pangea-sdk = "^5.1.0"
+
+[package.source]
+type = "directory"
+url = "../../packages/pangea-multipass-langchain"
+
+[[package]]
+name = "pangea-sdk"
+version = "5.4.0"
+description = "Pangea API SDK"
+optional = false
+python-versions = "<4.0.0,>=3.9"
+files = [
+    {file = "pangea_sdk-5.4.0-py3-none-any.whl", hash = "sha256:59aa45e7da639d9c2be00afba2b651a0b6414cc05821404577ea65d85a0d2ff2"},
+    {file = "pangea_sdk-5.4.0.tar.gz", hash = "sha256:647531e07d174741f2e38348a15b0d57621ce0f646ffee6450842b9dc3ef815e"},
+]
+
+[package.dependencies]
+aiohttp = ">=3.11.11,<4.0.0"
+cryptography = ">=43.0.3,<44.0.0"
+deprecated = ">=1.2.15,<2.0.0"
+google-crc32c = ">=1.5.0,<2.0.0"
+pydantic = ">=2.10.5,<3.0.0"
+python-dateutil = ">=2.9.0,<3.0.0"
+requests = ">=2.31.0,<3.0.0"
+requests-toolbelt = ">=1.0.0,<2.0.0"
+typing-extensions = ">=4.12.2,<5.0.0"
+
+[[package]]
 name = "propcache"
 version = "0.2.1"
 description = "Accelerated property cache"
