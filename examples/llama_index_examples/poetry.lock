@@ -2311,6 +2311,28 @@ test = ["hypothesis (>=6.46.1)", "pytest (>=7.3.2)", "pytest-xdist (>=2.2.0)"]
 xml = ["lxml (>=4.9.2)"]
 
 [[package]]
+name = "pangea-multipass"
+version = "0.2.0"
+description = "Pangea Multipass authorization library"
+optional = false
+python-versions = ">=3.10,<3.13"
+files = []
+develop = true
+
+[package.dependencies]
+google-api-python-client = "^2.149.0"
+google-auth = "^2.35.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+openpyxl = "^3.1.5"
+pangea-sdk = "^5.1.0"
+slack-sdk = "^3.34.0"
+
+[package.source]
+type = "directory"
+url = "../../packages/pangea-multipass"
+
+[[package]]
 name = "pangea-multipass-llama-index"
 version = "0.2.0"
 description = "Pangea Multipass authorization library for Llama Index"
@@ -2321,7 +2343,15 @@ files = []
 develop = true
 
 [package.dependencies]
-llama-index = "0.12.17"
+google-auth-oauthlib = "^1.2.1"
+llama-index = "0.11.11"
+llama-index-embeddings-bedrock = "0.3.1"
+llama-index-llms-bedrock = "0.2.1"
+llama-index-readers-confluence = "^0.2.1"
+llama-index-readers-google = "^0.4.1"
+llama-index-readers-jira = "^0.3.1"
+pangea-multipass = {path = "../pangea-multipass", develop = true}
+pangea-sdk = "^5.1.0"
 
 [package.source]
 type = "directory"
