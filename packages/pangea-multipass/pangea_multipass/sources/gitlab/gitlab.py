@@ -51,6 +51,17 @@ class GitLabAPI:
         return users[0] if len(users) else {}
 
     @staticmethod
+    def get_user_info(admin_token: str) -> dict:
+        """Get user information from current token"""
+
+        response = requests.get(
+            "https://gitlab.com/api/v4/user/",
+            headers=GitLabAPI.get_auth_headers(admin_token),
+        )
+        response.raise_for_status()
+        return response.json()
+
+    @staticmethod
     def get_user_projects(admin_token: str) -> list[dict[str, Any]]:
         """Fetch all projects the authenticated user has access to."""
         projects = []
@@ -115,6 +126,7 @@ class GitLabProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
             self._load_user_id()
 
         if self._user_id is None:
+            print("Could not load user ID")
             return False
 
         if project_id in self._access_cache:
