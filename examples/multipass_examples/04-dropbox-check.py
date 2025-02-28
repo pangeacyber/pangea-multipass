@@ -27,17 +27,12 @@ else:
 
 data_save(DROPBOX_TOKEN_FILE, tokens)
 access_token = tokens["access_token"]
-reader = DropboxReader(access_token, page_size=20)
-page = 0
+reader = DropboxReader(access_token)
 documents = []
 
 print("Loading documents from Dropbox...")
 try:
-    while reader.has_more:
-        docs = reader.load_data()
-        documents.extend(docs)
-        page += 1
-        print(f"Loaded page: {page}. Docs: {len(docs)}")
+    documents = reader.load_data()
 
 except HTTPError as e:
     if e.response:
@@ -54,7 +49,7 @@ from pangea_multipass import DropboxProcessor, get_document_metadata
 user_email = os.getenv("DROPBOX_USER_EMAIL")
 assert user_email
 
-processor = DropboxProcessor(access_token, get_document_metadata, user_email=user_email)
+processor = DropboxProcessor(access_token, user_email=user_email, get_node_metadata=get_document_metadata)
 print("Filtering authorized documents...")
 authorized_docs = processor.filter(documents)
 

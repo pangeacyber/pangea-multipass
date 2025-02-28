@@ -85,45 +85,59 @@ class GitHubAPI:
 
         return repos
 
+    @staticmethod
+    def get_repo_files(token: str, owner: str, repo: str) -> List[dict[str, Any]]:
+        """Fetch all files in a repository using the GitHub Tree API."""
+
+        headers = GitHubAPI.get_auth_headers(token)
+
+        url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/main?recursive=1"
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            tree_data = response.json()
+            return [item for item in tree_data.get("tree", []) if item["type"] == "blob"]
+        elif response.status_code == 404:
+            return []
+        else:
+            raise Exception(f"Error fetching files for repository '{repo}': {response.json()}")
+
+    @staticmethod
+    def download_file_content(token: str, url: str) -> str:
+        """Download the content of a file from GitHub."""
+
+        headers = GitHubAPI.get_auth_headers(token)
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return str(response.content)
+        else:
+            raise Exception(f"Error downloading file: {response.json()}")
+
+    @staticmethod
+    def get_allowed_repos(token: str, username: str) -> List[dict]:
+        projects = GitHubAPI.get_user_repos(token)
+        user_projects = []
+
+        for project in projects:
+            if GitHubAPI.user_has_access(token, project["owner"]["login"], project["name"], username):
+                user_projects.append(project)
+
+        return user_projects
+
 
 class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     _access_cache: dict[Tuple[str, str], bool] = {}
     _token: str
     _repos: List[Tuple[str, str]] = []
-    _username: Optional[str]
+    _username: str
 
-    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]], username: Optional[str] = None):
+    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]], username: str):
         super().__init__()
         self._token = token
         self._access_cache = {}
         self.get_node_metadata = get_node_metadata
         self._username = username
-
-    def _has_access(self, metadata: dict[str, Any]) -> bool:
-        """Check if the authenticated user has access to a repository."""
-
-        repo_name = metadata.get(PangeaMetadataKeys.GITHUB_REPOSITORY_NAME, None)
-        if repo_name is None:
-            raise KeyError(f"Invalid metadata key: {PangeaMetadataKeys.GITHUB_REPOSITORY_NAME}")
-
-        owner = metadata.get(PangeaMetadataKeys.GITHUB_REPOSITORY_OWNER, None)
-        if owner is None:
-            raise KeyError(f"Invalid metadata key: {PangeaMetadataKeys.GITHUB_REPOSITORY_OWNER}")
-
-        access_tuple = (owner, repo_name)
-        has_access = self._access_cache.get(access_tuple, None)
-        if has_access is not None:
-            return has_access
-
-        if self._username:
-            has_access = GitHubAPI.user_has_access(
-                admin_token=self._token, owner=owner, repo_name=repo_name, username=self._username
-            )
-        else:
-            has_access = GitHubAPI.has_access(token=self._token, owner=owner, repo_name=repo_name)
-
-        self._access_cache[access_tuple] = has_access
-        return has_access
 
     def filter(
         self,
@@ -154,7 +168,7 @@ class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
         """
 
         if not self._repos:
-            repos_info = GitHubAPI.get_user_repos(self._token)
+            repos_info = GitHubAPI.get_allowed_repos(self._token, username=self._username)
             repos = []
 
             for repo in repos_info:
@@ -167,6 +181,32 @@ class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
         return MetadataFilter(
             key=PangeaMetadataKeys.GITHUB_REPOSITORY_OWNER_AND_NAME, value=self._repos, operator=FilterOperator.IN
         )
+
+    def _has_access(self, metadata: dict[str, Any]) -> bool:
+        """Check if the authenticated user has access to a repository."""
+
+        repo_name = metadata.get(PangeaMetadataKeys.GITHUB_REPOSITORY_NAME, None)
+        if repo_name is None:
+            raise KeyError(f"Invalid metadata key: {PangeaMetadataKeys.GITHUB_REPOSITORY_NAME}")
+
+        owner = metadata.get(PangeaMetadataKeys.GITHUB_REPOSITORY_OWNER, None)
+        if owner is None:
+            raise KeyError(f"Invalid metadata key: {PangeaMetadataKeys.GITHUB_REPOSITORY_OWNER}")
+
+        access_tuple = (owner, repo_name)
+        has_access = self._access_cache.get(access_tuple, None)
+        if has_access is not None:
+            return has_access
+
+        if self._username:
+            has_access = GitHubAPI.user_has_access(
+                admin_token=self._token, owner=owner, repo_name=repo_name, username=self._username
+            )
+        else:
+            has_access = GitHubAPI.has_access(token=self._token, owner=owner, repo_name=repo_name)
+
+        self._access_cache[access_tuple] = has_access
+        return has_access
 
     def _is_authorized(self, node: T) -> bool:
         metadata = self.get_node_metadata(node)

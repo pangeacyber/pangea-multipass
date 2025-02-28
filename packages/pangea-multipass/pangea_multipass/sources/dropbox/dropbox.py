@@ -1,5 +1,5 @@
 import json
-from typing import Any, Callable, Generic, List
+from typing import Any, Callable, Generic, List, Optional
 
 import requests
 
@@ -58,51 +58,105 @@ class DropboxAPI:
         return False
 
     @staticmethod
-    def list_user_files(token: str, user_email: str):
+    def list_shared_folders(token: str, user_email: str) -> List[str]:
         """
-        Lists all files and folders that a user has access to in Dropbox.
+        Lists shared folders that a user has access to in Dropbox.
 
         :param token: Admin OAuth token with access to all files.
-        :param user_email: Email of the user whose accessible files need to be listed.
-        :return: List of file paths the user has access to.
+        :param user_email: Email of the user whose accessible folders need to be listed.
+        :return: List of folder paths the user has access to.
         """
-        url = "https://api.dropboxapi.com/2/sharing/list_folders"
+
+        accessible_folders: List[str] = []
+        has_more = True
+        cursor: Optional[str] = None
         headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
-        response = requests.post(url, json={}, headers=headers)
+        while has_more:
+            url = (
+                "https://api.dropboxapi.com/2/sharing/list_folders"
+                if cursor is None
+                else "https://api.dropboxapi.com/2/sharing/list_folders/continue"
+            )
+            data = {} if cursor is None else {"cursor": cursor}
+            response = requests.post(url, json=data, headers=headers)
 
-        if response.status_code != 200:
-            return []
+            if response.status_code != 200:
+                return accessible_folders
 
-        accessible_files = []
-        shared_folders = response.json().get("entries", [])
+            resp_data = response.json()
+            shared_folders = resp_data.get("entries", [])
+            cursor = resp_data.get("cursor", None)
+            has_more = cursor is not None
 
-        for folder in shared_folders:
-            folder_id = folder.get("shared_folder_id")
-            folder_name = folder.get("name")
+            for folder in shared_folders:
+                folder_id = folder.get("shared_folder_id")
+                folder_name = folder.get("name")
 
-            members_url = "https://api.dropboxapi.com/2/sharing/list_folder_members"
-            members_data = {"shared_folder_id": folder_id}
+                members_url = "https://api.dropboxapi.com/2/sharing/list_folder_members"
+                members_data = {"shared_folder_id": folder_id}
 
-            members_response = requests.post(members_url, json=members_data, headers=headers)
+                members_response = requests.post(members_url, json=members_data, headers=headers)
 
-            if members_response.status_code == 200:
-                members = members_response.json().get("users", [])
-                for member in members:
-                    if member.get("email", "").lower() == user_email.lower():
-                        accessible_files.append(folder_name)
-                        break
+                if members_response.status_code == 200:
+                    members = members_response.json().get("users", [])
+                    for member in members:
+                        if member.get("user", {}).get("email", "").lower() == user_email.lower():
+                            if not folder_name.startswith("/"):
+                                folder_name = f"/{folder_name}"
+                            accessible_folders.append(folder_name)
+                            break
 
-        return accessible_files
+        return accessible_folders
+
+    @staticmethod
+    def list_subfolders(token: str, root: str) -> List[str]:
+        """
+        Lists all folders in Dropbox.
+
+        :param token: Admin OAuth token with access to all files.
+        :return: List of all folder paths.
+        """
+
+        folders: List[str] = []
+        has_more = True
+        cursor: Optional[str] = None
+        headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
+        while has_more:
+            url = DropboxAPI.LIST_FILES_URL if cursor is None else DropboxAPI.LIST_CONTINUE_URL
+            data = {"path": root, "recursive": True, "limit": 100}
+            if cursor:
+                data = {"cursor": cursor}
+
+            response = requests.post(url, headers=headers, json=data)
+
+            if response.status_code != 200:
+                print("error", response.text)
+                return folders
+
+            resp_data = response.json()
+            folder_entries = resp_data.get("entries", [])
+            cursor = resp_data.get("cursor", None)
+            has_more = resp_data.get("has_more", False)
+
+            for entrie in folder_entries:
+                if entrie.get(".tag") != "folder":
+                    continue
+
+                folder_path = entrie.get("path_lower", "")
+                folders.append(folder_path)
+
+        return folders
 
 
 class DropboxProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     _access_cache: dict[str, bool] = {}
     _token: str
-    _files: List[str] = []
+    _folders: List[str] = []
     _user_email: str
 
-    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]], user_email: str):
+    def __init__(self, token: str, user_email: str, get_node_metadata: Callable[[T], dict[str, Any]]):
         super().__init__()
         self._token = token
         self._access_cache = {}
@@ -153,11 +207,18 @@ class DropboxProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
             MetadataFilter: Filter for Dropbox paths.
         """
 
-        if not self._files:
-            self._files = DropboxAPI.list_user_files(self._token, self._user_email)
-            self._access_cache = {value: True for value in self._files}
+        if not self._folders:
+            shared_folders = DropboxAPI.list_shared_folders(self._token, self._user_email)
+            folders = {value: True for value in shared_folders}
 
-        return MetadataFilter(key=PangeaMetadataKeys.DROPBOX_FILE_PATH, value=self._files, operator=FilterOperator.IN)
+            for folder in shared_folders:
+                subfolders = DropboxAPI.list_subfolders(self._token, folder)
+                folders.update({value: True for value in subfolders})
+
+            self._access_cache = folders
+            self._folders = list(folders.keys())
+
+        return MetadataFilter(key=PangeaMetadataKeys.DROPBOX_PATH, value=self._folders, operator=FilterOperator.IN)
 
     def _is_authorized(self, node: T) -> bool:
         metadata = self.get_node_metadata(node)

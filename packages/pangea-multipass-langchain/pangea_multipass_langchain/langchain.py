@@ -18,7 +18,12 @@ from pangea_multipass import (
     JiraProcessor,
 )
 from pangea_multipass import MetadataFilter as PangeaMetadataFilter
-from pangea_multipass import MultipassDocument, PangeaGenericNodeProcessor, PangeaNodeProcessorMixer, SlackProcessor
+from pangea_multipass import (
+    MultipassDocument,
+    PangeaGenericNodeProcessor,
+    PangeaNodeProcessorMixer,
+    SlackProcessor,
+)
 
 
 class LangChainDocumentReader(DocumentReader):
@@ -97,10 +102,10 @@ class LangChainGitHubFilter(GitHubProcessor[Document]):
 
     Args:
         token (str): GitHub classic token.
-        username (Optional[str]): GitHub username to check permissions.
+        username (str): GitHub username to check permissions.
     """
 
-    def __init__(self, token: str, username: Optional[str] = None):
+    def __init__(self, token: str, username: str):
         super().__init__(token, get_node_metadata=get_doc_metadata, username=username)
 
 
@@ -143,7 +148,7 @@ class LangChainDropboxFilter(DropboxProcessor[Document]):
     """
 
     def __init__(self, token: str, user_email: str):
-        super().__init__(token, get_node_metadata=get_doc_metadata, user_email=user_email)
+        super().__init__(token, user_email=user_email, get_node_metadata=get_doc_metadata)
 
 
 class DocumentFilterMixer:
