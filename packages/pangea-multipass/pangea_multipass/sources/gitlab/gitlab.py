@@ -219,5 +219,5 @@ class GitLabProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
         )
 
     def _load_user_id(self):
-        user = GitLabClient.get_user(self._token, username=self._username)
+        user = self._client.get_user(self._token, username=self._username)
         self._user_id = user.get("id", None)
