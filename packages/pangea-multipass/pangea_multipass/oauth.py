@@ -32,7 +32,7 @@ class OauthFlow:
         self.host = host
         self.port = port
 
-    def run_pkce(self, code_challenge: str, code_verifier: str, code_challenge_method: str = "S256"):
+    def run_pkce(self, code_challenge: str, code_verifier: str, code_challenge_method: str = "S256", scope: str = ""):
         self._auth_code = None
         redirect_uri = f"http://{self.host}:{self.port}"
 
@@ -46,16 +46,21 @@ class OauthFlow:
             f"code_challenge_method={code_challenge_method}"
         )
 
-        webbrowser.open(auth_url)
+        if scope:
+            auth_url += f"&scope={scope}"
 
+        webbrowser.open(auth_url)
         server_thread = threading.Thread(target=OauthFlow._run_server, daemon=True)
         server_thread.start()
 
         while OauthFlow._auth_code is None:
             pass  # Busy wait (can be improved with event-based handling)
 
+        headers = {"Origin": "http://localhost"}
+
         response = requests.post(
             self.token_url,
+            headers=headers,
             data={
                 "client_id": self.client_id,
                 "grant_type": "authorization_code",
@@ -114,7 +119,7 @@ class OauthFlow:
                 "refresh_token": refresh_token,
                 "client_id": client_id,
             },
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            headers={"Content-Type": "application/x-www-form-urlencoded", "Origin": "http://localhost"},
         )
         response.raise_for_status()
 
