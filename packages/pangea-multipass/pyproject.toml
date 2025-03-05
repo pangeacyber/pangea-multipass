@@ -24,7 +24,7 @@ packages = [
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.15.0"
-types-requests = "2.32.0.20241016"
+types-requests = "2.32.0.20250301"
 
 [[tool.mypy.overrides]]
 module = ["google_auth_oauthlib.flow.*", "googleapiclient.discovery.*"]
