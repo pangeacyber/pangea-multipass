@@ -1,28 +1,31 @@
+import logging
 from typing import Any, List, Optional, Tuple
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 from .core import MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues, generate_id
-from .sources import SlackAPI
+from .sources import SlackClient
 
 
 class SlackReader:
     _token: str
-    _client: WebClient
+    _slack_client: WebClient
     _channel_id: Optional[str] = None
     _latest_ts: Optional[str] = None
     _has_more_messages: bool = True
 
-    def __init__(self, token: str) -> None:
+    def __init__(self, token: str, logger_name: str = "multipass") -> None:
         self._token = token
-        self._client = WebClient(token=self._token)
+        self._slack_client = WebClient(token=self._token)
+        self.logger = logging.getLogger(logger_name)
+        self._client = SlackClient(logger_name)
         self._restart()
 
     def load_data(self, max_messages_per_channel: int = 1000) -> List[MultipassDocument]:
         """Load all messages from all channels"""
         documents: List[MultipassDocument] = []
-        channels = SlackAPI.list_channels(token=self._token)
+        channels = self._client.list_channels(token=self._token)
         for channel in channels:
             messages, _, _ = self._fetch_messages(channel["id"], max_messages_per_channel)
             documents.extend(self._process_messages(messages, channel))
@@ -31,7 +34,7 @@ class SlackReader:
 
     def get_channels(self) -> List[dict[str, Any]]:
         """Get all the channels token has access to"""
-        return SlackAPI.list_channels(token=self._token)
+        return self._client.list_channels(token=self._token)
 
     def read_messages(self, channel: dict, page_size: int = 100) -> List[MultipassDocument]:
         """
@@ -101,7 +104,7 @@ class SlackReader:
 
         try:
             while len(messages) < max_messages:
-                response = self._client.conversations_history(channel=channel_id, latest=latest, limit=page_size)
+                response = self._slack_client.conversations_history(channel=channel_id, latest=latest, limit=page_size)
                 new_messages: List[dict[str, Any]] = response.get("messages", [])
                 messages.extend(new_messages)
 

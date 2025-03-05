@@ -13,12 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dropbox reader and processor
 - Pagination support on GitHubReader
 - Pagination support on SlackReader
+- Logger to `GitLabReader`, `GitHubReader`, `SlackReader`, `GitLabClient`, `GitHubClient` and `SlackClient`.
 
 ### Fixed
 
 - Handle null fields on issues in JiraME
 - Handle trailing slash in Jira URL
 - GitLabProcessor `get_filter()`
+
+### Changed
+
+- Rename `GitLabAPI` to `GitLabClient`
+- Rename `GitHubAPI` to `GitHubClient`
+- Rename `SlackAPI` to `SlackClient`
 
 
 ## 0.2.0 - 2025-01-15

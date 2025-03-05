@@ -1,1 +1,1 @@
-from .gitlab import GitLabAPI, GitLabProcessor
+from .gitlab import GitLabClient, GitLabProcessor

@@ -1,8 +1,9 @@
+import logging
 from typing import Any, List, Optional
 
 import requests
 
-from .sources import GitLabAPI
+from .sources import GitLabClient
 from pangea_multipass import MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues, generate_id
 
 
@@ -11,14 +12,17 @@ class GitLabReader:
     _has_more_files: bool
     _next_files_page: Optional[str]
     _current_repository: dict
+    _logger_name: str
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, logger_name: str = "multipass"):
         self._token = token
+        self.logger = logging.getLogger(logger_name)
+        self._client = GitLabClient(logger_name)
         self._restart()
 
     def get_repos(self):
         """Get all the repositories the token has access to"""
-        return GitLabAPI.get_user_projects(self._token)
+        return self._client.get_user_projects(self._token)
 
     def read_repo_files(self, repository: dict, page_size: int = 100) -> List[MultipassDocument]:
         """
@@ -44,7 +48,7 @@ class GitLabReader:
                 file_name = file["name"]
                 repo_name = self._current_repository.get("name", "")
                 repo_namespace_path = self._current_repository.get("path_with_namespace", "")
-                content = GitLabAPI.download_file(self._token, repo_id, file_path)
+                content = self._client.download_file(self._token, repo_id, file_path)
                 metadata: dict[str, Any] = {
                     PangeaMetadataKeys.DATA_SOURCE: PangeaMetadataValues.DATA_SOURCE_GITLAB,
                     PangeaMetadataKeys.GITLAB_REPOSITORY_ID: repo_id,

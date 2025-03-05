@@ -2,7 +2,7 @@ import os
 import time
 import unittest
 
-from pangea_multipass import DropboxAPI, DropboxProcessor, DropboxReader, OauthFlow, get_document_metadata
+from pangea_multipass import DropboxClient, DropboxProcessor, DropboxReader, OauthFlow, get_document_metadata
 
 _TOTAL_FILES = 10
 _AUTHORIZED_FILES = 5
@@ -18,7 +18,7 @@ class TestDropbox(unittest.TestCase):
         self.user_email = os.getenv("DROPBOX_USER_EMAIL") or ""
         assert self.user_email
         token_data = OauthFlow.refresh_access_token(
-            url=DropboxAPI.TOKEN_URL, refresh_token=refresh_token, client_id=app_key
+            url=DropboxClient.TOKEN_URL, refresh_token=refresh_token, client_id=app_key
         )
         self.access_token = token_data["access_token"]
         assert self.access_token

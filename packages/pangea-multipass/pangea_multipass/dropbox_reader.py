@@ -1,9 +1,13 @@
+import json
+import logging
 from typing import List, Optional
 
 import requests
 
 from .core import MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues, generate_id
-from .sources import DropboxAPI
+from .sources import DropboxClient
+
+_actor = "dropbox_reader"
 
 
 class DropboxReader:
@@ -15,10 +19,12 @@ class DropboxReader:
     _folder_path: str
     _recursive: bool
 
-    def __init__(self, token: str, folder_path: str = "", recursive: bool = True):
+    def __init__(self, token: str, folder_path: str = "", recursive: bool = True, logger_name: str = "multipass"):
         self._token = token
         self._folder_path = folder_path
         self._recursive = recursive
+        self.logger = logging.getLogger(logger_name)
+        self._client = DropboxClient(logger_name)
         self.restart()
 
     def restart(self):
@@ -54,15 +60,30 @@ class DropboxReader:
 
         documents: List[MultipassDocument] = []
 
-        url = DropboxAPI.LIST_FILES_URL if self._cursor is None else DropboxAPI.LIST_CONTINUE_URL
+        url = DropboxClient.LIST_FILES_URL if self._cursor is None else DropboxClient.LIST_CONTINUE_URL
         data = {"path": self._folder_path, "recursive": self._recursive, "limit": page_size}
         if self._cursor:
             data = {"cursor": self._cursor}
 
         headers = {"Authorization": f"Bearer {self._token}", "Content-Type": "application/json"}
         response = requests.post(url, json=data, headers=headers)
-        response.raise_for_status()
+        if response.status_code != 200:
+            self.logger.error(
+                json.dumps(
+                    {
+                        "actor": _actor,
+                        "fn": "read_page",
+                        "action": "post",
+                        "url": url,
+                        "data": data,
+                        "status_code": response.status_code,
+                        "reason": response.reason,
+                        "text": response.text,
+                    }
+                )
+            )
 
+        response.raise_for_status()
         result = response.json()
         entries = result.get("entries", [])
 
@@ -77,7 +98,7 @@ class DropboxReader:
             name = entrie.get("name", "")
             path = file_path.removesuffix(f"/{name}")
 
-            file = DropboxAPI.download_file(token=self._token, file_path=file_path)
+            file = self._client.download_file(token=self._token, file_path=file_path)
             metadata: dict[str, str] = {
                 PangeaMetadataKeys.DATA_SOURCE: PangeaMetadataValues.DATA_SOURCE_DROPBOX,
                 PangeaMetadataKeys.DROPBOX_ID: entrie.get("id", ""),

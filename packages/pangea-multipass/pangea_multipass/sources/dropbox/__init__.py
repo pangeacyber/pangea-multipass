@@ -1,1 +1,1 @@
-from .dropbox import DropboxAPI, DropboxProcessor
+from .dropbox import DropboxClient, DropboxProcessor
