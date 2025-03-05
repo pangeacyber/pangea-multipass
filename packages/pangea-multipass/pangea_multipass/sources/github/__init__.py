@@ -1,1 +1,1 @@
-from .github import GitHubAPI, GitHubProcessor
+from .github import GitHubClient, GitHubProcessor

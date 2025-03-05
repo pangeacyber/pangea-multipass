@@ -1,7 +1,8 @@
+import logging
 from typing import Any, List, Optional
 
 from .core import MultipassDocument, PangeaMetadataKeys, PangeaMetadataValues, generate_id
-from .sources.github import GitHubAPI
+from .sources.github import GitHubClient
 
 
 class GitHubReader:
@@ -12,8 +13,10 @@ class GitHubReader:
     _repo_files: Optional[List[dict]] = None
     _current_repository: dict = {}
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, logger_name: str = "multipass"):
         self._token = token
+        self.logger = logging.getLogger(logger_name)
+        self._client = GitHubClient(logger_name)
         self._restart()
 
     def load_data(
@@ -28,21 +31,21 @@ class GitHubReader:
         documents: List[MultipassDocument] = []
 
         # Get repositories
-        repos = GitHubAPI.get_user_repos(self._token)
+        repos = self._client.get_user_repos(self._token)
 
         for repo in repos:
             owner = repo["owner"]["login"]
             repo_name = repo["name"]
 
             # Get all files recursively
-            files = GitHubAPI.get_repo_files(self._token, owner, repo_name)
+            files = self._client.get_repo_files(self._token, owner, repo_name)
 
             for file in files:
                 file_path = file["path"]
                 download_url = file["url"]
 
                 # Fetch the file content
-                content = GitHubAPI.download_file_content(self._token, download_url)
+                content = self._client.download_file_content(self._token, download_url)
 
                 # Create metadata
                 metadata: dict[str, Any] = {
@@ -84,7 +87,7 @@ class GitHubReader:
             download_url = file["url"]
 
             # Fetch the file content
-            content = GitHubAPI.download_file_content(self._token, download_url)
+            content = self._client.download_file_content(self._token, download_url)
 
             # Create metadata
             metadata: dict[str, Any] = {
@@ -103,7 +106,7 @@ class GitHubReader:
 
     def get_repos(self) -> List[dict]:
         """Get all the repositories the token has access to"""
-        return GitHubAPI.get_user_repos(self._token)
+        return self._client.get_user_repos(self._token)
 
     @property
     def has_more_files(self):
@@ -127,4 +130,4 @@ class GitHubReader:
         repo_name = self._current_repository["name"]
 
         if self._repo_files is None:
-            self._repo_files = GitHubAPI.get_repo_files(self._token, owner, repo_name)
+            self._repo_files = self._client.get_repo_files(self._token, owner, repo_name)
