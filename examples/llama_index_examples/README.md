@@ -27,10 +27,10 @@ Set the following environment variables to configure access to Confluence and JI
 
 ### Required Config Files
 
-1. **Google OAuth2 Credentials**: `credentials.json`  
+1. **Google OAuth2 Credentials**: `credentials.json`
    This file should contain your OAuth2 credentials for Google Drive API access. Download it from your Google Cloud Console and place it in the `examples` directory.
 
-2. **Admin Access Token for Google Drive**: `admin_access_token.json`  
+2. **Admin Access Token for Google Drive**: `admin_access_token.json`
    This file stores the access token for the Google Drive admin user and is generated through OAuth2.
 
 ## Installation and Setup
@@ -44,7 +44,7 @@ Ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed
 Run the following command to install all dependencies:
 
 ```bash
-poetry install
+poetry install --no-root
 ```
 
 ## Running the Application
