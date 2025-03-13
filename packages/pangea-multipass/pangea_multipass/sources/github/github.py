@@ -1,4 +1,6 @@
-from typing import Any, Callable, Generic, List, Optional, Tuple
+import json
+import logging
+from typing import Any, Callable, Generic, List, Tuple
 
 import requests
 
@@ -12,9 +14,13 @@ from pangea_multipass.core import (
 )
 
 
-class GitHubAPI:
-    @staticmethod
-    def get_auth_headers(token: str) -> dict[str, str]:
+class GitHubClient:
+    _actor = "github_client"
+
+    def __init__(self, logger_name: str = "multipass"):
+        self.logger = logging.getLogger(logger_name)
+
+    def get_auth_headers(self, token: str) -> dict[str, str]:
         """Authenticate to GitHub using a personal access token."""
         headers = {
             "Authorization": f"token {token}",
@@ -22,14 +28,13 @@ class GitHubAPI:
         }
         return headers
 
-    @staticmethod
-    def has_access(token: str, owner: str, repo_name: str) -> bool:
+    def has_access(self, token: str, owner: str, repo_name: str) -> bool:
         """
         Check if this token has access to this particular GitHub repository
         """
         access = False
 
-        headers = GitHubAPI.get_auth_headers(token)
+        headers = self.get_auth_headers(token)
         url = f"https://api.github.com/repos/{owner}/{repo_name}"
         response = requests.get(url, headers=headers)
 
@@ -38,18 +43,19 @@ class GitHubAPI:
         elif response.status_code == 404:
             access = False  # Repository not found or no access
         elif response.status_code == 403:
+            self._log_error("has_access", url, {}, response)
             raise Exception(f"Access forbidden. Check permissions or token scope.")
         else:
+            self._log_error("has_access", url, {}, response)
             raise Exception(f"Unexpected error: {response.status_code} - {response.json()}")
 
         return access
 
-    @staticmethod
-    def user_has_access(admin_token: str, owner: str, repo_name: str, username: str) -> bool:
+    def user_has_access(self, admin_token: str, owner: str, repo_name: str, username: str) -> bool:
         """
         Checks if a user has access to a specific GitHub repository using an admin token
         """
-        headers = GitHubAPI.get_auth_headers(admin_token)
+        headers = self.get_auth_headers(admin_token)
         url = f"https://api.github.com/repos/{owner}/{repo_name}/collaborators/{username}"
         response = requests.get(url, headers=headers)
 
@@ -58,15 +64,16 @@ class GitHubAPI:
         elif response.status_code == 404:
             return False
         elif response.status_code == 403:
+            self._log_error("user_has_access", url, {}, response)
             raise Exception("Admin token does not have sufficient permissions to check access.")
         else:
+            self._log_error("user_has_access", url, {}, response)
             raise Exception(f"Unexpected error: {response.status_code} - {response.json()}")
 
-    @staticmethod
-    def get_user_repos(token: str) -> List[dict[str, Any]]:
+    def get_user_repos(self, token: str) -> List[dict[str, Any]]:
         """Get all repositories the authenticated user has access to."""
 
-        headers = GitHubAPI.get_auth_headers(token)
+        headers = self.get_auth_headers(token)
         url = "https://api.github.com/user/repos"
         repos: List[dict[str, Any]] = []
         page = 1
@@ -74,6 +81,7 @@ class GitHubAPI:
         while True:
             response = requests.get(url, headers=headers, params={"per_page": 100, "page": page})
             if response.status_code != 200:
+                self._log_error("get_user_repos", url, {"per_page": 100, "page": page}, response)
                 raise Exception(f"Error fetching repositories: {response.json()}")
 
             data = response.json()
@@ -85,11 +93,10 @@ class GitHubAPI:
 
         return repos
 
-    @staticmethod
-    def get_repo_files(token: str, owner: str, repo: str) -> List[dict[str, Any]]:
+    def get_repo_files(self, token: str, owner: str, repo: str) -> List[dict[str, Any]]:
         """Fetch all files in a repository using the GitHub Tree API."""
 
-        headers = GitHubAPI.get_auth_headers(token)
+        headers = self.get_auth_headers(token)
 
         url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/main?recursive=1"
         response = requests.get(url, headers=headers)
@@ -98,32 +105,48 @@ class GitHubAPI:
             tree_data = response.json()
             return [item for item in tree_data.get("tree", []) if item["type"] == "blob"]
         elif response.status_code == 404:
+            self.logger.warning(f"Repository '{repo}' not found.")
             return []
         else:
+            self._log_error("get_repo_files", url, {}, response)
             raise Exception(f"Error fetching files for repository '{repo}': {response.json()}")
 
-    @staticmethod
-    def download_file_content(token: str, url: str) -> str:
+    def download_file_content(self, token: str, url: str) -> str:
         """Download the content of a file from GitHub."""
 
-        headers = GitHubAPI.get_auth_headers(token)
+        headers = self.get_auth_headers(token)
 
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             return str(response.content)
         else:
+            self._log_error("download_file_content", url, {}, response)
             raise Exception(f"Error downloading file: {response.json()}")
 
-    @staticmethod
-    def get_allowed_repos(token: str, username: str) -> List[dict]:
-        projects = GitHubAPI.get_user_repos(token)
+    def get_allowed_repos(self, token: str, username: str) -> List[dict]:
+        projects = self.get_user_repos(token)
         user_projects = []
 
         for project in projects:
-            if GitHubAPI.user_has_access(token, project["owner"]["login"], project["name"], username):
+            if self.user_has_access(token, project["owner"]["login"], project["name"], username):
                 user_projects.append(project)
 
         return user_projects
+
+    def _log_error(self, function_name: str, url: str, data: dict, response: requests.Response):
+        self.logger.error(
+            json.dumps(
+                {
+                    "actor": GitHubClient._actor,
+                    "fn": function_name,
+                    "url": url,
+                    "data": data,
+                    "status_code": response.status_code,
+                    "reason": response.reason,
+                    "text": response.text,
+                }
+            )
+        )
 
 
 class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
@@ -132,12 +155,19 @@ class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     _repos: List[Tuple[str, str]] = []
     _username: str
 
-    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]], username: str):
+    def __init__(
+        self,
+        token: str,
+        get_node_metadata: Callable[[T], dict[str, Any]],
+        username: str,
+        logger_name: str = "multipass",
+    ):
         super().__init__()
         self._token = token
         self._access_cache = {}
         self.get_node_metadata = get_node_metadata
         self._username = username
+        self._client = GitHubClient(logger_name)
 
     def filter(
         self,
@@ -168,7 +198,7 @@ class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
         """
 
         if not self._repos:
-            repos_info = GitHubAPI.get_allowed_repos(self._token, username=self._username)
+            repos_info = self._client.get_allowed_repos(self._token, username=self._username)
             repos = []
 
             for repo in repos_info:
@@ -199,11 +229,11 @@ class GitHubProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
             return has_access
 
         if self._username:
-            has_access = GitHubAPI.user_has_access(
+            has_access = self._client.user_has_access(
                 admin_token=self._token, owner=owner, repo_name=repo_name, username=self._username
             )
         else:
-            has_access = GitHubAPI.has_access(token=self._token, owner=owner, repo_name=repo_name)
+            has_access = self._client.has_access(token=self._token, owner=owner, repo_name=repo_name)
 
         self._access_cache[access_tuple] = has_access
         return has_access

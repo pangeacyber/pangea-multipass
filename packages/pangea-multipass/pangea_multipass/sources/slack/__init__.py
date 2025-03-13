@@ -1,1 +1,1 @@
-from .slack import SlackAPI, SlackProcessor
+from .slack import SlackClient, SlackProcessor

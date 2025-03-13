@@ -1,5 +1,8 @@
+import json
+import logging
 from typing import Any, Callable, Generic, List, Optional
 
+import requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
@@ -13,9 +16,13 @@ from pangea_multipass.core import (
 )
 
 
-class SlackAPI:
-    @staticmethod
-    def list_channels(token: str) -> List[dict[str, Any]]:
+class SlackClient:
+    _actor = "slack_client"
+
+    def __init__(self, logger_name: str = "multipass"):
+        self.logger = logging.getLogger(logger_name)
+
+    def list_channels(self, token: str) -> List[dict[str, Any]]:
         """
         List all channels the authenticated user has access to.
 
@@ -32,10 +39,10 @@ class SlackAPI:
             channels: List[dict[str, Any]] = response.get("channels", [])
             return channels
         except SlackApiError as e:
+            self._log_error("list_channels", "conversations.list", {}, e.response)
             return []
 
-    @staticmethod
-    def get_channel_members(token: str, channel_id: str) -> Optional[List[str]]:
+    def get_channel_members(self, token: str, channel_id: str) -> Optional[List[str]]:
         """
         Retrieve the list of members in a Slack channel.
 
@@ -52,10 +59,10 @@ class SlackAPI:
             response = client.conversations_members(channel=channel_id)
             return response["members"]
         except SlackApiError as e:
+            self._log_error("get_channel_members", "conversations.members", {"channel": channel_id}, e.response)
             return None
 
-    @staticmethod
-    def get_all_channels(token: str) -> Optional[List[str]]:
+    def get_all_channels(self, token: str) -> Optional[List[str]]:
         """
         Retrieve all channels in the workspace.
 
@@ -73,10 +80,10 @@ class SlackAPI:
             channels = response.get("channels", [])
             return [channel["id"] for channel in channels]
         except SlackApiError as e:
+            self._log_error("get_all_channels", "conversations.list", {}, e.response)
             return None
 
-    @staticmethod
-    def get_user_id(token: str, user_email: str) -> Optional[str]:
+    def get_user_id(self, token: str, user_email: str) -> Optional[str]:
         """
         Retrieve the Slack user ID for a given email address.
 
@@ -92,11 +99,11 @@ class SlackAPI:
         try:
             response = client.users_lookupByEmail(email=user_email)
             return response["user"]["id"]
-        except SlackApiError:
+        except SlackApiError as e:
+            self._log_error("get_user_id", "users.lookupByEmail", {"email": user_email}, e.response)
             return None
 
-    @staticmethod
-    def get_channels_for_user(token: str, user_id: str, channel_ids: List[str]) -> List[str]:
+    def get_channels_for_user(self, token: str, user_id: str, channel_ids: List[str]) -> List[str]:
         """
         Check which channels a user has access to.
 
@@ -120,9 +127,26 @@ class SlackAPI:
                 if e.response["error"] == "not_in_channel":
                     continue  # User is not in this channel
                 else:
-                    # TODO: log error to logger.
+                    self._log_error(
+                        "get_channels_for_user", "conversations.members", {"channel": channel_id}, e.response
+                    )
                     pass
         return accessible_channels
+
+    def _log_error(self, function_name: str, url: str, data: dict, response: requests.Response):
+        self.logger.error(
+            json.dumps(
+                {
+                    "actor": SlackClient._actor,
+                    "fn": function_name,
+                    "url": url,
+                    "data": data,
+                    "status_code": response.status_code,
+                    "reason": response.reason,
+                    "text": response.text,
+                }
+            )
+        )
 
 
 class SlackProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
@@ -131,12 +155,19 @@ class SlackProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
     _user_email: Optional[str] = None
     _user_id: Optional[str] = None
 
-    def __init__(self, token: str, get_node_metadata: Callable[[T], dict[str, Any]], user_email: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        get_node_metadata: Callable[[T], dict[str, Any]],
+        user_email: Optional[str] = None,
+        logger_name: str = "multipass",
+    ):
         super().__init__()
         self._token = token
         self._channels_id_cache = {}
         self.get_node_metadata = get_node_metadata
         self._user_email = user_email
+        self._client = SlackClient(logger_name)
 
     def _has_access(self, metadata: dict[str, Any]) -> bool:
         """Check if the authenticated user has access to a channel."""
@@ -202,12 +233,11 @@ class SlackProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
             True if the user is a member of the channel, False otherwise.
         """
 
-        user_id = SlackAPI.get_user_id(token, user_email)
+        user_id = self._client.get_user_id(token, user_email)
         if not user_id:
-            # TODO: Log error to logger
             return False
 
-        channel_members = SlackAPI.get_channel_members(token, channel_id)
+        channel_members = self._client.get_channel_members(token, channel_id)
         if channel_members is None:
             return False
 
@@ -218,16 +248,16 @@ class SlackProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
             return
 
         if not self._user_id and self._user_email is not None:
-            self._user_id = SlackAPI.get_user_id(self._token, self._user_email)
+            self._user_id = self._client.get_user_id(self._token, self._user_email)
 
         if not self._user_id:
             return
 
-        all_channels = SlackAPI.get_all_channels(self._token)
+        all_channels = self._client.get_all_channels(self._token)
         if all_channels is None:
             return
 
-        channels = SlackAPI.get_channels_for_user(self._token, user_id=self._user_id, channel_ids=all_channels)
+        channels = self._client.get_channels_for_user(self._token, user_id=self._user_id, channel_ids=all_channels)
         for channel in channels:
             self._channels_id_cache[channel] = True
 
@@ -235,7 +265,7 @@ class SlackProcessor(PangeaGenericNodeProcessor[T], Generic[T]):
         if self._channels_id_cache:
             return
 
-        for channel in SlackAPI.list_channels(self._token):
+        for channel in self._client.list_channels(self._token):
             self._channels_id_cache[channel["id"]] = True
 
     def _is_authorized(self, node: T) -> bool:
