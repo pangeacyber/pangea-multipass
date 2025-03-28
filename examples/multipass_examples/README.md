@@ -2,7 +2,7 @@
 
 ## Setting up your Data Sources
 
-Check out the README in the base `examples` folder for the environment variables you need for each data source. 
+Check out the README in the base `examples` folder for the environment variables you need for each data source.
 
 ## Running the Code
 
@@ -13,7 +13,7 @@ Ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed
 Run the following command to install all dependencies:
 
 ```bash
-poetry install
+poetry install --no-root
 ```
 
 ### Running the GitHub check:
@@ -30,20 +30,20 @@ Sample output:
 
 ```bash
 Loaded 8 docs:
-offices.txt 
-strategy.txt 
-capacitor.txt 
-folder_1/internal_architecture.txt 
-folder_2/react.txt 
-folder_1/salaries.txt 
-folder_2/venture-capital.txt 
-interest-rate.txt 
+offices.txt
+strategy.txt
+capacitor.txt
+folder_1/internal_architecture.txt
+folder_2/react.txt
+folder_1/salaries.txt
+folder_2/venture-capital.txt
+interest-rate.txt
 
 Authorized docs: 5
-offices.txt 
-strategy.txt 
-capacitor.txt 
-folder_1/internal_architecture.txt 
+offices.txt
+strategy.txt
+capacitor.txt
+folder_1/internal_architecture.txt
 folder_2/react.txt
 ```
 
@@ -88,7 +88,7 @@ User has access to 32 messages
 After you set the Dropbox environment variables in the `examples\README.md` file, run this command:
 
 ```bash
-poetry run python 04-dropbox-check.py 
+poetry run python 04-dropbox-check.py
 ```
 
 The first time this runs, it will open a browser window to authorize the Dropbox application to your account and store the resulting tokens. Later runs will simply continue to the output below.
