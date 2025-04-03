@@ -23,7 +23,9 @@ for doc in documents:
 user_token = os.getenv("GITHUB_USER_TOKEN")
 assert user_token
 
-processor = LlamaIndexGitHubProcessor(user_token)
+username = "bob_example"
+
+processor = LlamaIndexGitHubProcessor(user_token, username=username)
 authorized_docs = processor.filter(documents)
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")

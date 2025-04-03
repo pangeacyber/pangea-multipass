@@ -44,7 +44,7 @@ Ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed
 Run the following command to install all dependencies:
 
 ```bash
-poetry install
+poetry install --no-root
 ```
 
 ## Running the Application
