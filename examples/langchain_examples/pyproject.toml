@@ -9,6 +9,8 @@ license = "MIT"
 package-mode = false
 requires-python = ">=3.10,<3.13"
 dependencies = [
+    "pangea-multipass-langchain (>=0.2.0)",
+    "pangea-multipass (>=0.2.0)",
     "google-api-python-client (>=2.151.0)",
     "google-auth-httplib2 (>=0.2.0)",
     "langchain-google-community (>=2.0.2)",
@@ -19,6 +21,7 @@ dependencies = [
 
 [tool.poetry.dependencies]
 pangea-multipass-langchain = { path = "../../packages/pangea-multipass-langchain", develop = true }
+pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.14.1"
