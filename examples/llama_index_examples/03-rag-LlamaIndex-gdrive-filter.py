@@ -66,6 +66,7 @@ def google_drive_read_docs() -> List[LIDocument]:
     # GDrive.get_and_save_access_token(credentials_filepath, admin_token_filepath, SCOPES)
 
     # load the documents and create the index
+    print("Login to GDrive as admin...")
     gdrive_reader = GoogleDriveReader(
         folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
@@ -94,6 +95,7 @@ if not os.path.exists(PERSIST_DIR):
     index.storage_context.persist(persist_dir=PERSIST_DIR)
 else:
     # load the existing index
+    print("Loading index...")
     storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
     index = load_index_from_storage(storage_context)
 
@@ -103,6 +105,7 @@ from pangea_multipass_llama_index import LlamaIndexGDriveProcessor, NodePostproc
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../credentials.json")
+print("Login to GDrive as user...")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 
 node_processor = NodePostprocessorMixer([LlamaIndexGDriveProcessor(creds)])

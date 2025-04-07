@@ -43,9 +43,11 @@ def google_drive_read_docs() -> List[LIDocument]:
         GDriveAPI.get_and_save_access_token(credentials_filepath, admin_token_filepath, SCOPES)
 
     # load the documents and create the index
+    print("Login to GDrive as admin...")
     gdrive_reader = GoogleDriveReader(
         folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
+    print("Loading data...")
     documents: List[LIDocument] = gdrive_reader.load_data(folder_id=gdrive_fid)
 
     print(f"Processing {len(documents)} docs...")
@@ -66,6 +68,7 @@ from pangea_multipass import GDriveAPI
 from pangea_multipass_llama_index import LlamaIndexGDriveProcessor, NodePostprocessorMixer
 
 # Create GDrive filter
+print("Login to GDrive as user...")
 creds = Credentials.from_authorized_user_file(admin_token_filepath, SCOPES)
 
 # User email to check permissions
