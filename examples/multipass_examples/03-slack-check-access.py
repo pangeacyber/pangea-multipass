@@ -1,15 +1,19 @@
 # Copyright 2021 Pangea Cyber Corporation
 # Author: Pangea Cyber Corporation
 
+import logging
 import os
 
 from pangea_multipass import SlackReader
+from pangea_multipass.utils import set_logger_to_stdout
+
+set_logger_to_stdout("multipass", logging.INFO)
 
 admin_token = os.getenv("SLACK_ADMIN_TOKEN")
 assert admin_token
 
-reader = SlackReader(token=admin_token, max_messages=2)
-documents = reader.load_data()
+reader = SlackReader(token=admin_token)
+documents = reader.load_data(max_messages_per_channel=1000)
 print(f"Loaded {len(documents)} messages.")
 
 # Inference time

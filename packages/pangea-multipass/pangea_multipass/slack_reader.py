@@ -27,6 +27,7 @@ class SlackReader:
         documents: List[MultipassDocument] = []
         channels = self._client.list_channels(token=self._token)
         for channel in channels:
+            self.logger.debug(f"Fetching messages from channel {channel['name']}")
             messages, _, _ = self._fetch_messages(channel["id"], max_messages_per_channel)
             documents.extend(self._process_messages(messages, channel))
 
@@ -44,10 +45,12 @@ class SlackReader:
         """
         new_channel_id = channel["id"]
         if self._channel_id is None or new_channel_id != self._channel_id:
+            self.logger.debug(f"Restarting reader for channel {new_channel_id}")
             self._restart()
             self._channel_id = new_channel_id
 
         if self._channel_id is None:
+            self.logger.error("Channel ID is not set")
             raise Exception("Channel ID is not set")
 
         messages, latest, more_messages = self._fetch_messages(self._channel_id, page_size, self._latest_ts)
@@ -109,6 +112,7 @@ class SlackReader:
                 messages.extend(new_messages)
 
                 if not new_messages:
+                    self.logger.debug(f"No more messages to fetch for channel {channel_id}")
                     more_messages = False
                     break
 
@@ -117,12 +121,16 @@ class SlackReader:
 
                 # We could delete this check and do another request and it should return an empty list.
                 if len(new_messages) < page_size:
+                    self.logger.debug(
+                        f"Size of new messages is less than page size. No more messages to fetch for channel {channel_id}"
+                    )
                     more_messages = False
                     break
 
                 page_size = page_size if (max_messages - len(messages)) > page_size else (max_messages - len(messages))
 
         except SlackApiError as e:
+            self.logger.error(f"Error fetching messages for channel {channel_id}: {e.response['error']}")
             raise Exception(f"Error fetching messages for channel {channel_id}: {e.response['error']}")
 
         return (messages, latest, more_messages)
