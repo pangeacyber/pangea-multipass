@@ -1401,20 +1401,20 @@ pydantic = ">=1.10"
 
 [[package]]
 name = "llama-index"
-version = "0.12.22"
+version = "0.12.28"
 description = "Interface between LLMs and your data"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "llama_index-0.12.22-py3-none-any.whl", hash = "sha256:a245184449954e20b791ff292536ba806027784a7e765c7c4a6bb864668d5b7d"},
-    {file = "llama_index-0.12.22.tar.gz", hash = "sha256:6d9f83530cf1adefd2719509dc7ccfbda1fed92ccca030c8ffa3eb45ccc8973b"},
+    {file = "llama_index-0.12.28-py3-none-any.whl", hash = "sha256:e5e422a54cf4a7ee38a2c4ffacbd0c34a33bd57df993dad1213544e47b8fffec"},
+    {file = "llama_index-0.12.28.tar.gz", hash = "sha256:11f2e4bd25a9b9e2a6a0ff326b4336af10a62433d1b13ec1831debcff31a1ac8"},
 ]
 
 [package.dependencies]
 llama-index-agent-openai = ">=0.4.0,<0.5.0"
 llama-index-cli = ">=0.4.1,<0.5.0"
-llama-index-core = ">=0.12.22,<0.13.0"
+llama-index-core = ">=0.12.28,<0.13.0"
 llama-index-embeddings-openai = ">=0.3.0,<0.4.0"
 llama-index-indices-managed-llama-cloud = ">=0.4.0"
 llama-index-llms-openai = ">=0.3.0,<0.4.0"
@@ -2474,12 +2474,12 @@ files = []
 develop = true
 
 [package.dependencies]
-google-api-python-client = ">=2.163.0"
+google-api-python-client = ">=2.166.0"
 google-auth = ">=2.38.0"
 google-auth-httplib2 = ">=0.2.0"
 google-auth-oauthlib = ">=1.2.1"
 openpyxl = ">=3.1.5"
-slack-sdk = ">=3.34.0"
+slack-sdk = ">=3.35.0"
 
 [package.source]
 type = "directory"
@@ -2496,7 +2496,7 @@ files = []
 develop = true
 
 [package.dependencies]
-llama-index = "0.12.22"
+llama-index = "0.12.28"
 pangea-multipass = ">=0.2.0"
 
 [package.source]
