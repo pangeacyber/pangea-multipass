@@ -9,7 +9,8 @@ assert token
 username = os.getenv("GITLAB_USERNAME")
 assert username
 
-reader = GitLabReader(token=token, page_size=10)
+reader = GitLabReader(token=token)
+print("Loading data...")
 files = reader.load_data()
 print(f"Loaded {len(files)} files.")
 
