@@ -53,6 +53,7 @@ if not os.path.exists(PERSIST_DIR):
     admin_token_filepath = "admin_access_token.json"
 
     credentials_filepath = os.path.abspath("../credentials.json")
+    print("Login to GDrive as admin...")
     GDriveAPI.get_and_save_access_token(
         credentials_filepath, admin_token_filepath, ["https://www.googleapis.com/auth/drive.readonly"]
     )
@@ -83,11 +84,14 @@ if not os.path.exists(PERSIST_DIR):
     # Finish metadata enrichement
 
     # Initialize the vector store https://faiss.ai
+    print("Initializing vector store...")
     vectorstore = FAISS.from_documents(documents=docs, embedding=embedding_model)
 
     # Store to file system
+    print("Storing vector store...")
     vectorstore.save_local(PERSIST_DIR)
 else:
+    print("Loading vector store...")
     vectorstore = FAISS.load_local(
         folder_path=PERSIST_DIR, embeddings=embedding_model, allow_dangerous_deserialization=True
     )
@@ -107,6 +111,8 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/drive.metadata.readonly",
 ]
+
+print("Login to GDrive as user...")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 
 gdrive_filter = LangChainGDriveFilter(creds)

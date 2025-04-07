@@ -20,7 +20,8 @@ for doc in documents:
     print(doc.metadata.get(PangeaMetadataKeys.FILE_NAME), "")
 
 # Inference time
-username = "bob_example"
+username = os.getenv("GITHUB_USERNAME")
+assert username, "GITHUB_USERNAME is not set"
 
 processor = LangChainGitHubFilter(admin_token, username=username)
 authorized_docs = processor.filter(documents)
