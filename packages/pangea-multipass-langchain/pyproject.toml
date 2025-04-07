@@ -9,7 +9,7 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "langchain (==0.3.22)",
+    "langchain (==0.3.23)",
     "pangea-multipass (>=0.2.0)",
 ]
 
