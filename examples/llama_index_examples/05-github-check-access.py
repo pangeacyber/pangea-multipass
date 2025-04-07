@@ -11,6 +11,7 @@ admin_token = os.getenv("GITHUB_ADMIN_TOKEN")
 assert admin_token
 
 reader = GitHubReader(admin_token)
+print("Loading data...")
 documents = reader.load_data()
 print(f"Loaded {len(documents)} docs:")
 
@@ -20,12 +21,12 @@ for doc in documents:
     print(doc.metadata.get(PangeaMetadataKeys.FILE_NAME), "")
 
 # Inference time
-user_token = os.getenv("GITHUB_USER_TOKEN")
-assert user_token
 
-username = "bob_example"
 
-processor = LlamaIndexGitHubProcessor(user_token, username=username)
+username = os.getenv("GITHUB_USERNAME")
+assert username, "GITHUB_USERNAME is not set"
+
+processor = LlamaIndexGitHubProcessor(admin_token, username=username)
 authorized_docs = processor.filter(documents)
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")

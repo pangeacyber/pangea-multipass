@@ -54,6 +54,7 @@ def load_gdrive_documents() -> List[Document]:
     admin_token_filepath = "admin_access_token.json"
 
     credentials_filepath = os.path.abspath("../credentials.json")
+    print("Login to GDrive as admin...")
     GDriveAPI.get_and_save_access_token(
         credentials_filepath, admin_token_filepath, ["https://www.googleapis.com/auth/drive.readonly"]
     )
@@ -87,12 +88,12 @@ def load_gdrive_documents() -> List[Document]:
 def confluence_read_docs() -> List[Document]:
     """Fetch all documents from Confluence using ConfluenceLoader."""
 
-    token = os.getenv("CONFLUENCE_ADMIN_TOKEN")
-    assert token
-    email = os.getenv("CONFLUENCE_ADMIN_EMAIL")
-    assert email
-    url = os.getenv("CONFLUENCE_BASE_URL")
-    assert url
+    confluence_admin_token = os.getenv("CONFLUENCE_ADMIN_TOKEN")
+    assert confluence_admin_token
+    confluence_admin_email = os.getenv("CONFLUENCE_ADMIN_EMAIL")
+    assert confluence_admin_email
+    confluence_url = os.getenv("CONFLUENCE_BASE_URL")
+    assert confluence_url
 
     confluence_space_key = "~71202041f9bfec117041348629ccf3e3c751b3"
     # confluence_space_id = 393230
@@ -100,9 +101,9 @@ def confluence_read_docs() -> List[Document]:
     # Create a ConfluenceReader instance
     print("Loading Confluence docs...")
     loader = ConfluenceLoader(
-        url=url,
-        username=email,
-        api_key=token,
+        url=confluence_url,
+        username=confluence_admin_email,
+        api_key=confluence_admin_token,
         space_key=confluence_space_key,
     )
     documents: List[Document] = loader.load()
@@ -122,11 +123,14 @@ if not os.path.exists(PERSIST_DIR):
     docs = gdrive_docs + confluence_docs
 
     # Initialize the vector store https://faiss.ai
+    print("Initializing vector store...")
     vectorstore = FAISS.from_documents(documents=docs, embedding=embedding_model)
 
     # Store to file system
+    print("Storing vector store...")
     vectorstore.save_local(PERSIST_DIR)
 else:
+    print("Loading vector store...")
     vectorstore = FAISS.load_local(
         folder_path=PERSIST_DIR, embeddings=embedding_model, allow_dangerous_deserialization=True
     )
@@ -146,18 +150,22 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/drive.metadata.readonly",
 ]
+print("Login to GDrive as user...")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 gdrive_filter = LangChainGDriveFilter(creds)
 
 # Create Confluence filter
-confluence_user_token = os.getenv("CONFLUENCE_USER_TOKEN")
-assert confluence_user_token
-confluence_user_email = os.getenv("CONFLUENCE_USER_EMAIL")
-assert confluence_user_email
+confluence_admin_token = os.getenv("CONFLUENCE_ADMIN_TOKEN")
+assert confluence_admin_token
+confluence_admin_email = os.getenv("CONFLUENCE_ADMIN_EMAIL")
+assert confluence_admin_email
 confluence_url = os.getenv("CONFLUENCE_BASE_URL")
 assert confluence_url
+confluence_account_id = os.getenv("CONFLUENCE_USER_ACCOUNT_ID")
+assert confluence_account_id
+
 confluence_filter = LangChainConfluenceFilter(
-    ConfluenceAuth(confluence_user_email, confluence_user_token, confluence_url),
+    ConfluenceAuth(confluence_admin_email, confluence_admin_token, confluence_url), account_id=confluence_account_id
 )
 
 # Create mixed filter

@@ -21,7 +21,7 @@ def data_save(filename: str, data: dict):
 _loggers: Dict[str, bool] = {}
 
 
-def set_logger(logger_name: str, level=logging.DEBUG):
+def set_logger_to_json(logger_name: str, level=logging.DEBUG):
     if _loggers.get(logger_name) is not None:
         return
 
@@ -34,6 +34,23 @@ def set_logger(logger_name: str, level=logging.DEBUG):
     handler.setLevel(level)
     formatter = logging.Formatter(
         fmt='{"time": "%(asctime)s.%(msecs)03d", "name": "%(name)s", "level": "%(levelname)s",  "message": %(message)s },',
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+
+def set_logger_to_stdout(logger_name: str, level=logging.DEBUG):
+    if _loggers.get(logger_name) is not None:
+        return
+
+    _loggers[logger_name] = True
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(level)
+    handler = logging.StreamHandler()
+    handler.setLevel(level)
+    formatter = logging.Formatter(
+        fmt="[%(asctime)s.%(msecs)03d %(name)s %(levelname)s]: %(message)s.",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
     handler.setFormatter(formatter)

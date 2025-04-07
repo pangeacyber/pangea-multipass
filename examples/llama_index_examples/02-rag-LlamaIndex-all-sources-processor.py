@@ -68,6 +68,7 @@ def google_drive_read_docs() -> List[LIDocument]:
     # GDrive.get_and_save_access_token(credentials_filepath, admin_token_filepath, SCOPES)
 
     # load the documents and create the index
+    print("Login to GDrive as admin...")
     gdrive_reader = GoogleDriveReader(
         folder_id=gdrive_fid, token_path=admin_token_filepath, credentials_path=credentials_filepath
     )
@@ -172,6 +173,7 @@ if not os.path.exists(PERSIST_DIR):
     index.storage_context.persist(persist_dir=PERSIST_DIR)
 else:
     # load the existing index
+    print("Loading index...")
     storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
     index = load_index_from_storage(storage_context)
 
@@ -187,28 +189,35 @@ from pangea_multipass_llama_index import (
 
 # Create GDrive filter
 credentials_filepath = os.path.abspath("../credentials.json")
+print("Login to GDrive as user...")
 creds = GDriveAPI.get_user_credentials(credentials_filepath, scopes=SCOPES)
 gdrive_processor = LlamaIndexGDriveProcessor(creds)
 
 # Create Confluence filter
-confluence_user_token = os.getenv("CONFLUENCE_USER_TOKEN")
-assert confluence_user_token
-confluence_user_email = os.getenv("CONFLUENCE_USER_EMAIL")
-assert confluence_user_email
+confluence_admin_token = os.getenv("CONFLUENCE_ADMIN_TOKEN")
+assert confluence_admin_token
+confluence_admin_email = os.getenv("CONFLUENCE_ADMIN_EMAIL")
+assert confluence_admin_email
 confluence_url = os.getenv("CONFLUENCE_BASE_URL")
 assert confluence_url
+confluence_account_id = os.getenv("CONFLUENCE_USER_ACCOUNT_ID")
+assert confluence_account_id
 confluence_processor = LlamaIndexConfluenceProcessor(
-    ConfluenceAuth(confluence_user_email, confluence_user_token, confluence_url),
+    ConfluenceAuth(confluence_admin_email, confluence_admin_token, confluence_url), account_id=confluence_account_id
 )
 
 # Create JIRA filter
-jira_user_token = os.getenv("JIRA_USER_TOKEN")
-assert jira_user_token
-jira_user_email = os.getenv("JIRA_USER_EMAIL")
-assert jira_user_email
-jira_url = os.getenv("JIRA_BASE_URL")
-assert jira_url
-jira_processor = LlamaIndexJiraProcessor(JiraAuth(jira_user_email, jira_user_token, jira_url))
+JIRA_BASE_URL = os.getenv("JIRA_BASE_URL") or ""
+assert JIRA_BASE_URL
+jira_admin_email = os.getenv("JIRA_ADMIN_EMAIL") or ""
+assert jira_admin_email
+jira_admin_token = os.getenv("JIRA_ADMIN_TOKEN") or ""
+assert jira_admin_token
+jira_account_id = os.getenv("JIRA_USER_ACCOUNT_ID") or ""
+assert jira_account_id
+jira_processor = LlamaIndexJiraProcessor(
+    JiraAuth(jira_admin_email, jira_admin_token, JIRA_BASE_URL), account_id=jira_account_id
+)
 
 # Initialize query engine and the reteriver to send prompts
 # query_engine = index.as_query_engine(similarity_top_k=10, streaming=True, filters=metadata_filters)
