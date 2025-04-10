@@ -1,5 +1,5 @@
 .base-langchain:
-  image: python:3.10@sha256:8ad0e578e1b733f2a496b41f179175679374191a9c7ab8c63156446094a9cda8
+  image: python:3.10@sha256:e2c7fb05741c735679b26eda7dd34575151079f8c615875fbefe401972b14d85
   before_script:
     - !reference [.setup, update-pip]
     - !reference [.setup, update-poetry]
