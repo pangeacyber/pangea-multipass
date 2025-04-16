@@ -7,4 +7,5 @@ from .gdrive import *
 from .github import *
 from .gitlab import *
 from .jira import *
+from .one_drive import *
 from .slack import *

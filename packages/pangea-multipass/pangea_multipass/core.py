@@ -55,6 +55,8 @@ class PangeaMetadataKeys(str, enum.Enum):
     DROPBOX_ID = f"{_PANGEA_METADATA_KEY_PREFIX}dropbox_id"
     DROPBOX_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}path"
     DROPBOX_FILE_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}file_path"
+    ONEDRIVE_ID = f"{_PANGEA_METADATA_KEY_PREFIX}onedrive_id"
+    ONEDRIVE_PATH = f"{_PANGEA_METADATA_KEY_PREFIX}onedrive_path"
 
 
 class PangeaMetadataValues(str, enum.Enum):
@@ -65,6 +67,7 @@ class PangeaMetadataValues(str, enum.Enum):
     DATA_SOURCE_SLACK = "slack"
     DATA_SOURCE_GITLAB = "gitlab"
     DATA_SOURCE_DROPBOX = "dropbox"
+    DATA_SOURCE_ONEDRIVE = "onedrive"
 
 
 @dataclasses.dataclass
