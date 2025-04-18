@@ -1,5 +1,5 @@
 .base-llama-index:
-  image: python:3.10@sha256:8ad0e578e1b733f2a496b41f179175679374191a9c7ab8c63156446094a9cda8
+  image: python:3.11@sha256:a3e280261e448b95d49423532ccd6e5329c39d171c10df1457891ff7c5e2301b
   before_script:
     - !reference [.setup, update-pip]
     - !reference [.setup, update-poetry]
