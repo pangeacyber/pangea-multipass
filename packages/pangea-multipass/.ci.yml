@@ -1,5 +1,5 @@
 .base-multipass:
-  image: python:3.10@sha256:e2c7fb05741c735679b26eda7dd34575151079f8c615875fbefe401972b14d85
+  image: python:3.10@sha256:eb378de2da328db70df637b4a911398c94ada8d526b1c0e83925cd027833f2eb
   before_script:
     - !reference [.setup, update-pip]
     - !reference [.setup, update-poetry]
@@ -30,7 +30,7 @@ publish-multipass:
     - if: $CI_COMMIT_TAG =~ /pangea-multipass\/.+/
 
 .multipass-test-base:
-  image: python:3.10@sha256:e2c7fb05741c735679b26eda7dd34575151079f8c615875fbefe401972b14d85
+  image: python:3.10@sha256:eb378de2da328db70df637b4a911398c94ada8d526b1c0e83925cd027833f2eb
   before_script:
     - !reference [.setup, update-pip]
     - !reference [.setup, update-poetry]
