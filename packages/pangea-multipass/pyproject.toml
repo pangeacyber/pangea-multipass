@@ -23,7 +23,7 @@ packages = [
 ]
 
 [tool.poetry.group.dev.dependencies]
-mypy = "1.15.0"
+mypy = "1.16.0"
 types-requests = "2.32.0.20250515"
 
 [[tool.mypy.overrides]]
