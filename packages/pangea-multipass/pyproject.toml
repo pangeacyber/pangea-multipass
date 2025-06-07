@@ -7,7 +7,7 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.13.4,<4.0"
 dependencies = [
     "google-auth-oauthlib (>=1.2.2)",
     "google-auth-httplib2 (>=0.2.0)",
