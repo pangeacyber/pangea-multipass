@@ -19,15 +19,8 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
-  cancel-in-progress: true
-
-env:
-  POETRY_VERSION: 2.1.1
-
 jobs:
-  mypy:
+  build:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -39,20 +32,52 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
-      - name: Install poetry
-        run: |
-          pip install --upgrade poetry==${{ env.POETRY_VERSION }}
-          poetry --version
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.1.0
+        with:
+          enable-cache: true
 
       - name: Setup Python
         uses: actions/setup-python@v5.6.0
         with:
           python-version: 3.12
-          cache: poetry
-          cache-dependency-path: ./packages/${{ matrix.package }}/poetry.lock
 
       - name: Install dependencies
-        run: poetry install
+        run: uv sync --all-extras --dev
+
+      - name: Build
+        run: uv build
+
+  mypy:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        path:
+          - examples/langchain_examples
+          - examples/llama_index_examples
+          - examples/multipass_examples
+          - packages/pangea-multipass
+          - packages/pangea-multipass-langchain
+          - packages/pangea-multipass-llama-index
+    defaults:
+      run:
+        working-directory: ${{ matrix.path }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.1.0
+        with:
+          enable-cache: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
 
       - name: mypy
-        run: poetry run mypy . --ignore-missing-imports --implicit-reexport
+        run: uv run mypy . --ignore-missing-imports --implicit-reexport

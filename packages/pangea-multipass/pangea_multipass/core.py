@@ -253,7 +253,7 @@ class PangeaNodeProcessorMixer(Generic[T]):
         for npp in self._node_processors:
             for node in npp.filter(list(unauthorized.values())):
                 id = self._get_node_metadata(node).get(PangeaMetadataKeys.NODE_ID)
-                authorized[id] = unauthorized.pop(id)
+                authorized[id] = unauthorized.pop(id)  # type: ignore
 
         self._unauthorized_nodes = list(unauthorized.values())
         self._authorized_nodes = list(authorized.values())

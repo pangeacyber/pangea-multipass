@@ -26,14 +26,6 @@ To install `pangea-multipass`, you can use [Poetry](https://python-poetry.org/) 
 poetry add pangea-multipass
 ```
 
-Alternatively, if installing directly from the source:
-- Clone the repository and run the following commands:
-
-```bash
-cd pangea-multipass
-poetry install
-```
-
 There are full runnable demos in the `pangea_multipass_lib\examples` directory but here are the key aspects.
 
 Using a set of Google Drive credentials - following the steps in the llama_index_examples folder - you initialize the data source:

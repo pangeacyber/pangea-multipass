@@ -97,7 +97,7 @@ else:
     # load the existing index
     print("Loading index...")
     storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
-    index = load_index_from_storage(storage_context)
+    index = load_index_from_storage(storage_context)  # type: ignore
 
 # Inference
 
@@ -132,7 +132,7 @@ while True:
 
     answer = query_engine.query(user_prompt)
     # print("Assistant: ", answer)
-    answer.print_response_stream()
+    answer.print_response_stream()  # type: ignore
 
     print("\n=================\n")
     print(

@@ -23,14 +23,14 @@ model_kwargs = {
     "temperature": 0.5,
 }
 
-## Setup the LLM paramaters
+## Setup the LLM parameters
 llm = ChatBedrock(
     client=bedrock_client,
     model_id=model_id,
     model_kwargs=model_kwargs,
 )
 
-## Setup the Embedding model paramaters
+## Setup the Embedding model parameters
 embedding_model = BedrockEmbeddings(model_id="amazon.titan-embed-g1-text-02", client=bedrock_client)
 
 

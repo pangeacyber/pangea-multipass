@@ -16,7 +16,7 @@ documents = reader.load_data()
 print(f"Loaded {len(documents)} docs:")
 
 # Convert documents to Llama Index format
-documents = from_multipass(documents)
+documents = from_multipass(documents)  # type: ignore
 for doc in documents:
     print(doc.metadata.get(PangeaMetadataKeys.FILE_NAME), "")
 
@@ -27,8 +27,8 @@ username = os.getenv("GITHUB_USERNAME")
 assert username, "GITHUB_USERNAME is not set"
 
 processor = LlamaIndexGitHubProcessor(admin_token, username=username)
-authorized_docs = processor.filter(documents)
+authorized_docs = processor.filter(documents)  # type: ignore
 
 print(f"\nAuthorized docs: {len(authorized_docs)}")
-for doc in authorized_docs:
-    print(doc.metadata.get(PangeaMetadataKeys.FILE_NAME), "")
+for d in authorized_docs:
+    print(d.metadata.get(PangeaMetadataKeys.FILE_NAME), "")

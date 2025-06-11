@@ -78,7 +78,7 @@ gdrive_processor = LlamaIndexGDriveProcessor(creds, user_email=user_email)
 node_processor = NodePostprocessorMixer([gdrive_processor])
 
 # Process documents
-authorized_docs = node_processor.postprocess_nodes(documents)
+authorized_docs = node_processor.postprocess_nodes(documents)  # type: ignore
 unauthorized_docs = node_processor.get_unauthorized_nodes()
 
 if len(authorized_docs):

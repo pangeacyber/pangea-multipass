@@ -13,24 +13,17 @@ dependencies = [
     "pangea-multipass (>=0.2.0)",
 ]
 
-[tool.poetry]
-packages = [
-    { include = "pangea_multipass_langchain" }
+[dependency-groups]
+dev = [
+    "mypy==1.16.0",
 ]
 
-[tool.poetry.dependencies]
-pangea-multipass = { path = "../pangea-multipass", develop = true }
-
-[tool.poetry.group.dev.dependencies]
-mypy = "1.15.0"
-
-[[tool.mypy.overrides]]
-module = ["pangea_multipass.*"]
-follow_untyped_imports = true
+[tool.uv.sources]
+pangea-multipass = { path = "../pangea-multipass", editable = true }
 
 [build-system]
-requires = ["poetry-core>=1.9.1"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
 
 [tool.black]
 line-length = 120
@@ -48,3 +41,7 @@ error_summary = true
 pretty = true
 show_column_numbers = true
 warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["pangea_multipass.*"]
+follow_untyped_imports = true
