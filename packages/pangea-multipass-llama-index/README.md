@@ -16,13 +16,6 @@ Use [Poetry](https://python-poetry.org/) to install dependencies:
 poetry add pangea-multipass-llama-index
 ```
 
-If installing directly from the source, clone the repository and run:
-
-```bash
-cd pangea-multipass-llama-index
-poetry install
-```
-
 ## Usage
 ### Core Components
 - Document Reader: LIDocumentReader reads content from Llama Index documents for enrichment.

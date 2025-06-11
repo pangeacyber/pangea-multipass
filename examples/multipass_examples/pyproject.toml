@@ -11,19 +11,21 @@ package-mode = false
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "pangea-multipass",
-    "llama-index-readers-google (>=0.6.0)",
+    "llama-index-readers-google==0.6.0",
 ]
 
-[tool.poetry.dependencies]
-pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
+[dependency-groups]
+dev = [
+    "mypy==1.16.0",
+    "types-requests==2.31.0.6",
+]
 
-[tool.poetry.group.dev.dependencies]
-mypy = "1.14.1"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv.sources]
+pangea-multipass = { path = "../../packages/pangea-multipass", editable = true }
 
 [tool.isort]
 profile = "black"
 line_length = 120
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]

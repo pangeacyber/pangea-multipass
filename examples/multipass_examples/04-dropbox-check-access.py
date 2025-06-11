@@ -20,6 +20,7 @@ if not os.path.exists(DROPBOX_TOKEN_FILE):
     tokens = flow.run_pkce(code_verifier=code_verifier, code_challenge=code_challenge)
 else:
     tokens = data_load(DROPBOX_TOKEN_FILE)
+    assert tokens
     access_token = OauthFlow.refresh_access_token(
         url=DropboxClient.TOKEN_URL, refresh_token=tokens["refresh_token"], client_id=app_key
     )

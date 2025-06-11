@@ -6,14 +6,15 @@ Check out the README in the base `examples` folder for the environment variables
 
 ## Running the Code
 
-Ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed for dependency management and virtual environment setup.
+Ensure you have [uv](https://docs.astral.sh/uv/) installed for dependency
+management and virtual environment setup.
 
 ### Installing Dependencies
 
 Run the following command to install all dependencies:
 
 ```bash
-poetry install --no-root
+uv sync
 ```
 
 ### Running the GitHub check:
@@ -21,7 +22,7 @@ poetry install --no-root
 After you set the GitHub environment variables in the `examples\README.md` file, run this command:
 
 ```bash
-poetry run python 01-github-check.py
+uv run 01-github-check.py
 ```
 
 *Note:* If your admin account has access to numerous repositories - directly or via Organizations - this may take a while. For test purposes, we recommend using a smaller test account.
@@ -52,7 +53,7 @@ folder_2/react.txt
 After you set the Google Drive environment variables in the `examples\README.md` file, run this command:
 
 ```bash
-poetry run python 02-gdrive-check.py
+uv run 02-gdrive-check.py
 ```
 
 
@@ -61,7 +62,7 @@ poetry run python 02-gdrive-check.py
 After you set the Slack environment variables in the `examples\README.md` file, run this command:
 
 ```bash
-poetry run python 03-slack-check.py
+uv run 03-slack-check.py
 ```
 
 *Note:* In order to read messages from your Slack channel, your app/bot will need to be present in the channel. This applies to both public and private channels. Any public channels that the bot is not in will generate a "not_in_channel" message.
@@ -88,7 +89,7 @@ User has access to 32 messages
 After you set the Dropbox environment variables in the `examples\README.md` file, run this command:
 
 ```bash
-poetry run python 04-dropbox-check.py 
+uv run 04-dropbox-check.py 
 ```
 
 The first time this runs, it will open a browser window to authorize the Dropbox application to your account and store the resulting tokens. Later runs will simply continue to the output below.

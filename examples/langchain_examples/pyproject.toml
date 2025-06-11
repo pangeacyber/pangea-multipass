@@ -17,20 +17,21 @@ dependencies = [
     "lxml (>=5.3.0)",
     "faiss-cpu (>=1.9.0)",
     "boto3 (>=1.36.22,<2.0.0)",
-    "langchain-aws (>=0.2.18,<0.3.0)",
+    "langchain-aws==0.2.25",
 ]
 
-[tool.poetry.dependencies]
-pangea-multipass-langchain = { path = "../../packages/pangea-multipass-langchain", develop = true }
-pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
+[dependency-groups]
+dev = [
+    "mypy==1.16.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-mypy = "1.14.1"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv.sources]
+pangea-multipass = { path = "../../packages/pangea-multipass", editable = true }
+pangea-multipass-langchain = { path = "../../packages/pangea-multipass-langchain", editable = true }
 
 [tool.isort]
 profile = "black"
 line_length = 120
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]

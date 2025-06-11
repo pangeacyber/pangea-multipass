@@ -71,7 +71,7 @@ assert jira_account_id
 jira_processor = LlamaIndexJiraProcessor(
     JiraAuth(jira_user_email, jira_user_token, jira_url), account_id=jira_account_id
 )
-authorized_docs = jira_processor.filter(documents)
+authorized_docs = jira_processor.filter(documents)  # type: ignore
 
 print(f"\nAuthorized issues: {len(authorized_docs)}")
 for doc in authorized_docs:

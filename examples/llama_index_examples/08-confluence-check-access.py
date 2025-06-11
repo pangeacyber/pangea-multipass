@@ -60,7 +60,7 @@ confluence_processor = LlamaIndexConfluenceProcessor(
     ConfluenceAuth(admin_email, admin_token, url), account_id=account_id
 )
 
-authorized_docs = confluence_processor.filter(documents)
+authorized_docs = confluence_processor.filter(documents)  # type: ignore
 
 print(f"\nAuthorized pages: {len(authorized_docs)}")
 for doc in authorized_docs:

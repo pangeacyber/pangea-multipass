@@ -19,20 +19,17 @@ dependencies = [
     "llama-index-readers-jira (==0.4.1)",
 ]
 
-[tool.poetry.dependencies]
-pangea-multipass-llama-index = { path = "../../packages/pangea-multipass-llama-index", develop = true }
-pangea-multipass = { path = "../../packages/pangea-multipass", develop = true }
+[dependency-groups]
+dev = [
+    "mypy==1.16.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-mypy = "1.14.1"
+[tool.uv.sources]
+pangea-multipass = { path = "../../packages/pangea-multipass", editable = true }
+pangea-multipass-llama-index = { path = "../../packages/pangea-multipass-llama-index", editable = true }
 
-[[tool.mypy.overrides]]
-module = ["llama_index.*", "pangea_multipass.*"]
-follow_untyped_imports = true
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.mypy]
+plugins = ["pydantic.mypy"]
 
 [tool.isort]
 profile = "black"

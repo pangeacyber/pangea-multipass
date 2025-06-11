@@ -48,7 +48,7 @@ class GitLabReader:
                 file_name = file["name"]
                 repo_name = self._current_repository.get("name", "")
                 repo_namespace_path = self._current_repository.get("path_with_namespace", "")
-                content = self._client.download_file(self._token, repo_id, file_path)
+                content = self._client.download_file(self._token, repo_id, file_path)  # type: ignore[arg-type]
                 metadata: dict[str, Any] = {
                     PangeaMetadataKeys.DATA_SOURCE: PangeaMetadataValues.DATA_SOURCE_GITLAB,
                     PangeaMetadataKeys.GITLAB_REPOSITORY_ID: repo_id,

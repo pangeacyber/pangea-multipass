@@ -37,14 +37,14 @@ Set the following environment variables to configure access to Confluence and JI
 
 ### Prerequisites
 
-Ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed for dependency management and virtual environment setup.
+Ensure you have [uv](https://docs.astral.sh/uv/) installed for dependency management and virtual environment setup.
 
 ### Installing Dependencies
 
 Run the following command to install all dependencies:
 
 ```bash
-poetry install --no-root
+uv sync
 ```
 
 ## Running the Application
@@ -52,7 +52,7 @@ poetry install --no-root
 - Run the App:
 
 ```bash
-poetry run python 07-2-rag-LlamaIndex-all-sources-processor
+uv run 07-2-rag-LlamaIndex-all-sources-processor
 ```
 
 ## How It Works
