@@ -420,7 +420,7 @@ wheels = [
 
 [[package]]
 name = "google-api-python-client"
-version = "2.172.0"
+version = "2.170.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
@@ -429,9 +429,9 @@ dependencies = [
     { name = "httplib2" },
     { name = "uritemplate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/02/69/c0cec6be5878d4de161f64096edb3d4a2d1a838f036b8425ea8358d0dfb3/google_api_python_client-2.172.0.tar.gz", hash = "sha256:dcb3b7e067154b2aa41f1776cf86584a5739c0ac74e6ff46fc665790dca0e6a6", size = 13074841, upload-time = "2025-06-10T16:58:41.181Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/db/86/1bd09aea2664a46bc65713cb7876381ec8949a4b1e71be97dfc359c79781/google_api_python_client-2.170.0.tar.gz", hash = "sha256:75f3a1856f11418ea3723214e0abc59d9b217fd7ed43dcf743aab7f06ab9e2b1", size = 12971933, upload-time = "2025-05-22T20:39:52.802Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/fc/8850ccf21c5df43faeaf8bba8c4149ee880b41b8dc7066e3259bcfd921ca/google_api_python_client-2.172.0-py3-none-any.whl", hash = "sha256:9f1b9a268d5dc1228207d246c673d3a09ee211b41a11521d38d9212aeaa43af7", size = 13595800, upload-time = "2025-06-10T16:58:38.143Z" },
+    { url = "https://files.pythonhosted.org/packages/ca/ab/928fb4551ce9c791de96b0681924d46de9a5b50931394fd19850383a08a1/google_api_python_client-2.170.0-py3-none-any.whl", hash = "sha256:7bf518a0527ad23322f070fa69f4f24053170d5c766821dc970ff0571ec22748", size = 13490660, upload-time = "2025-05-22T20:39:49.834Z" },
 ]
 
 [[package]]
@@ -770,8 +770,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "boto3", specifier = "==1.38.32" },
-    { name = "faiss-cpu", specifier = ">=1.9.0" },
-    { name = "google-api-python-client", specifier = ">=2.170.0" },
+    { name = "faiss-cpu", specifier = "==1.11.0" },
+    { name = "google-api-python-client", specifier = "==2.170.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "langchain-aws", specifier = "==0.2.25" },
     { name = "langchain-google-community", specifier = ">=2.0.2" },
