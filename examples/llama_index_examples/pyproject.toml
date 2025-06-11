@@ -12,7 +12,7 @@ requires-python = ">=3.10,<3.13"
 dependencies = [
     "pangea-multipass-llama-index (>=0.2.0)",
     "pangea-multipass (>=0.2.0)",
-    "llama-index-llms-bedrock (==0.3.3)",
+    "llama-index-llms-bedrock (==0.3.8)",
     "llama-index-embeddings-bedrock (==0.5.0)",
     "llama-index-readers-google (==0.6.0)",
     "llama-index-readers-confluence (==0.3.1)",
