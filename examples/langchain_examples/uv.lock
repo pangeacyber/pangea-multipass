@@ -774,7 +774,7 @@ requires-dist = [
     { name = "google-api-python-client", specifier = "==2.170.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "langchain-aws", specifier = "==0.2.25" },
-    { name = "langchain-google-community", specifier = ">=2.0.2" },
+    { name = "langchain-google-community", specifier = "==2.0.7" },
     { name = "lxml", specifier = ">=5.3.0" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
     { name = "pangea-multipass-langchain", editable = "../../packages/pangea-multipass-langchain" },
