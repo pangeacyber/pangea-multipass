@@ -1071,7 +1071,7 @@ requires-dist = [
     { name = "llama-index-embeddings-bedrock", specifier = "==0.5.0" },
     { name = "llama-index-llms-bedrock", specifier = "==0.3.3" },
     { name = "llama-index-readers-confluence", specifier = "==0.3.1" },
-    { name = "llama-index-readers-google", specifier = "==0.6.0" },
+    { name = "llama-index-readers-google", specifier = "==0.6.1" },
     { name = "llama-index-readers-jira", specifier = "==0.4.1" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
     { name = "pangea-multipass-llama-index", editable = "../../packages/pangea-multipass-llama-index" },
@@ -1213,7 +1213,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-readers-google"
-version = "0.6.0"
+version = "0.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "gkeepapi" },
@@ -1224,9 +1224,9 @@ dependencies = [
     { name = "pandas" },
     { name = "pydrive" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/32/09/f4d8fceda2cf7343c04262c488e7e2722936c88eaada994b2dc4242c80e7/llama_index_readers_google-0.6.0.tar.gz", hash = "sha256:b22703895d97d0b9e398281b254d2c67434fd7fd4d71ffd15a57ef003b47e238", size = 24056, upload-time = "2025-01-25T18:22:37.393Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/69/35/d9aa099dc13606ede917fdd5baefed229ac8c318d15724549a5b719bae44/llama_index_readers_google-0.6.1.tar.gz", hash = "sha256:4116388771bd3404858e8844ee30ee392386b96193e5734daa520dff1026b377", size = 24680, upload-time = "2025-03-12T17:15:11.049Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fb/ab/7699a03d46e0ac862e9f54174a01d366e6903400d5e397be8b323c5c1764/llama_index_readers_google-0.6.0-py3-none-any.whl", hash = "sha256:7bc718776226cb407d477b2500447c64c51261ec11a6097e52ce3f00f22994c8", size = 33396, upload-time = "2025-01-25T18:22:35.668Z" },
+    { url = "https://files.pythonhosted.org/packages/97/13/d45feb44c3a9460387094c496ecce15831465783e106d191b4629ee5cb55/llama_index_readers_google-0.6.1-py3-none-any.whl", hash = "sha256:988486fc2229c7bb79ae79547077337ccd43a508eb8c1e8cc5877f4a48726059", size = 34247, upload-time = "2025-03-12T17:15:09.792Z" },
 ]
 
 [[package]]
