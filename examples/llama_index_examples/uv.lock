@@ -1069,7 +1069,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "llama-index-embeddings-bedrock", specifier = "==0.5.0" },
-    { name = "llama-index-llms-bedrock", specifier = "==0.3.3" },
+    { name = "llama-index-llms-bedrock", specifier = "==0.3.8" },
     { name = "llama-index-readers-confluence", specifier = "==0.3.1" },
     { name = "llama-index-readers-google", specifier = "==0.6.0" },
     { name = "llama-index-readers-jira", specifier = "==0.4.1" },
@@ -1108,16 +1108,16 @@ wheels = [
 
 [[package]]
 name = "llama-index-llms-bedrock"
-version = "0.3.3"
+version = "0.3.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
     { name = "llama-index-core" },
     { name = "llama-index-llms-anthropic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fb/5e/5cb7a6ccf8362568d87b640a0477fe519c0c4b677d5a9406ab6a5c1820d1/llama_index_llms_bedrock-0.3.3.tar.gz", hash = "sha256:b11c29eff88760522b6e9013459a5a4cc57a5dd5d66e57f855d6096b2fb0acd3", size = 9498, upload-time = "2024-12-17T22:42:11.312Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/b1/f7172ba0c6d808863ea545a2b99c7b4a51b8109caba9df67e44cd8971ca5/llama_index_llms_bedrock-0.3.8.tar.gz", hash = "sha256:8ca2914842a1d09079c35429b15dc50659d697ae84a15a89076a12f90505800e", size = 10771, upload-time = "2025-03-26T16:15:09.008Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/80/63/c7e1fe67fa2dc4a249c05bc56f0781251f18b91bdfb2ed0a484a219259e1/llama_index_llms_bedrock-0.3.3-py3-none-any.whl", hash = "sha256:ba3657c1ace61eb19474802dbf052a30b8cd0f184823d69ed3276f687193ddd4", size = 10055, upload-time = "2024-12-17T22:42:09.137Z" },
+    { url = "https://files.pythonhosted.org/packages/ff/2f/7fc5206467151f64764bae61abd0fbbb8392fe84def15b1467f7fb174d7b/llama_index_llms_bedrock-0.3.8-py3-none-any.whl", hash = "sha256:58b804a206146bd7228590a4ee92ce13806a21040d92cb61e3046f2ee64f66cd", size = 11516, upload-time = "2025-03-26T16:15:07.722Z" },
 ]
 
 [[package]]
