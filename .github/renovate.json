@@ -4,6 +4,27 @@
   "ignorePaths": [],
   "packageRules": [
     {
+      "matchManagers": ["github-actions"],
+      "extends": [
+        ":semanticPrefixChore",
+        ":semanticCommitScope(ci)"
+      ]
+    },
+    {
+      "matchFileNames": ["examples/**"],
+      "extends": [
+        ":semanticPrefixChore",
+        ":semanticCommitScope(examples)"
+      ]
+    },
+    {
+      "matchFileNames": ["packages/**"],
+      "extends": [
+        ":semanticPrefixChore",
+        ":semanticCommitScope({{parentDir}})"
+      ]
+    },
+    {
       "matchDepNames": ["python"],
       "enabled": false
     }
