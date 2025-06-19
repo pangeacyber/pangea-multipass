@@ -21,7 +21,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "mypy==1.16.0",
+    "mypy==1.16.1",
 ]
 
 [tool.uv.sources]
