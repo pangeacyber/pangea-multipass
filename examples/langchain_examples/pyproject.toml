@@ -17,7 +17,7 @@ dependencies = [
     "lxml==5.4.0",
     "faiss-cpu==1.11.0",
     "boto3==1.38.40",
-    "langchain-aws==0.2.25",
+    "langchain-aws==0.2.26",
 ]
 
 [dependency-groups]
