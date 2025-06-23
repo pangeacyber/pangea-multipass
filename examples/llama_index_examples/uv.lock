@@ -924,7 +924,7 @@ wheels = [
 
 [[package]]
 name = "llama-index"
-version = "0.12.42"
+version = "0.12.43"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "llama-index-agent-openai" },
@@ -940,9 +940,9 @@ dependencies = [
     { name = "llama-index-readers-llama-parse" },
     { name = "nltk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5e/86/7e36d3f7b0606cba5e4862bb62f8e6bef91b7c45229f15262faf2c92f6e3/llama_index-0.12.42.tar.gz", hash = "sha256:d2bd2b9ea06bc42ebe74697aaa0b66c79bd3dee8ff5d06c53294d49ca44512e7", size = 8073, upload-time = "2025-06-12T04:59:38.313Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4a/dd/14a70a73b1a8b52cf05153450878b7d4ade74dcf51112eb846aac1761500/llama_index-0.12.43.tar.gz", hash = "sha256:ace6d3030bedd5b4b53b82f1388ca6870b2cb4d9e7e6553c48a0da285b9ad5d2", size = 8074, upload-time = "2025-06-19T00:51:37.234Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/64/9a/3044c50dd7cd7340763ed25e5ee7ee59917281735725eb73f62fe110333e/llama_index-0.12.42-py3-none-any.whl", hash = "sha256:9a304b2bd71d6772fc6c2e9995e119815c00716fc98813b15ea79caee09f1fe2", size = 7085, upload-time = "2025-06-12T04:59:37.071Z" },
+    { url = "https://files.pythonhosted.org/packages/35/cf/3647ca2567e8258a2b084e103cf1b5568ac4fb2d54fe074e85aaffc59409/llama_index-0.12.43-py3-none-any.whl", hash = "sha256:4cdfd0e77ce3ace48fae99780a426e0ddc8c14878caa709b887eda3aae6d7a4f", size = 7083, upload-time = "2025-06-19T00:51:35.654Z" },
 ]
 
 [[package]]
@@ -1096,19 +1096,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ef/03/6a34612ecc03ab05cd4818b989cbd7c6bf83e9ffa94c7275847a82ff4f9f/llama_index_instrumentation-0.2.0.tar.gz", hash = "sha256:ae8333522487e22a33732924a9a08dfb456f54993c5c97d8340db3c620b76f13", size = 44023, upload-time = "2025-06-20T15:50:05.191Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/96/b5/24ad1cf25b8c35b2075cfdd8c12d0f8390b7cfd54122ed704097bd755a2f/llama_index_instrumentation-0.2.0-py3-none-any.whl", hash = "sha256:1055ae7a3d19666671a8f1a62d08c90472552d9fcec7e84e6919b2acc92af605", size = 14966, upload-time = "2025-06-20T15:50:04.381Z" },
-]
-
-[[package]]
-name = "llama-index-instrumentation"
-version = "0.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "deprecated" },
-    { name = "pydantic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/85/82/31d8e44ea00ecc55f8383c97ee5f9bcb52f9418b4139da2e8439d2430288/llama_index_instrumentation-0.1.0.tar.gz", hash = "sha256:8f0b8535670d917cc7fde9600d5be9e75c0ed8872ddb9b89005d09130ffcff0f", size = 44004, upload-time = "2025-06-09T15:41:31.376Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b8/ea/184ac78743ebe1cf88c3286d1864499794f449b01e20c66186d7c5b99d1d/llama_index_instrumentation-0.1.0-py3-none-any.whl", hash = "sha256:b533d5715e41fe572bc959c7bda2ddf0c6f36de95e4d9a4d78265e4069ac0583", size = 14802, upload-time = "2025-06-09T15:41:29.822Z" },
 ]
 
 [[package]]
@@ -1771,7 +1758,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-api-python-client", specifier = ">=2.172.0" },
+    { name = "google-api-python-client", specifier = ">=2.173.0" },
     { name = "google-auth", specifier = ">=2.40.3" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
@@ -1796,7 +1783,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index", specifier = "==0.12.42" },
+    { name = "llama-index", specifier = "==0.12.43" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
 ]
 
