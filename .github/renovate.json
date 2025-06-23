@@ -15,14 +15,13 @@
       "extends": [
         ":semanticPrefixChore",
         ":semanticCommitScope(examples)"
-      ]
+      ],
+      "additionalBranchPrefix": "{{parentDir}}/"
     },
     {
       "matchFileNames": ["packages/**"],
-      "extends": [
-        ":semanticPrefixChore",
-        ":semanticCommitScope({{parentDir}})"
-      ]
+      "additionalBranchPrefix": "{{parentDir}}/",
+      "semanticCommitScope": "{{parentDir}}"
     },
     {
       "matchDepNames": ["python"],
