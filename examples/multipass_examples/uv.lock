@@ -686,7 +686,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-readers-google"
-version = "0.6.2"
+version = "0.6.2.post1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "gkeepapi" },
@@ -697,9 +697,9 @@ dependencies = [
     { name = "pandas" },
     { name = "pydrive" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/18/04/8dccaf80c16693e9cb20b9feea6a46cd9eaa506089effa4a16952d8326f9/llama_index_readers_google-0.6.2.tar.gz", hash = "sha256:758985c098f7b4cc5e83fcc9bacd4061be33a33383fd3d139fa701a9b891bbbd", size = 23029, upload-time = "2025-06-17T23:57:58.126Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/51/197670ce72006a867d82b2c30027a6a35ec366799363ed41342bfe95b75b/llama_index_readers_google-0.6.2.post1.tar.gz", hash = "sha256:a716b53b7e7be15ecab2371204f72bd9f47ca4109b22ed1be40730a6a233b4d8", size = 23026, upload-time = "2025-06-24T10:54:34.112Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/66/6b6953a45591d35458ba84442e543486f9aa638fda77da0748db7ef24dcc/llama_index_readers_google-0.6.2-py3-none-any.whl", hash = "sha256:b0c5d9c8cfca4d57c34cb9a436f54a1c8247564d56d0b09e8cc55a83b27f7005", size = 34314, upload-time = "2025-06-17T23:57:57.318Z" },
+    { url = "https://files.pythonhosted.org/packages/54/b7/a998d898d709d74a552fddc339ff06bc9a401bc5498c4ab34f72369e0237/llama_index_readers_google-0.6.2.post1-py3-none-any.whl", hash = "sha256:2f80b4629c992c5f84a64de6e73f55246017b6316f7ae0e5bfde1647d88ee905", size = 34366, upload-time = "2025-06-24T10:54:32.848Z" },
 ]
 
 [[package]]
@@ -848,7 +848,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index-readers-google", specifier = "==0.6.2" },
+    { name = "llama-index-readers-google", specifier = "==0.6.2.post1" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
 ]
 
@@ -1131,7 +1131,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-api-python-client", specifier = ">=2.172.0" },
+    { name = "google-api-python-client", specifier = ">=2.173.0" },
     { name = "google-auth", specifier = ">=2.40.3" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
