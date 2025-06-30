@@ -1014,16 +1014,16 @@ wheels = [
 
 [[package]]
 name = "llama-index-embeddings-bedrock"
-version = "0.5.1"
+version = "0.5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aioboto3" },
     { name = "boto3" },
     { name = "llama-index-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1f/6d/0b0e670eb01be7d520d1975f8ed1be760526dfb19f2d543aecd6fb28544f/llama_index_embeddings_bedrock-0.5.1.tar.gz", hash = "sha256:fc0f9605fde668316137978bb1d16f521ec230e5b617b2131e712b9d21200cab", size = 6801, upload-time = "2025-06-10T20:51:26.928Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cb/85/26bfba1bb33831973af2e6b321a60f03f779fe233a4abd9ff2d36f516d51/llama_index_embeddings_bedrock-0.5.2.tar.gz", hash = "sha256:a7441985a464fc60dff2bf527e5ee840878225c9ec9ce33a874a40c751466f8e", size = 6801, upload-time = "2025-06-27T14:08:20.737Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4d/91/f1f18e4a837f613b8fe95a4229226e8e6c42f5408cbbd772ac5cb7d82108/llama_index_embeddings_bedrock-0.5.1-py3-none-any.whl", hash = "sha256:86b89f1af27f605b4a268e8780941b21b93abd2e58ffdf057334b59f9e57aad1", size = 6462, upload-time = "2025-06-10T20:51:25.795Z" },
+    { url = "https://files.pythonhosted.org/packages/22/a9/8212a30bb37ab3dd6abc8da291fa76019ab6ad3e8b75ab228b49478e03ef/llama_index_embeddings_bedrock-0.5.2-py3-none-any.whl", hash = "sha256:531190208ac47a44c60cbe42e858b20f3211444ae9b16d236faa3dc9d7a855a8", size = 6464, upload-time = "2025-06-27T14:08:19.693Z" },
 ]
 
 [[package]]
@@ -1060,7 +1060,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index-embeddings-bedrock", specifier = "==0.5.1" },
+    { name = "llama-index-embeddings-bedrock", specifier = "==0.5.2" },
     { name = "llama-index-llms-bedrock", specifier = "==0.3.8" },
     { name = "llama-index-readers-confluence", specifier = "==0.3.1" },
     { name = "llama-index-readers-google", specifier = "==0.6.2.post1" },
