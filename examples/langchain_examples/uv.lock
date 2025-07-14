@@ -690,7 +690,7 @@ wheels = [
 
 [[package]]
 name = "langchain-aws"
-version = "0.2.27"
+version = "0.2.28"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -699,9 +699,9 @@ dependencies = [
     { name = "numpy", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/60/ff/7bfa3e508d7b4f7406c755f93d1db03f5822e91a29a31035bd369d7878fd/langchain_aws-0.2.27.tar.gz", hash = "sha256:3d08c099dafb6536c74cba7de393845a314086ead73a5821fde52d435be34a47", size = 99349, upload-time = "2025-06-24T13:39:46.012Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/61/fa/9edb616602a272eac8408b5551b5f271fc6cfa981bf66d09c33de14ceae9/langchain_aws-0.2.28.tar.gz", hash = "sha256:206930fdb69c7f222167b2e5f3ad1f7cd12cfe758f6c5f306c2fd0dc7db92fa1", size = 99860, upload-time = "2025-07-11T00:27:34.974Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/44/3dec0bfe8666b2b906a3bbec8739a2cb93aee516c032bce8a3ed41957ccd/langchain_aws-0.2.27-py3-none-any.whl", hash = "sha256:d2912c4488ff5ef0361661c1a42476b3586c27c8e86c0c7e3a198e5dc9b8ae6f", size = 121204, upload-time = "2025-06-24T13:39:45.046Z" },
+    { url = "https://files.pythonhosted.org/packages/e6/e5/0a1fa4bfc36cfc7fcc5d397f161540fb526c3e105c48cfc8ed4dd68e362b/langchain_aws-0.2.28-py3-none-any.whl", hash = "sha256:2f034449bbac915b8d7700e77d99e7d204e0e987f27d3d1850927f05b51f123c", size = 121478, upload-time = "2025-07-11T00:27:33.466Z" },
 ]
 
 [[package]]
@@ -773,7 +773,7 @@ requires-dist = [
     { name = "faiss-cpu", specifier = "==1.11.0" },
     { name = "google-api-python-client", specifier = "==2.175.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
-    { name = "langchain-aws", specifier = "==0.2.27" },
+    { name = "langchain-aws", specifier = "==0.2.28" },
     { name = "langchain-google-community", specifier = "==2.0.7" },
     { name = "lxml", specifier = "==6.0.0" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
@@ -1179,7 +1179,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-api-python-client", specifier = ">=2.173.0" },
+    { name = "google-api-python-client", specifier = ">=2.175.0" },
     { name = "google-auth", specifier = ">=2.40.3" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
