@@ -926,7 +926,7 @@ wheels = [
 
 [[package]]
 name = "llama-index"
-version = "0.12.44"
+version = "0.12.48"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "llama-index-agent-openai" },
@@ -942,9 +942,9 @@ dependencies = [
     { name = "llama-index-readers-llama-parse" },
     { name = "nltk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/77/98/f7a278e0c1a8d2896418a0c80eaf9412edaa2b7178da742f7a133fbf1015/llama_index-0.12.44.tar.gz", hash = "sha256:c0e2e61f61f39c4d72ae7e3ac88b88eeaa8f5ea30a79ff8eccd883f1c45759b5", size = 8087, upload-time = "2025-06-26T05:35:34.55Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7c/75/0f95cddd9428bb03695f1a2be7364e61bbd0e64e768dbc05e48a72ff8e23/llama_index-0.12.48.tar.gz", hash = "sha256:54b922fd94efde2c21c12be392c381cb4a0531a7ca8e482a7e3d1c6795af2da5", size = 8089, upload-time = "2025-07-09T18:35:49.006Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/0f/0455e13982c03684bfd0ee68aa14da31776a10277b909e0b71931f18a265/llama_index-0.12.44-py3-none-any.whl", hash = "sha256:693c1c19c46855014c40ee627c6312af10ac4f6ca9fd08e7d905b403f1fdefa6", size = 7085, upload-time = "2025-06-26T05:35:33.004Z" },
+    { url = "https://files.pythonhosted.org/packages/c2/11/3542de92feeb401c873d4d3c5f51e2fe21c446fa2b7ca379c753bfd7735a/llama_index-0.12.48-py3-none-any.whl", hash = "sha256:93a80de54a5cf86114c252338d7917bb81ffe94afa47f01c41c9ee04c0155db4", size = 7085, upload-time = "2025-07-09T18:35:47.386Z" },
 ]
 
 [[package]]
@@ -977,7 +977,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-core"
-version = "0.12.46"
+version = "0.12.51"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -997,6 +997,7 @@ dependencies = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pillow" },
+    { name = "platformdirs" },
     { name = "pydantic" },
     { name = "pyyaml" },
     { name = "requests" },
@@ -1009,9 +1010,9 @@ dependencies = [
     { name = "typing-inspect" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4c/4b/4d3d291549f6fb1b99115ef2c9cf2bab284b26d589149e3d4041c0d305a4/llama_index_core-0.12.46.tar.gz", hash = "sha256:d95a9a3be9170087aef70671aa5edaa0e200f7ae5d1d0973c3a5b8e1d7bb0eab", size = 7273431, upload-time = "2025-07-03T02:41:30.669Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/5a/31ff0e46c7356d8ff7d27ea86880a28508b89fe47f5235f3bba8f801cd3c/llama_index_core-0.12.51.tar.gz", hash = "sha256:3478fc69bdf33e4df34e430d95d1f76f010034d7fc55364d8b89d20149816b8b", size = 7278710, upload-time = "2025-07-21T21:58:34.076Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b0/67/164ae22e97d100a119beb98487b29a12f22f624e00c445b6b60418fd9e62/llama_index_core-0.12.46-py3-none-any.whl", hash = "sha256:320d91a528dbb5679f7c49cc8b0106e6a2c92d376fdf3576cdf827dc33c479e9", size = 7644068, upload-time = "2025-07-03T02:41:21.437Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/47/18b51aea337ec481f7a61885080b01bdcfd0c279cfccb6cd8f0345b8d197/llama_index_core-0.12.51-py3-none-any.whl", hash = "sha256:09019589a1157e10504d5291769a7cff061fda2bb9f175efefb5a7b064e3ef48", size = 7649622, upload-time = "2025-07-21T21:58:22.031Z" },
 ]
 
 [[package]]
@@ -1064,7 +1065,7 @@ dev = [
 requires-dist = [
     { name = "llama-index-embeddings-bedrock", specifier = "==0.5.2" },
     { name = "llama-index-llms-bedrock", specifier = "==0.3.8" },
-    { name = "llama-index-readers-confluence", specifier = "==0.3.1" },
+    { name = "llama-index-readers-confluence", specifier = "==0.3.2" },
     { name = "llama-index-readers-google", specifier = "==0.6.2.post1" },
     { name = "llama-index-readers-jira", specifier = "==0.4.1" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
@@ -1183,7 +1184,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-readers-confluence"
-version = "0.3.1"
+version = "0.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "atlassian-python-api" },
@@ -1197,9 +1198,9 @@ dependencies = [
     { name = "svglib" },
     { name = "xlrd" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a1/94/94bfa83faa88761c03ad2a4493f577e16547ecb280b6b18cb6b316b6ce06/llama_index_readers_confluence-0.3.1.tar.gz", hash = "sha256:26ecb8bacb1f9b504d3f74bfbd09884486ce8b84178d84e84a630ff0b9c91b05", size = 10859, upload-time = "2024-12-16T15:35:31.145Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/10/a3/4737845ad281a5b8e860e991f4cf0c970b125116156c7b0557f58aa3b175/llama_index_readers_confluence-0.3.2.tar.gz", hash = "sha256:2fa42874036a7e88dd88d2852d6e92018e5a2cbe02946a0fb63e8b7ca8054c64", size = 28423, upload-time = "2025-07-17T09:12:59.222Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/e3/ad3342a93ba75d58a61947a342a234e150a9a3dcd6071d83d6749991f023/llama_index_readers_confluence-0.3.1-py3-none-any.whl", hash = "sha256:37faea76e498d1ea5bc8138482ba5e67836abd8ddc13a0cc94a3c224ac33d2e4", size = 9904, upload-time = "2024-12-16T15:35:28.809Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/b8/3bf904313d172af619cc2a7e1111edcf50b5e96d90a153971f7cd74d98b9/llama_index_readers_confluence-0.3.2-py3-none-any.whl", hash = "sha256:e31af895661acb61dee666f030a26512b6600646cab44be5e8c30dc9ff084b22", size = 28364, upload-time = "2025-07-17T09:12:58.046Z" },
 ]
 
 [[package]]
@@ -1753,12 +1754,12 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-api-python-client", specifier = ">=2.173.0" },
+    { name = "google-api-python-client", specifier = ">=2.175.0" },
     { name = "google-auth", specifier = ">=2.40.3" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
     { name = "openpyxl", specifier = ">=3.1.5" },
-    { name = "slack-sdk", specifier = ">=3.35.0" },
+    { name = "slack-sdk", specifier = ">=3.36.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1778,7 +1779,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index", specifier = "==0.12.44" },
+    { name = "llama-index", specifier = "==0.12.48" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
 ]
 
@@ -2346,11 +2347,11 @@ wheels = [
 
 [[package]]
 name = "slack-sdk"
-version = "3.35.0"
+version = "3.36.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/32/a5/13077a5696ded22cc955ff6314028b7e6140b1c989b19ca27a6b26590e6e/slack_sdk-3.35.0.tar.gz", hash = "sha256:8183b6cbf26a0c1e2441478cd9c0dc4eef08d60c1394cfdc9a769e309a9b6459", size = 232887, upload-time = "2025-03-17T15:32:51.959Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/73/1e/bbf7fdd00306f097ddb839c23628b7e271128cc8f584b9cae8f704b3924e/slack_sdk-3.36.0.tar.gz", hash = "sha256:8586022bdbdf9f8f8d32f394540436c53b1e7c8da9d21e1eab4560ba70cfcffa", size = 233382, upload-time = "2025-07-09T20:58:22.838Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/32/8e/eed71dc79a187ba32681f12a104786ab89355bc474082211d92e1fba6bcf/slack_sdk-3.35.0-py2.py3-none-any.whl", hash = "sha256:00933d171fbd8a068b321ebb5f89612cc781d3183d8e3447c85499eca9d865be", size = 293272, upload-time = "2025-03-17T15:32:50.294Z" },
+    { url = "https://files.pythonhosted.org/packages/70/9a/380d20856d9ea39fbc4d3bb66f076b0d72035ebe873eb05fc88ebee4125f/slack_sdk-3.36.0-py2.py3-none-any.whl", hash = "sha256:6c96887d7175fc1b0b2777b73bb65f39b5b8bee9bd8acfec071d64014f9e2d10", size = 293949, upload-time = "2025-07-09T20:58:21.233Z" },
 ]
 
 [[package]]
