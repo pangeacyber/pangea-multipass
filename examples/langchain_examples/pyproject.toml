@@ -15,7 +15,7 @@ dependencies = [
     "google-auth-httplib2 (>=0.2.0)",
     "langchain-google-community==2.0.7",
     "lxml==6.0.0",
-    "faiss-cpu==1.11.0",
+    "faiss-cpu==1.11.0.post1",
     "boto3==1.39.9",
     "langchain-aws==0.2.28",
 ]
