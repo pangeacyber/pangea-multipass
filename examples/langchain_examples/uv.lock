@@ -698,7 +698,7 @@ wheels = [
 
 [[package]]
 name = "langchain-aws"
-version = "0.2.28"
+version = "0.2.29"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -707,9 +707,9 @@ dependencies = [
     { name = "numpy", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/61/fa/9edb616602a272eac8408b5551b5f271fc6cfa981bf66d09c33de14ceae9/langchain_aws-0.2.28.tar.gz", hash = "sha256:206930fdb69c7f222167b2e5f3ad1f7cd12cfe758f6c5f306c2fd0dc7db92fa1", size = 99860, upload-time = "2025-07-11T00:27:34.974Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5e/3a/eb72246f42b6c1d6a7ca49f4d50f1a7b7c808692165592cee1cab28ce07e/langchain_aws-0.2.29.tar.gz", hash = "sha256:a7b24b9b3d96af0ff5c7e55988c178c17e090aa954325b77d725f334eb2c4479", size = 109161, upload-time = "2025-07-22T03:08:03.219Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e6/e5/0a1fa4bfc36cfc7fcc5d397f161540fb526c3e105c48cfc8ed4dd68e362b/langchain_aws-0.2.28-py3-none-any.whl", hash = "sha256:2f034449bbac915b8d7700e77d99e7d204e0e987f27d3d1850927f05b51f123c", size = 121478, upload-time = "2025-07-11T00:27:33.466Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/4f/d8422af0058e75f4f5d87b57b77da401c1b045c30d06894415055415af28/langchain_aws-0.2.29-py3-none-any.whl", hash = "sha256:dd04c0d859ea44d506a85f179cb3f638529687881dcf14b12e63899c67478320", size = 133051, upload-time = "2025-07-22T03:08:01.902Z" },
 ]
 
 [[package]]
@@ -738,7 +738,7 @@ wheels = [
 
 [[package]]
 name = "langchain-core"
-version = "0.3.68"
+version = "0.3.72"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonpatch" },
@@ -749,9 +749,9 @@ dependencies = [
     { name = "tenacity" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/23/20/f5b18a17bfbe3416177e702ab2fd230b7d168abb17be31fb48f43f0bb772/langchain_core-0.3.68.tar.gz", hash = "sha256:312e1932ac9aa2eaf111b70fdc171776fa571d1a86c1f873dcac88a094b19c6f", size = 563041, upload-time = "2025-07-03T17:02:28.704Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8b/49/7568baeb96a57d3218cb5f1f113b142063679088fd3a0d0cae1feb0b3d36/langchain_core-0.3.72.tar.gz", hash = "sha256:4de3828909b3d7910c313242ab07b241294650f5cb6eac17738dd3638b1cd7de", size = 567227, upload-time = "2025-07-24T00:40:08.5Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f9/da/c89be0a272993bfcb762b2a356b9f55de507784c2755ad63caec25d183bf/langchain_core-0.3.68-py3-none-any.whl", hash = "sha256:5e5c1fbef419590537c91b8c2d86af896fbcbaf0d5ed7fdcdd77f7d8f3467ba0", size = 441405, upload-time = "2025-07-03T17:02:27.115Z" },
+    { url = "https://files.pythonhosted.org/packages/6e/7d/9f75023c478e3b854d67da31d721e39f0eb30ae969ec6e755430cb1c0fb5/langchain_core-0.3.72-py3-none-any.whl", hash = "sha256:9fa15d390600eb6b6544397a7aa84be9564939b6adf7a2b091179ea30405b240", size = 442806, upload-time = "2025-07-24T00:40:06.994Z" },
 ]
 
 [[package]]
@@ -781,7 +781,7 @@ requires-dist = [
     { name = "faiss-cpu", specifier = "==1.11.0.post1" },
     { name = "google-api-python-client", specifier = "==2.176.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
-    { name = "langchain-aws", specifier = "==0.2.28" },
+    { name = "langchain-aws", specifier = "==0.2.29" },
     { name = "langchain-google-community", specifier = "==2.0.7" },
     { name = "lxml", specifier = "==6.0.0" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
