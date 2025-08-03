@@ -15,7 +15,7 @@ dependencies = [
     "llama-index-llms-bedrock (==0.3.8)",
     "llama-index-embeddings-bedrock (==0.5.2)",
     "llama-index-readers-google (==0.6.2.post1)",
-    "llama-index-readers-confluence (==0.3.2)",
+    "llama-index-readers-confluence (==0.4.0)",
     "llama-index-readers-jira (==0.4.1)",
 ]
 
