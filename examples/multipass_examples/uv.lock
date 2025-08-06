@@ -154,7 +154,7 @@ wheels = [
 
 [[package]]
 name = "banks"
-version = "2.1.3"
+version = "2.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "deprecated" },
@@ -163,9 +163,9 @@ dependencies = [
     { name = "platformdirs" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/21/5f/08a0c087581726044536e198c011742ccb9ced6061575f1ed00c034e6443/banks-2.1.3.tar.gz", hash = "sha256:c0dd2cb0c5487274a513a552827e6a8ddbd0ab1a1b967f177e71a6e4748a3ed2", size = 177311, upload-time = "2025-06-27T07:12:04.582Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/f8/25ef24814f77f3fd7f0fd3bd1ef3749e38a9dbd23502fbb53034de49900c/banks-2.2.0.tar.gz", hash = "sha256:d1446280ce6e00301e3e952dd754fd8cee23ff277d29ed160994a84d0d7ffe62", size = 179052, upload-time = "2025-07-18T16:28:26.892Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/27/a30c24a74cc4f3969f3e0d184da149fa6327620c7c72333ccc3a8e3e1095/banks-2.1.3-py3-none-any.whl", hash = "sha256:9e1217dc977e6dd1ce42c5ff48e9bcaf238d788c81b42deb6a555615ffcffbab", size = 28133, upload-time = "2025-06-27T07:12:05.986Z" },
+    { url = "https://files.pythonhosted.org/packages/b4/d6/f9168956276934162ec8d48232f9920f2985ee45aa7602e3c6b4bc203613/banks-2.2.0-py3-none-any.whl", hash = "sha256:963cd5c85a587b122abde4f4064078def35c50c688c1b9d36f43c92503854e7d", size = 29244, upload-time = "2025-07-18T16:28:27.835Z" },
 ]
 
 [[package]]
@@ -635,7 +635,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-core"
-version = "0.12.46"
+version = "0.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -655,6 +655,7 @@ dependencies = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pillow" },
+    { name = "platformdirs" },
     { name = "pydantic" },
     { name = "pyyaml" },
     { name = "requests" },
@@ -667,9 +668,9 @@ dependencies = [
     { name = "typing-inspect" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4c/4b/4d3d291549f6fb1b99115ef2c9cf2bab284b26d589149e3d4041c0d305a4/llama_index_core-0.12.46.tar.gz", hash = "sha256:d95a9a3be9170087aef70671aa5edaa0e200f7ae5d1d0973c3a5b8e1d7bb0eab", size = 7273431, upload-time = "2025-07-03T02:41:30.669Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/0d/29865c82de51c2c1f263a61c267c336d35b14839fded66061a999dba1d40/llama_index_core-0.13.0.tar.gz", hash = "sha256:01fec50d3d807e3c3bc17a62ed1f5b93dad2205cda52f7d0c2d34cc6a6ab2b92", size = 7230599, upload-time = "2025-07-30T17:24:00.398Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b0/67/164ae22e97d100a119beb98487b29a12f22f624e00c445b6b60418fd9e62/llama_index_core-0.12.46-py3-none-any.whl", hash = "sha256:320d91a528dbb5679f7c49cc8b0106e6a2c92d376fdf3576cdf827dc33c479e9", size = 7644068, upload-time = "2025-07-03T02:41:21.437Z" },
+    { url = "https://files.pythonhosted.org/packages/f3/27/36a3ad19c8e2e7967ca1c9e469e5205901d2b6d299420e9aba4eafd90d8d/llama_index_core-0.13.0-py3-none-any.whl", hash = "sha256:46c14fc2a26b8f7618c2dd2daf6e430e3f94b1908474baee539f705c9c638348", size = 7573714, upload-time = "2025-07-30T17:23:52.355Z" },
 ]
 
 [[package]]
@@ -687,7 +688,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-readers-google"
-version = "0.6.2.post1"
+version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "gkeepapi" },
@@ -698,9 +699,9 @@ dependencies = [
     { name = "pandas" },
     { name = "pydrive" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/51/197670ce72006a867d82b2c30027a6a35ec366799363ed41342bfe95b75b/llama_index_readers_google-0.6.2.post1.tar.gz", hash = "sha256:a716b53b7e7be15ecab2371204f72bd9f47ca4109b22ed1be40730a6a233b4d8", size = 23026, upload-time = "2025-06-24T10:54:34.112Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/a0/11ac293d961f03a2437c471aa494df203ffda29e6e3f948caea894aee156/llama_index_readers_google-0.7.0.tar.gz", hash = "sha256:b0f7c0579950a1a9a5c8eb9f3ef8f03ea3d7b2a6e1cf737459ef40ca7dbbff7b", size = 23024, upload-time = "2025-07-30T21:06:33.177Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/54/b7/a998d898d709d74a552fddc339ff06bc9a401bc5498c4ab34f72369e0237/llama_index_readers_google-0.6.2.post1-py3-none-any.whl", hash = "sha256:2f80b4629c992c5f84a64de6e73f55246017b6316f7ae0e5bfde1647d88ee905", size = 34366, upload-time = "2025-06-24T10:54:32.848Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/31/ada3bcd1f27202bd67c9461cfe13e706e20fac67af3e28432e461487b574/llama_index_readers_google-0.7.0-py3-none-any.whl", hash = "sha256:9dc4b44e1d0d810a31c3d59a07e7dae5665774784559decc83c50220cc66f75e", size = 34310, upload-time = "2025-07-30T21:06:32.369Z" },
 ]
 
 [[package]]
@@ -849,7 +850,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index-readers-google", specifier = "==0.6.2.post1" },
+    { name = "llama-index-readers-google", specifier = "==0.7.0" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
 ]
 
