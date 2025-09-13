@@ -682,7 +682,7 @@ wheels = [
 
 [[package]]
 name = "llama-index-readers-google"
-version = "0.7.1"
+version = "0.7.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "gkeepapi" },
@@ -693,9 +693,9 @@ dependencies = [
     { name = "pandas" },
     { name = "pydrive" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/58/c5/d2923d0f1038cbe1d6441508c1343a53f307b5698d218330876c24cfd1b0/llama_index_readers_google-0.7.1.tar.gz", hash = "sha256:51c3b92f097ee73c6ffc3d5a015a16a6e7200c2f845b4121ef3efdec6ebaed95", size = 23225, upload-time = "2025-08-28T17:03:10.344Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a9/fc/5b48cbbee8a13884350b817aee530fd11613262b66e01f84239615d38927/llama_index_readers_google-0.7.2.tar.gz", hash = "sha256:ab28f263dda1b9abb29c6beb4595a0374bdd4d5b00f4e47c3a4803d0e895f1ea", size = 23222, upload-time = "2025-09-08T20:27:53.885Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/36/63/cd1f3b060615a30e6cbc9676e9b586678c1ce0580e6ffdc96a78e8d4f80d/llama_index_readers_google-0.7.1-py3-none-any.whl", hash = "sha256:54fdc50b49bacca0132b6006fcf9518ab3887d806ada600c4b8774286eb34e35", size = 34380, upload-time = "2025-08-28T17:03:09.183Z" },
+    { url = "https://files.pythonhosted.org/packages/b2/2e/6e89119b884853ed0fa84094367d829a83734b2c2e6bc28fbcf8839f9c33/llama_index_readers_google-0.7.2-py3-none-any.whl", hash = "sha256:0adcf05c7f9d0fe3bdf5cd147ea9d1e37aa3ec5a1bc0d804be3ffec99d8e0ea1", size = 34377, upload-time = "2025-09-08T20:27:53.012Z" },
 ]
 
 [[package]]
@@ -845,7 +845,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index-readers-google", specifier = "==0.7.1" },
+    { name = "llama-index-readers-google", specifier = "==0.7.2" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
 ]
 
