@@ -16,7 +16,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "mypy==1.17.1",
+    "mypy==1.18.1",
     "types-requests==2.32.4.20250809",
 ]
 
