@@ -730,7 +730,7 @@ requires-dist = [
     { name = "google-api-python-client", specifier = "==2.181.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "langchain-aws", specifier = "==0.2.32" },
-    { name = "langchain-google-community", specifier = "==2.0.7" },
+    { name = "langchain-google-community", specifier = "==2.0.8" },
     { name = "lxml", specifier = "==6.0.1" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
     { name = "pangea-multipass-langchain", editable = "../../packages/pangea-multipass-langchain" },
@@ -741,7 +741,7 @@ dev = [{ name = "mypy", specifier = "==1.18.1" }]
 
 [[package]]
 name = "langchain-google-community"
-version = "2.0.7"
+version = "2.0.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
@@ -751,9 +751,9 @@ dependencies = [
     { name = "langchain-community" },
     { name = "langchain-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5d/45/6c375b55e1775a4764d1535e1239205604c8396fd2c4eb10333a7357ec2e/langchain_google_community-2.0.7.tar.gz", hash = "sha256:ca73dade3bcc141bca38a3753c32d68325f45a3bccf1588d17ef84fe049f63aa", size = 71929, upload-time = "2025-02-26T10:31:33.894Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/84/8aec07b667807c2d5d80253d79c7cb4b987e46a5616f4d04be1388c43df4/langchain_google_community-2.0.8.tar.gz", hash = "sha256:e459eef777eb2bf1d84c48fa4c21d7abe2878a9cbdbdd80191fe7690ed127e46", size = 90398, upload-time = "2025-09-12T19:31:01.328Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/43/1a55d44baa276bac62e1b244d8888467f9b13cc4a00fc7521d2c398d3ba6/langchain_google_community-2.0.7-py3-none-any.whl", hash = "sha256:4502d63a1d1ce39f4a34cf7974c87700a40e00c15dbe15b7970b2708c5d9ca1f", size = 99582, upload-time = "2025-02-26T10:31:32.083Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/d1/dca2cc3c35323d422fd9e4936a5ebd9e33400b5e56ff3062fa6efb92c180/langchain_google_community-2.0.8-py3-none-any.whl", hash = "sha256:3ec5596c26c3c2d952e2da651e6b761a412735fb8e070a73753743d15fa0e662", size = 99795, upload-time = "2025-09-12T19:30:59.879Z" },
 ]
 
 [[package]]
@@ -1154,7 +1154,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "mypy", specifier = "==1.17.1" },
+    { name = "mypy", specifier = "==1.18.1" },
     { name = "types-requests", specifier = "==2.32.4.20250809" },
 ]
 
@@ -1174,7 +1174,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "mypy", specifier = "==1.17.1" }]
+dev = [{ name = "mypy", specifier = "==1.18.1" }]
 
 [[package]]
 name = "pathspec"
