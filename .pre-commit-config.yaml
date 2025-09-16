@@ -32,7 +32,7 @@ repos:
         args:
           - --line-length=120
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.17.1
+    rev: v1.18.1
     hooks:
       - id: mypy
         args:
