@@ -13,7 +13,7 @@ dependencies = [
     "pangea-multipass (>=0.2.0)",
     "google-api-python-client==2.181.0",
     "google-auth-httplib2 (>=0.2.0)",
-    "langchain-google-community==2.0.9",
+    "langchain-google-community==2.0.10",
     "lxml==6.0.1",
     "faiss-cpu==1.12.0",
     "boto3==1.40.31",

@@ -374,6 +374,12 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/14/4b/ead00905132820b623732b175d66354e9d3e69fcf2a5dcdab780664e7896/google_api_core-2.25.1-py3-none-any.whl", hash = "sha256:8a2a56c1fef82987a524371f99f3bd0143702fecc670c72e600c1cda6bf8dbb7", size = 160807, upload-time = "2025-06-12T20:52:19.334Z" },
 ]
 
+[package.optional-dependencies]
+grpc = [
+    { name = "grpcio" },
+    { name = "grpcio-status" },
+]
+
 [[package]]
 name = "google-api-python-client"
 version = "2.181.0"
@@ -441,6 +447,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d6/b8/2b53838d2acd6ec6168fd284a990c76695e84c65deee79c9f3a4276f6b4f/google_cloud_core-2.4.3.tar.gz", hash = "sha256:1fab62d7102844b278fe6dead3af32408b1df3eb06f5c7e8634cbd40edc4da53", size = 35861, upload-time = "2025-03-10T21:05:38.948Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/40/86/bda7241a8da2d28a754aad2ba0f6776e35b67e37c36ae0c45d49370f1014/google_cloud_core-2.4.3-py2.py3-none-any.whl", hash = "sha256:5130f9f4c14b4fafdff75c79448f9495cfade0d8775facf1b09c3bf67e027f6e", size = 29348, upload-time = "2025-03-10T21:05:37.785Z" },
+]
+
+[[package]]
+name = "google-cloud-modelarmor"
+version = "0.2.8"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "google-api-core", extra = ["grpc"] },
+    { name = "google-auth" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/58/ab/414e0dc60331d19dde1c751f13829e732d3e1349ea9bdcc8fb9b375b7b6b/google_cloud_modelarmor-0.2.8.tar.gz", hash = "sha256:8e06edb0c0d063509733c9612a85142b42897d31b548cca76b4f4d5323b7aae5", size = 152573, upload-time = "2025-08-06T11:52:17.877Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/71/1b/5b572a5d35342c19b24ea80268367aeba237c9ea842b96a078889ad90812/google_cloud_modelarmor-0.2.8-py3-none-any.whl", hash = "sha256:4141ce1437f15f20a758c8d53e0ecaa91e60b5045dc66d94a8f4076b588c194b", size = 133777, upload-time = "2025-08-06T11:51:51.069Z" },
 ]
 
 [[package]]
@@ -526,6 +547,20 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/3b/0c/3a5fa47d2437a44ced74141795ac0251bbddeae74bf81df3447edd767d27/grpcio-1.74.0-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:cce634b10aeab37010449124814b05a62fb5f18928ca878f1bf4750d1f0c815b", size = 6489616, upload-time = "2025-07-24T18:53:36.217Z" },
     { url = "https://files.pythonhosted.org/packages/ae/95/ab64703b436d99dc5217228babc76047d60e9ad14df129e307b5fec81fd0/grpcio-1.74.0-cp312-cp312-win32.whl", hash = "sha256:885912559974df35d92219e2dc98f51a16a48395f37b92865ad45186f294096c", size = 3807083, upload-time = "2025-07-24T18:53:37.911Z" },
     { url = "https://files.pythonhosted.org/packages/84/59/900aa2445891fc47a33f7d2f76e00ca5d6ae6584b20d19af9c06fa09bf9a/grpcio-1.74.0-cp312-cp312-win_amd64.whl", hash = "sha256:42f8fee287427b94be63d916c90399ed310ed10aadbf9e2e5538b3e497d269bc", size = 4490123, upload-time = "2025-07-24T18:53:39.528Z" },
+]
+
+[[package]]
+name = "grpcio-status"
+version = "1.74.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "googleapis-common-protos" },
+    { name = "grpcio" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/93/22/238c5f01e6837df54494deb08d5c772bc3f5bf5fb80a15dce254892d1a81/grpcio_status-1.74.0.tar.gz", hash = "sha256:c58c1b24aa454e30f1fc6a7e0dbbc194c54a408143971a94b5f4e40bb5831432", size = 13662, upload-time = "2025-07-24T19:01:56.874Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/aa/1b1fe7d8ab699e1ec26d3a36b91d3df9f83a30abc07d4c881d0296b17b67/grpcio_status-1.74.0-py3-none-any.whl", hash = "sha256:52cdbd759a6760fc8f668098a03f208f493dd5c76bf8e02598bbbaf1f6fc2876", size = 14425, upload-time = "2025-07-24T19:01:19.963Z" },
 ]
 
 [[package]]
@@ -730,7 +765,7 @@ requires-dist = [
     { name = "google-api-python-client", specifier = "==2.181.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "langchain-aws", specifier = "==0.2.33" },
-    { name = "langchain-google-community", specifier = "==2.0.9" },
+    { name = "langchain-google-community", specifier = "==2.0.10" },
     { name = "lxml", specifier = "==6.0.1" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
     { name = "pangea-multipass-langchain", editable = "../../packages/pangea-multipass-langchain" },
@@ -741,19 +776,20 @@ dev = [{ name = "mypy", specifier = "==1.18.1" }]
 
 [[package]]
 name = "langchain-google-community"
-version = "2.0.9"
+version = "2.0.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
     { name = "google-api-python-client" },
     { name = "google-cloud-core" },
+    { name = "google-cloud-modelarmor" },
     { name = "grpcio" },
     { name = "langchain-community" },
     { name = "langchain-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d4/4f/2623f85a8cd26c5b1e23dc295c7d12b4272065cf850d4b3262e2ceffc9a1/langchain_google_community-2.0.9.tar.gz", hash = "sha256:fa759ada22d3d712d4ef2bae193d5c031dec7f900b74811bd53e06ff1268f44f", size = 90779, upload-time = "2025-09-15T21:18:25.264Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0c/5f/8cc4993372e2358ec27e01bab9b6f6fe6fbc14e3d85f7caa67d0ab2c8f12/langchain_google_community-2.0.10.tar.gz", hash = "sha256:5476adfa3b64cc2ce52c1fd514d0b1eab8775c4416a9dc555423f387fafd842f", size = 102746, upload-time = "2025-09-16T15:42:36.825Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/aa/192cd53ebc62fca8a0698800da24bcfc3c143e126501cc643cac13cc4748/langchain_google_community-2.0.9-py3-none-any.whl", hash = "sha256:20a6a701b84fe9d495bb0851552a7eca5d2e194aac9b61687e3b4e5c4efd9b43", size = 99879, upload-time = "2025-09-15T21:18:24.045Z" },
+    { url = "https://files.pythonhosted.org/packages/3f/f4/3a48511d52ea2517bacd60cef057432aeb1afc29e9925a9cbe08920ba0c4/langchain_google_community-2.0.10-py3-none-any.whl", hash = "sha256:9afb3eba04359670ba5797efc2ed8a1749a3de706a17c21f85173b31e4b5474a", size = 106270, upload-time = "2025-09-16T15:42:34.982Z" },
 ]
 
 [[package]]
