@@ -382,7 +382,7 @@ grpc = [
 
 [[package]]
 name = "google-api-python-client"
-version = "2.182.0"
+version = "2.183.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
@@ -391,9 +391,9 @@ dependencies = [
     { name = "httplib2" },
     { name = "uritemplate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6f/cb/b85b1d7d7fd520739fb70c4878f1f414043c3c34434bc90ba9d4f93366ed/google_api_python_client-2.182.0.tar.gz", hash = "sha256:cb2aa127e33c3a31e89a06f39cf9de982db90a98dee020911b21013afafad35f", size = 13599318, upload-time = "2025-09-16T21:10:57.97Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fa/1f/49a2c83fc6dcd8b127cc9efbecf7d5fc36109c2028ba22ed6cb4d072fca4/google_api_python_client-2.183.0.tar.gz", hash = "sha256:abae37e04fecf719388e5c02f707ed9cdf952f10b217c79a3e76c636762e3ea9", size = 13645623, upload-time = "2025-09-23T22:27:00.854Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c1/29/76dabe97ebb710ca9a308f0415b2206e37d149983ec2becbf66525c52322/google_api_python_client-2.182.0-py3-none-any.whl", hash = "sha256:a9b071036d41a17991d8fbf27bedb61f2888a39ae5696cb5a326bf999b2d5209", size = 14168745, upload-time = "2025-09-16T21:10:54.657Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/06/1974f937172854bc7622eff5c2390f33542ceb843f305922922c8f5f7f17/google_api_python_client-2.183.0-py3-none-any.whl", hash = "sha256:2005b6e86c27be1db1a43f43e047a0f8e004159f3cceddecb08cf1624bddba31", size = 14214837, upload-time = "2025-09-23T22:26:57.758Z" },
 ]
 
 [[package]]
@@ -765,7 +765,7 @@ dev = [
 requires-dist = [
     { name = "boto3", specifier = "==1.40.37" },
     { name = "faiss-cpu", specifier = "==1.12.0" },
-    { name = "google-api-python-client", specifier = "==2.182.0" },
+    { name = "google-api-python-client", specifier = "==2.183.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
     { name = "langchain-aws", specifier = "==0.2.33" },
     { name = "langchain-google-community", specifier = "==2.0.10" },
