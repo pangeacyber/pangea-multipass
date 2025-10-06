@@ -9,7 +9,7 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "llama-index==0.12.52",
+    "llama-index==0.14.4",
     "pangea-multipass (>=0.2.0)",
 ]
 
