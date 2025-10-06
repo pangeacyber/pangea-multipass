@@ -684,7 +684,7 @@ wheels = [
 
 [[package]]
 name = "langchain-aws"
-version = "0.2.34"
+version = "0.2.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -693,9 +693,9 @@ dependencies = [
     { name = "numpy", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/a4/c5dc9f3ac1c20049c5fdcbdc2f740871fe05b98df6e026f636c3ff080170/langchain_aws-0.2.34.tar.gz", hash = "sha256:65b5009855a31a7cdd696c7c13d285f34099458f34e8a13844c6fc6bfc3bfc02", size = 120447, upload-time = "2025-09-30T22:09:39.622Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8d/7a/19a903725acbb1c4481dc0391b2551250bf4e04cbe5a891a55e09319772b/langchain_aws-0.2.35.tar.gz", hash = "sha256:45793a34fe45d365f4292cc768db74669ca24601d2c5da1ac6f44403750d70af", size = 120567, upload-time = "2025-10-02T23:59:57.204Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/a9/429c9a427313fbdb04a546b1473001036d2e6b54b47dacb6d4ff9c09ef45/langchain_aws-0.2.34-py3-none-any.whl", hash = "sha256:08091265eed7577e0daaaba7b1e262ba0b31d7bb7b9da2bf7841b33a5c9c8cd1", size = 145535, upload-time = "2025-09-30T22:09:38.332Z" },
+    { url = "https://files.pythonhosted.org/packages/41/92/1827652b4ed6d8ffaffe8b40be49a6889a9b3cb4b523fb56871691c48601/langchain_aws-0.2.35-py3-none-any.whl", hash = "sha256:8ddb10f3c29f6d52bcbaa4d7f4f56462acf01f608adc7c70f41e5a476899a6bc", size = 145620, upload-time = "2025-10-02T23:59:55.288Z" },
 ]
 
 [[package]]
@@ -767,7 +767,7 @@ requires-dist = [
     { name = "faiss-cpu", specifier = "==1.12.0" },
     { name = "google-api-python-client", specifier = "==2.184.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.0" },
-    { name = "langchain-aws", specifier = "==0.2.34" },
+    { name = "langchain-aws", specifier = "==0.2.35" },
     { name = "langchain-google-community", specifier = "==2.0.10" },
     { name = "lxml", specifier = "==6.0.2" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
