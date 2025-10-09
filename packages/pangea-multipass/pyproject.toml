@@ -14,7 +14,7 @@ dependencies = [
     "google-api-python-client (>=2.184.0)",
     "google-auth (>=2.41.1)",
     "openpyxl (>=3.1.5)",
-    "slack-sdk (>=3.36.0)",
+    "slack-sdk (>=3.37.0)",
 ]
 
 [dependency-groups]
