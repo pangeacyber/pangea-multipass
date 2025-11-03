@@ -142,16 +142,16 @@ wheels = [
 
 [[package]]
 name = "boto3"
-version = "1.40.63"
+version = "1.40.64"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
     { name = "jmespath" },
     { name = "s3transfer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5d/fb/db063c9600cbe2c52009edd436262c696b18bafaf49835a7f17ba1679a84/boto3-1.40.63.tar.gz", hash = "sha256:3bf4b034900c87a6a9b3b3b44c4aec26e96fc73bff2505f0766224b7295178ce", size = 111541, upload-time = "2025-10-30T19:32:52.081Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/08/d2/e508e5f42dc1c8a7412f5170751e626a18ed32c6e95c5df30bde6c5addf1/boto3-1.40.64.tar.gz", hash = "sha256:b92d6961c352f2bb8710c9892557d4b0e11258b70967d4e740e1c97375bcd779", size = 111543, upload-time = "2025-10-31T19:33:24.336Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/d4/d977f678c60e05c19c857ad896f838152dc68e0cc28f0f026e224879d8ca/boto3-1.40.63-py3-none-any.whl", hash = "sha256:f15d4abf1a6283887c336f660cdfc2162a210d2d8f4d98dbcbcef983371c284d", size = 139322, upload-time = "2025-10-30T19:32:49.876Z" },
+    { url = "https://files.pythonhosted.org/packages/65/c2/27da558ceb90d17b1e4c0cca5dab29f8aea7f63242a1005a8f54230ce5e6/boto3-1.40.64-py3-none-any.whl", hash = "sha256:35ca3dd80dd90d5f4e8ed032440f28790696fdf50f48c0d16a09a75675f9112f", size = 139321, upload-time = "2025-10-31T19:33:22.92Z" },
 ]
 
 [[package]]
@@ -776,7 +776,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "boto3", specifier = "==1.40.63" },
+    { name = "boto3", specifier = "==1.40.64" },
     { name = "faiss-cpu", specifier = "==1.12.0" },
     { name = "google-api-python-client", specifier = "==2.186.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.1" },
@@ -1200,7 +1200,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-api-python-client", specifier = ">=2.185.0" },
+    { name = "google-api-python-client", specifier = ">=2.186.0" },
     { name = "google-auth", specifier = ">=2.42.1" },
     { name = "google-auth-httplib2", specifier = ">=0.2.1" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
