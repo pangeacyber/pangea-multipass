@@ -11,7 +11,7 @@ requires-python = ">=3.10,<3.13"
 dependencies = [
     "pangea-multipass-langchain (>=0.2.0)",
     "pangea-multipass (>=0.2.0)",
-    "google-api-python-client==2.185.0",
+    "google-api-python-client==2.186.0",
     "google-auth-httplib2 (>=0.2.1)",
     "langchain-google-community==2.0.10",
     "lxml==6.0.2",
