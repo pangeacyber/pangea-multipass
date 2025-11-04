@@ -9,7 +9,7 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "google-auth-oauthlib (>=1.2.2)",
+    "google-auth-oauthlib (>=1.2.3)",
     "google-auth-httplib2 (>=0.2.1)",
     "google-api-python-client (>=2.186.0)",
     "google-auth (>=2.42.1)",
