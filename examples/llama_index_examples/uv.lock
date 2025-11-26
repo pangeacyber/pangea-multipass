@@ -768,12 +768,6 @@ wheels = [
 ]
 
 [[package]]
-name = "html2text"
-version = "2024.2.26"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/1a/43/e1d53588561e533212117750ee79ad0ba02a41f52a08c1df3396bd466c05/html2text-2024.2.26.tar.gz", hash = "sha256:05f8e367d15aaabc96415376776cdd11afd5127a77fce6e36afc60c563ca2c32", size = 56527, upload-time = "2024-02-27T18:49:24.855Z" }
-
-[[package]]
 name = "httpcore"
 version = "1.0.9"
 source = { registry = "https://pypi.org/simple" }
@@ -1078,7 +1072,7 @@ dev = [
 requires-dist = [
     { name = "llama-index-embeddings-bedrock", specifier = "==0.7.1" },
     { name = "llama-index-llms-bedrock", specifier = "==0.4.2" },
-    { name = "llama-index-readers-confluence", specifier = "==0.5.0" },
+    { name = "llama-index-readers-confluence", specifier = "==0.6.0" },
     { name = "llama-index-readers-google", specifier = "==0.7.2" },
     { name = "llama-index-readers-jira", specifier = "==0.5.1" },
     { name = "pangea-multipass", editable = "../../packages/pangea-multipass" },
@@ -1157,13 +1151,13 @@ wheels = [
 
 [[package]]
 name = "llama-index-readers-confluence"
-version = "0.5.0"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "atlassian-python-api" },
     { name = "docx2txt" },
-    { name = "html2text" },
     { name = "llama-index-core" },
+    { name = "markdownify" },
     { name = "pdf2image" },
     { name = "pillow" },
     { name = "pytesseract" },
@@ -1171,9 +1165,9 @@ dependencies = [
     { name = "svglib" },
     { name = "xlrd" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/31/4c/31fbeaf11025da0fe2c6a24f06c30cbe1013c703cd6e678dc269ce804bb6/llama_index_readers_confluence-0.5.0.tar.gz", hash = "sha256:29b2bcde4fe8b901eb6896dfcfb72ce84c5b28c628beee46f674eefd5f71540a", size = 28538, upload-time = "2025-10-27T12:43:16.501Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e4/c6/265feb2d6c23f98a08ce1fc4b979a94115e811dcee97c8cd2a3b97a74f9b/llama_index_readers_confluence-0.6.0.tar.gz", hash = "sha256:0a2e55da1aa0e1cb7c5b37e756b544fd9817f4392caafdb54300680012674e1f", size = 17089, upload-time = "2025-11-20T16:07:08.071Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/1d/0d22549f93404976d3e7046ac794be2288c40a38997f5fb637a1c1cea691/llama_index_readers_confluence-0.5.0-py3-none-any.whl", hash = "sha256:9d34dc0070ec7c467b8ec51a4867cca5ed10746965805fc0e7f80e9b6a7c5f6b", size = 28474, upload-time = "2025-10-27T12:43:15.365Z" },
+    { url = "https://files.pythonhosted.org/packages/e2/cb/ee4b628fd8889b97759c3400fddd338e1fb882a13c337610ba88737dbdaa/llama_index_readers_confluence-0.6.0-py3-none-any.whl", hash = "sha256:d51fb94aa4b2f3998e1ea5b6b7042a3bedbe414ee0d444f03a1f7db600a97b57", size = 17477, upload-time = "2025-11-20T16:07:06.878Z" },
 ]
 
 [[package]]
@@ -1331,6 +1325,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/7a/c1/27428a2ff348e994ab4f8777d3a0ad510b6b92d37718e5887d2da99952a2/lxml-6.0.2-pp311-pypy311_pp73-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:60fa43be34f78bebb27812ed90f1925ec99560b0fa1decdb7d12b84d857d31e9", size = 4272119, upload-time = "2025-09-22T04:04:51.801Z" },
     { url = "https://files.pythonhosted.org/packages/f0/d0/3020fa12bcec4ab62f97aab026d57c2f0cfd480a558758d9ca233bb6a79d/lxml-6.0.2-pp311-pypy311_pp73-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:21c73b476d3cfe836be731225ec3421fa2f048d84f6df6a8e70433dff1376d5a", size = 4417314, upload-time = "2025-09-22T04:04:55.024Z" },
     { url = "https://files.pythonhosted.org/packages/6c/77/d7f491cbc05303ac6801651aabeb262d43f319288c1ea96c66b1d2692ff3/lxml-6.0.2-pp311-pypy311_pp73-win_amd64.whl", hash = "sha256:27220da5be049e936c3aca06f174e8827ca6445a4353a1995584311487fc4e3e", size = 3518768, upload-time = "2025-09-22T04:04:57.097Z" },
+]
+
+[[package]]
+name = "markdownify"
+version = "1.2.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3f/bc/c8c8eea5335341306b0fa7e1cb33c5e1c8d24ef70ddd684da65f41c49c92/markdownify-1.2.2.tar.gz", hash = "sha256:b274f1b5943180b031b699b199cbaeb1e2ac938b75851849a31fd0c3d6603d09", size = 18816, upload-time = "2025-11-16T19:21:18.565Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/43/ce/f1e3e9d959db134cedf06825fae8d5b294bd368aacdd0831a3975b7c4d55/markdownify-1.2.2-py3-none-any.whl", hash = "sha256:3f02d3cc52714084d6e589f70397b6fc9f2f3a8531481bf35e8cc39f975e186a", size = 15724, upload-time = "2025-11-16T19:21:17.622Z" },
 ]
 
 [[package]]
