@@ -142,16 +142,16 @@ wheels = [
 
 [[package]]
 name = "boto3"
-version = "1.41.0"
+version = "1.41.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
     { name = "jmespath" },
     { name = "s3transfer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/dd/4f/92744c97f42e214948b9c8eff86e7e72c7ca8be788867a8aea80dc192052/boto3-1.41.0.tar.gz", hash = "sha256:73bf7f63152406404c0359c013a692e884b98a3b297160058a38f00ef19e375b", size = 111589, upload-time = "2025-11-19T20:29:10.72Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/19/9d/a8d41de19d81c87dd9d7528e8ad2f4f0c0282d0899a70a3d963472064063/boto3-1.41.1.tar.gz", hash = "sha256:fdee48cff828cfe0fb66295ae4d5f47736ee35f11e1de6be6c6dcd910f0810a4", size = 111611, upload-time = "2025-11-20T20:29:06.262Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/32/35/5f4b70f20188614a485b26e80369b9fa260a06fb0ae328153d7fc647619f/boto3-1.41.0-py3-none-any.whl", hash = "sha256:d5c454bb23655b052073c8dc6703dda5360825b72b1691822ae7709050b96390", size = 139340, upload-time = "2025-11-19T20:29:09.03Z" },
+    { url = "https://files.pythonhosted.org/packages/20/c7/d72f9843d207a222a6471a019390470b075aff2aa7c5bba32b202f7a26de/boto3-1.41.1-py3-none-any.whl", hash = "sha256:05009dadcb0c63a2a4a11780f615362a811aa85e7a6950f2793ecf8055fcd1f2", size = 139341, upload-time = "2025-11-20T20:29:04.373Z" },
 ]
 
 [[package]]
@@ -769,7 +769,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "boto3", specifier = "==1.41.0" },
+    { name = "boto3", specifier = "==1.41.1" },
     { name = "faiss-cpu", specifier = "==1.13.0" },
     { name = "google-api-python-client", specifier = "==2.187.0" },
     { name = "google-auth-httplib2", specifier = ">=0.2.1" },
@@ -1198,7 +1198,7 @@ requires-dist = [
     { name = "google-auth-httplib2", specifier = ">=0.2.1" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
     { name = "openpyxl", specifier = ">=3.1.5" },
-    { name = "slack-sdk", specifier = ">=3.38.0" },
+    { name = "slack-sdk", specifier = ">=3.39.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1561,14 +1561,14 @@ wheels = [
 
 [[package]]
 name = "s3transfer"
-version = "0.14.0"
+version = "0.15.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/62/74/8d69dcb7a9efe8baa2046891735e5dfe433ad558ae23d9e3c14c633d1d58/s3transfer-0.14.0.tar.gz", hash = "sha256:eff12264e7c8b4985074ccce27a3b38a485bb7f7422cc8046fee9be4983e4125", size = 151547, upload-time = "2025-09-09T19:23:31.089Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ca/bb/940d6af975948c1cc18f44545ffb219d3c35d78ec972b42ae229e8e37e08/s3transfer-0.15.0.tar.gz", hash = "sha256:d36fac8d0e3603eff9b5bfa4282c7ce6feb0301a633566153cbd0b93d11d8379", size = 152185, upload-time = "2025-11-20T20:28:56.327Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/48/f0/ae7ca09223a81a1d890b2557186ea015f6e0502e9b8cb8e1813f1d8cfa4e/s3transfer-0.14.0-py3-none-any.whl", hash = "sha256:ea3b790c7077558ed1f02a3072fb3cb992bbbd253392f4b6e9e8976941c7d456", size = 85712, upload-time = "2025-09-09T19:23:30.041Z" },
+    { url = "https://files.pythonhosted.org/packages/5f/e1/5ef25f52973aa12a19cf4e1375d00932d7fb354ffd310487ba7d44225c1a/s3transfer-0.15.0-py3-none-any.whl", hash = "sha256:6f8bf5caa31a0865c4081186689db1b2534cef721d104eb26101de4b9d6a5852", size = 85984, upload-time = "2025-11-20T20:28:55.046Z" },
 ]
 
 [[package]]
