@@ -13,7 +13,7 @@ dependencies = [
     "pangea-multipass-llama-index (>=0.2.0)",
     "pangea-multipass (>=0.2.0)",
     "llama-index-llms-bedrock (==0.4.2)",
-    "llama-index-embeddings-bedrock (==0.7.1)",
+    "llama-index-embeddings-bedrock (==0.7.2)",
     "llama-index-readers-google (==0.7.2)",
     "llama-index-readers-confluence (==0.6.0)",
     "llama-index-readers-jira (==0.5.1)",

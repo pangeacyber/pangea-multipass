@@ -1024,16 +1024,16 @@ wheels = [
 
 [[package]]
 name = "llama-index-embeddings-bedrock"
-version = "0.7.1"
+version = "0.7.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aioboto3" },
     { name = "boto3" },
     { name = "llama-index-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5b/97/d2b30df4b7866e77a1f4f0969de411ba22480ae503f638dc5e8769428192/llama_index_embeddings_bedrock-0.7.1.tar.gz", hash = "sha256:018c403a9c3892eaceef2ac4ea13d7fd6f61c13a509485e499828e6738db9bb8", size = 8621, upload-time = "2025-11-19T00:47:41.795Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1c/f6/d39dd496c80f7c0766868bd5fc27c8491bba7afef456219ae47405ef6ed0/llama_index_embeddings_bedrock-0.7.2.tar.gz", hash = "sha256:64a0597f17e21e32357053b28c3bb7c9c7bdcf9f884a986ed121e5133e08e448", size = 8881, upload-time = "2025-11-25T02:54:15.809Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/94/e3/a44cd7f4616e0d33a4def901f199d8f9faccf45cf7acc7739bac6bd9069e/llama_index_embeddings_bedrock-0.7.1-py3-none-any.whl", hash = "sha256:1cb3b2014eee353f3954509e76db147b9c7965b0764c277c955df1d55f5c7489", size = 8469, upload-time = "2025-11-19T00:47:40.619Z" },
+    { url = "https://files.pythonhosted.org/packages/bd/11/a41788093e3db3e4c1d71dab75933dacc80a0af92f83505f75f47fdfccae/llama_index_embeddings_bedrock-0.7.2-py3-none-any.whl", hash = "sha256:f5766f21ad92fd30e5496cc364e3436852f8f91df6e2a55a3d4fffa02d864b17", size = 8673, upload-time = "2025-11-25T02:54:14.668Z" },
 ]
 
 [[package]]
@@ -1070,7 +1070,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index-embeddings-bedrock", specifier = "==0.7.1" },
+    { name = "llama-index-embeddings-bedrock", specifier = "==0.7.2" },
     { name = "llama-index-llms-bedrock", specifier = "==0.4.2" },
     { name = "llama-index-readers-confluence", specifier = "==0.6.0" },
     { name = "llama-index-readers-google", specifier = "==0.7.2" },
@@ -1757,7 +1757,7 @@ requires-dist = [
     { name = "google-auth-httplib2", specifier = ">=0.2.1" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.2" },
     { name = "openpyxl", specifier = ">=3.1.5" },
-    { name = "slack-sdk", specifier = ">=3.38.0" },
+    { name = "slack-sdk", specifier = ">=3.39.0" },
 ]
 
 [package.metadata.requires-dev]
