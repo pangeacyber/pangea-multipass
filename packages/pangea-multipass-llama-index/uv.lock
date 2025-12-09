@@ -1820,7 +1820,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index", specifier = ">=0.14.8" },
+    { name = "llama-index", specifier = ">=0.14.9" },
     { name = "pangea-multipass", editable = "../pangea-multipass" },
 ]
 
