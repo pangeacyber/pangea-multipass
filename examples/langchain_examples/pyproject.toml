@@ -16,7 +16,7 @@ dependencies = [
     "langchain-google-community==2.0.10",
     "lxml==6.0.2",
     "faiss-cpu==1.13.1",
-    "boto3==1.42.6",
+    "boto3==1.42.7",
     "langchain-aws==0.2.35",
 ]
 
